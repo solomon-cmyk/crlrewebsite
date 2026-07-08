@@ -1,0 +1,11 @@
+field,current_value,new_value,source_notes
+year_1_adr,1800,1750,Marave Rental app lib/constants.js — ADR_DEFAULT is midpoint of $500–$3000 slider = $1750; presets: conservative $500 / base $1750 / optimistic $3000
+year_1_occupancy_pct,50,50,Marave Rental app lib/constants.js — ADR_PRESETS conservative occupancy 50% (base preset 55%; optimistic 65%)
+year_2_occupancy_pct,55,55,Marave Rental app lib/constants.js — base preset occupancy 55%; matches current default
+default_purchase_price,1500000,2500000,Marave Rental app Guide.jsx — default purchasePrice useState(2500000)
+hoa_annual,24000,12000,Marave Rental app lib/constants.js — DEFAULT_CARRYING.hoa 12000
+insurance_annual,6500,3500,Marave Rental app lib/constants.js — DEFAULT_CARRYING.insurance 3500
+property_tax_annual,4500,8000,Marave Rental app lib/constants.js — DEFAULT_CARRYING.taxes 8000
+utilities_annual,3600,2400,Marave Rental app lib/constants.js — DEFAULT_CARRYING.utilities 2400
+deep_clean_pest_annual,1400,1800,Marave Rental app lib/constants.js — DEFAULT_CARRYING.deepCleans 1800
+maintenance_above_reserve_annual,2000,2000,Marave Rental app lib/constants.js — DEFAULT_CARRYING.maintenance 2000; matches current default
