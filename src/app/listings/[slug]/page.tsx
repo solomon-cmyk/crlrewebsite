@@ -1,9 +1,9 @@
 import { BrokerFooter } from "@/components/broker/BrokerFooter";
+import { ListingGallery } from "@/components/broker/ListingGallery";
 import { SiteNav } from "@/components/broker/SiteNav";
 import { getAllListings, getListingBySlug } from "@/lib/listings";
 import { organizationJsonLd, jsonLdScript, websiteJsonLd } from "@/lib/seo/jsonld";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -59,46 +59,35 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
       />
       <SiteNav />
       <div className="listing-detail">
-        <header className="listing-detail__hero">
-          <div className="wrap">
-            <Link href="/listings" className="listing-detail__back">
-              All listings
-            </Link>
+        <div className="wrap listing-detail__top">
+          <Link href="/listings" className="listing-detail__back">
+            ← All listings
+          </Link>
+        </div>
+
+        <div className="wrap listing-detail__gallery-wrap">
+          <ListingGallery images={gallery} title={listing.title} />
+        </div>
+
+        <div className="wrap listing-detail__content">
+          <header className="listing-detail__intro">
             <p className="eyebrow">{listing.location}</p>
             <h1>{listing.title}</h1>
             <div className="listing-detail__meta">
               <span className={`tag${listing.sold ? " tag--sold" : ""}`}>{listing.tag}</span>
               <span className="listing-detail__price">{listing.price}</span>
             </div>
-          </div>
-        </header>
-
-        <div className="wrap listing-detail__content">
-          <div className="listing-detail__gallery">
-            {gallery.map((src, index) => (
-              <div className="listing-detail__photo" key={`${listing.slug}-${index}`}>
-                <Image
-                  src={src}
-                  alt={`${listing.title} photo ${index + 1}`}
-                  width={1400}
-                  height={900}
-                  unoptimized
-                  priority={index === 0}
-                />
+            {listing.specs.length > 0 && (
+              <div className="listing-detail__specs">
+                {listing.specs.map((spec) => (
+                  <span key={`${spec.label}${spec.suffix}`}>
+                    <b>{spec.label}</b>
+                    {spec.suffix}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
-
-          {listing.specs.length > 0 && (
-            <div className="listing-detail__specs">
-              {listing.specs.map((spec) => (
-                <span key={`${spec.label}${spec.suffix}`}>
-                  <b>{spec.label}</b>
-                  {spec.suffix}
-                </span>
-              ))}
-            </div>
-          )}
+            )}
+          </header>
 
           {listing.description.length > 0 && (
             <div className="listing-detail__description">

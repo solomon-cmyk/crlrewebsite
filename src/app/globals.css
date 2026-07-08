@@ -2601,15 +2601,137 @@ to {
   }
 }
 
-.listings-index__hero,
-.listing-detail__hero {
+.listings-index__hero {
   background: linear-gradient(160deg, var(--forest3) 0%, var(--forest) 100%);
   color: var(--on-dark);
   padding: 120px 0 40px;
 }
 
-.listings-index__home,
+.listing-detail {
+  background: var(--paper);
+  padding-top: 96px;
+}
+
+.listing-detail__top {
+  padding: 0 28px 16px;
+}
+
 .listing-detail__back {
+  display: inline-block;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.listing-detail__back:hover {
+  color: var(--bronze);
+}
+
+.listing-detail__gallery-wrap {
+  padding: 0 28px;
+}
+
+.listing-gallery {
+  margin-bottom: 32px;
+}
+
+.listing-gallery__hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--forest2);
+  aspect-ratio: 16 / 10;
+}
+
+.listing-gallery__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.listing-gallery__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(19, 32, 26, 0.72);
+  color: var(--on-dark);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease;
+}
+
+.listing-gallery__nav:hover {
+  background: rgba(19, 32, 26, 0.9);
+}
+
+.listing-gallery__nav--prev {
+  left: 14px;
+}
+
+.listing-gallery__nav--next {
+  right: 14px;
+}
+
+.listing-gallery__count {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  background: rgba(19, 32, 26, 0.72);
+  color: var(--on-dark);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+}
+
+.listing-gallery__thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.listing-gallery__thumb {
+  flex: 0 0 112px;
+  height: 72px;
+  padding: 0;
+  border: 2px solid transparent;
+  overflow: hidden;
+  background: var(--forest2);
+  cursor: pointer;
+  scroll-snap-align: start;
+  opacity: 0.72;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.listing-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.listing-gallery__thumb:hover,
+.listing-gallery__thumb.is-active {
+  opacity: 1;
+  border-color: var(--bronze);
+}
+
+.listings-index__home,
+.listing-detail__hero .listing-detail__back {
   display: inline-block;
   color: var(--on-dark-mut);
   text-decoration: none;
@@ -2631,47 +2753,42 @@ to {
   flex-wrap: wrap;
   align-items: center;
   gap: 14px;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .listing-detail__price {
   font-family: var(--serif);
-  font-size: 1.6rem;
-  color: var(--on-dark);
+  font-size: 1.5rem;
+  color: var(--ink);
 }
 
 .listing-detail__content {
   padding: 0 28px 64px;
 }
 
-.listing-detail__gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-top: -28px;
+.listing-detail__intro {
+  max-width: 72ch;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
 }
 
-.listing-detail__photo {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--forest2);
+.listing-detail__intro h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 8px 0 0;
 }
 
-.listing-detail__photo:first-child {
-  grid-column: span 2;
-}
-
-.listing-detail__photo img {
-  width: 100%;
-  height: auto;
-  display: block;
+.listing-detail__intro .eyebrow {
+  color: var(--forest2);
 }
 
 .listing-detail__specs {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
-  margin: 24px 0;
+  margin-top: 16px;
   font-size: 0.92rem;
   color: var(--ink-soft);
 }
@@ -2691,7 +2808,7 @@ to {
 
 .listing-detail__description {
   max-width: 72ch;
-  margin: 28px 0;
+  margin: 0 0 28px;
 }
 
 .listing-detail__description p {
@@ -2746,12 +2863,22 @@ to {
     grid-template-columns: 1fr;
   }
 
-  .listing-detail__gallery {
-    grid-template-columns: 1fr;
+  .listing-detail {
+    padding-top: 84px;
   }
 
-  .listing-detail__photo:first-child {
-    grid-column: auto;
+  .listing-gallery__hero {
+    aspect-ratio: 4 / 3;
+  }
+
+  .listing-gallery__nav {
+    width: 38px;
+    height: 38px;
+  }
+
+  .listing-gallery__thumb {
+    flex-basis: 88px;
+    height: 58px;
   }
 
   .listing-detail__features ul {
