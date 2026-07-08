@@ -1,40 +1,40 @@
 export const NAV_LINKS = [
-  { href: "#marave", label: "Maravé" },
-  { href: "#collections", label: "Residences" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#reserve", label: "Reserve" },
+  { href: "/#marave", label: "Maravé" },
+  { href: "/#collections", label: "Residences" },
+  { href: "/#gallery", label: "Gallery" },
+  { href: "/#reserve", label: "Reserve" },
   { href: "/listings", label: "Listings" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ] as const;
 
 export const MARQUEE_ITEMS = [
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg",
+    src: "/media/marave/images/villa-pool.webp",
     alt: "Maravé villa with plunge pool",
     label: "Villa · Plunge Pool",
   },
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20A/H_OC_Interior_CondoA_Living_Day.jpg",
+    src: "/media/marave/images/condo-a-living.webp",
     alt: "Maravé condominium living",
     label: "Condominium · Living",
   },
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_14_Villas%20Day_b.jpg",
+    src: "/media/marave/images/villas-day.webp",
     alt: "Maravé villas exterior",
     label: "The Villas",
   },
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20F/H_OC_Interior_CondoF_Balcony.jpg",
+    src: "/media/marave/images/penthouse-balcony.webp",
     alt: "Maravé penthouse balcony",
     label: "Penthouse · Balcony",
   },
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_05_Beach_Club_Pool_V1_06-2.jpg",
+    src: "/media/marave/images/beach-club-pool.webp",
     alt: "Maravé beach club",
     label: "Beach Club",
   },
   {
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/LXR%20Beach%20Image.webp",
+    src: "/media/marave/images/lxr-beach.webp",
     alt: "Maravé Pacific beachfront",
     label: "Pacific Beachfront",
   },
@@ -60,7 +60,7 @@ export const COLLECTIONS = [
     kind: "46 Residences",
     title: "Condominiums",
     image:
-      "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20A/H_OC_Interior_CondoA_Living_Day.jpg",
+      "/media/marave/images/condo-a-living.webp",
     alt: "Maravé condominium",
     specs: [
       { label: "1 to 3", suffix: " bed" },
@@ -74,7 +74,7 @@ export const COLLECTIONS = [
     kind: "66 Estates",
     title: "The Villas",
     image:
-      "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg",
+      "/media/marave/images/villa-pool.webp",
     alt: "Maravé villa",
     specs: [
       { label: "4,000+", suffix: " sq ft" },
@@ -88,7 +88,7 @@ export const COLLECTIONS = [
     kind: "Only 4 Available",
     title: "Penthouses",
     image:
-      "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20F/H_OC_Interior_CondoF_Balcony.jpg",
+      "/media/marave/images/penthouse-balcony.webp",
     alt: "Maravé penthouse",
     specs: [
       { label: "4,000+", suffix: " sq ft" },
@@ -141,39 +141,39 @@ export type GalleryItem = {
 
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_17_Aerial_03.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_17_Aerial_03.jpg",
+    href: "/media/marave/images/aerial-estate.webp",
+    src: "/media/marave/images/aerial-estate.webp",
     alt: "Aerial estate",
     label: "Aerial Estate",
     hero: true,
   },
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20A/H_OC_Interior_CondoA_Living_Day.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20A/H_OC_Interior_CondoA_Living_Day.jpg",
+    href: "/media/marave/images/condo-a-living.webp",
+    src: "/media/marave/images/condo-a-living.webp",
     alt: "Condominium living",
     label: "Condo · Living",
   },
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20F/H_OC_Interior_CondoF_Balcony.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20F/H_OC_Interior_CondoF_Balcony.jpg",
+    href: "/media/marave/images/penthouse-balcony.webp",
+    src: "/media/marave/images/penthouse-balcony.webp",
     alt: "Penthouse balcony",
     label: "Penthouse · Balcony",
   },
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg",
+    href: "/media/marave/images/villa-pool.webp",
+    src: "/media/marave/images/villa-pool.webp",
     alt: "Villa plunge pool",
     label: "Villa · Plunge Pool",
   },
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_05_Beach_Club_Pool_V1_06-2.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_05_Beach_Club_Pool_V1_06-2.jpg",
+    href: "/media/marave/images/beach-club-pool.webp",
+    src: "/media/marave/images/beach-club-pool.webp",
     alt: "Beach club",
     label: "Beach Club",
   },
   {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/LXR%20Beach%20Image.webp",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/LXR%20Beach%20Image.webp",
+    href: "/media/marave/images/lxr-beach.webp",
+    src: "/media/marave/images/lxr-beach.webp",
     alt: "Pacific beachfront",
     label: "Pacific Beachfront",
   },
@@ -209,14 +209,14 @@ export const OWNERSHIP_INCLUDES = [
 export const TEAM = [
   {
     href: "https://crlre.com/agents/mark-dalton-2/",
-    image: "https://crlre.com/wp-content/uploads/MARK.png",
+    image: "/listings/uploads/MARK.webp",
     name: "Mark Dalton",
     role: "Founder · Developer",
     bio: "Owner of Costa Rica Luxury Real Estate and developer of Maravé, with 35+ years in real estate.",
   },
   {
     href: "https://crlre.com/agents/gladis-b-galindo-2/",
-    image: "https://crlre.com/wp-content/uploads/GLADIS.png",
+    image: "/listings/uploads/GLADIS.webp",
     name: "Gladis B. Galindo",
     role: "Advisor · Attorney",
     bio: "A registered lawyer based in Costa Rica, with deep knowledge of property and administrative law.",

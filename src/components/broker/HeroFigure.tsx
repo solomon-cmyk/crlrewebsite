@@ -34,7 +34,7 @@ export function HeroFigure() {
   return (
     <div className="hero-figure reveal hero-figure--motion" ref={figureRef}>
       <Image
-        src="https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_14_Villas%20Day_b.jpg"
+        src="/media/marave/images/villas-day.webp"
         alt="Maravé Resort & Residences, Manuel Antonio"
         width={900}
         height={540}

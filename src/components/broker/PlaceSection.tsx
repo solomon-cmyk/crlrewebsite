@@ -7,7 +7,7 @@ export function PlaceSection() {
       <div className="wrap place-grid">
         <div className="place-figure reveal">
           <Image
-            src="https://www.maraveresidences.com/Marave%20Final%20Renders/Extra%20Images/Manuel%20Antonio%20Park.jpg"
+            src="/media/marave/images/manuel-antonio-park.webp"
             alt="Manuel Antonio National Park"
             width={800}
             height={540}

@@ -36,17 +36,23 @@ export function SiteNav() {
         <div className="wrap nav-inner">
           <BrandLogo onClick={closeMenu} compact={scrolled || menuOpen} />
           <nav className={`links${menuOpen ? " open" : ""}`} id="links" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} onClick={closeMenu}>
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.href.startsWith("/") ? (
+                <Link key={link.href} href={link.href} onClick={closeMenu}>
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} onClick={closeMenu}>
+                  {link.label}
+                </a>
+              )
+            )}
             <Link href="/blog" onClick={closeMenu}>
               Blog
             </Link>
-            <a href="#contact" className="btn btn-ghost nav-contact" onClick={closeMenu}>
+            <Link href="/#contact" className="btn btn-ghost nav-contact" onClick={closeMenu}>
               Contact
-            </a>
+            </Link>
           </nav>
           <button
             type="button"

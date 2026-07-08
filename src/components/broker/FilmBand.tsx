@@ -2,10 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const VIDEO_SRC =
-  "https://www.maraveresidences.com/Marave%20Final%20Renders/videos/residences-hero.mp4";
-const POSTER_SRC =
-  "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg";
+const VIDEO_SRC = "/media/marave/videos/residences-hero.mp4";
+const POSTER_SRC = "/media/marave/images/villa-pool.webp";
 
 export function FilmBand() {
   const wrapRef = useRef<HTMLDivElement>(null);
