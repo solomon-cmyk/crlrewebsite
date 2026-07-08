@@ -2,6 +2,8 @@
 
 import { COLLECTION_OPTIONS } from "@/lib/broker-content";
 import { CONTACT } from "@/lib/contact";
+import { TCPA_CONSENT_LABEL, TCPA_CONSENT_NOTE } from "@/lib/legal/consent";
+import Link from "next/link";
 import {
   createContext,
   useCallback,
@@ -32,7 +34,6 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [intent, setIntent] = useState<LeadIntent>("info");
   const [submitted, setSubmitted] = useState(false);
-  const [autoShows, setAutoShows] = useState(0);
 
   const openModal = useCallback((nextIntent: LeadIntent = "info") => {
     setIntent(nextIntent);
@@ -43,18 +44,6 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
   const closeModal = useCallback(() => {
     setOpen(false);
   }, []);
-
-  useEffect(() => {
-    if (submitted || autoShows >= 3) return;
-    const delay = autoShows === 0 ? 22000 : 95000;
-    const timer = window.setTimeout(() => {
-      if (!open) {
-        setAutoShows((count) => count + 1);
-        openModal("info");
-      }
-    }, delay);
-    return () => window.clearTimeout(timer);
-  }, [autoShows, open, openModal, submitted]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -75,11 +64,12 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
     const phone = String(data.get("phone") ?? "");
     const collection = String(data.get("collection") ?? "");
     const message = String(data.get("message") ?? "");
+    const tcpaConsent = data.get("tcpaConsent") === "on";
     const subject = encodeURIComponent(
       `${intent === "reserve" ? "Maravé Reservation Request" : "Maravé Information Request"} | ${name}`
     );
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nCollection: ${collection}\nIntent: ${intent === "reserve" ? "Reservation Agreement" : "More Information"}\n\n${message}`
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nCollection: ${collection}\nIntent: ${intent === "reserve" ? "Reservation Agreement" : "More Information"}\nTCPA Consent: ${tcpaConsent ? "Yes" : "No"}\n\n${message}`
     );
     window.location.href = `mailto:${CONTACT.emailMarave}?subject=${subject}&body=${body}`;
     setSubmitted(true);
@@ -117,8 +107,8 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
             </h3>
             <p id="modalSub">
               {intent === "reserve"
-                ? "Begin your $10,000 reservation to lock your unit and today's price. Mark will send the documents."
-                : "Tell us a little about what you're looking for and Mark will reach out personally."}
+                ? "Begin your $10,000 reservation to lock your unit and today's price. Mark will send the documents personally."
+                : "Tell us what you are looking for and Mark will follow up directly."}
             </p>
           </div>
           <div className="modal-body">
@@ -152,15 +142,22 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
                 <form id="leadForm" onSubmit={onSubmit}>
                   <div className="field">
                     <label htmlFor="lf-name">Full name</label>
-                    <input id="lf-name" name="name" type="text" required />
+                    <input id="lf-name" name="name" type="text" autoComplete="name" required />
                   </div>
                   <div className="field">
                     <label htmlFor="lf-email">Email</label>
-                    <input id="lf-email" name="email" type="email" required />
+                    <input id="lf-email" name="email" type="email" autoComplete="email" required />
                   </div>
                   <div className="field">
                     <label htmlFor="lf-phone">Phone</label>
-                    <input id="lf-phone" name="phone" type="tel" />
+                    <input
+                      id="lf-phone"
+                      name="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      required
+                    />
                   </div>
                   <div className="field">
                     <label htmlFor="lf-collection">Collection of interest</label>
@@ -172,7 +169,17 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
                   </div>
                   <div className="field">
                     <label htmlFor="lf-msg">Anything else?</label>
-                    <textarea id="lf-msg" name="message" />
+                    <textarea id="lf-msg" name="message" rows={3} />
+                  </div>
+                  <div className="field field--consent">
+                    <label className="consent-label" htmlFor="lf-tcpa">
+                      <input id="lf-tcpa" name="tcpaConsent" type="checkbox" required />
+                      <span>{TCPA_CONSENT_LABEL}</span>
+                    </label>
+                    <p className="consent-note">
+                      {TCPA_CONSENT_NOTE}{" "}
+                      <Link href="/privacy#communications-consent">Privacy Policy</Link>.
+                    </p>
                   </div>
                   <button type="submit" className="btn btn-bronze modal-submit">
                     {intent === "reserve" ? "Request reservation →" : "Send to Mark →"}

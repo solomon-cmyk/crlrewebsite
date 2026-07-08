@@ -15,8 +15,8 @@ export function ContactSection() {
           Claim your place <em>before</em> the world reads about it.
         </h2>
         <p>
-          Request the full Maravé package, pricing, floor plans, and ownership details, or start
-          your reservation today.
+          Mark works directly with buyers on Maravé reservations, pricing, floor plans, and
+          ownership details. Reach out when you are ready to move from research to a conversation.
         </p>
         <div className="contact-rows">
           <button type="button" className="btn btn-bronze" onClick={() => openModal("reserve")}>

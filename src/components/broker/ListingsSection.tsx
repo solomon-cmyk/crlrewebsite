@@ -13,8 +13,8 @@ export function ListingsSection() {
             Exclusive <em>listings</em>
           </h2>
           <p>
-            Beyond Maravé, a selection of our exclusive homes across Manuel Antonio and the Southern
-            Pacific coast.
+            Beyond Maravé, explore exclusive homes, land, and new construction across Manuel
+            Antonio, Uvita, and the Southern Pacific coast.
           </p>
         </div>
         <div className="grid">

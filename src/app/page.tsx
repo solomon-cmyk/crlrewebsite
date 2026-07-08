@@ -4,6 +4,7 @@ import { BrokerGallery } from "@/components/broker/BrokerGallery";
 import { BrokerHero } from "@/components/broker/BrokerHero";
 import { CollectionsSection } from "@/components/broker/CollectionsSection";
 import { ContactSection } from "@/components/broker/ContactSection";
+import { CredibilityStrip } from "@/components/broker/CredibilityStrip";
 import { FilmBand } from "@/components/broker/FilmBand";
 import { FinishesSection } from "@/components/broker/FinishesSection";
 import { LeadModalProvider } from "@/components/broker/LeadModal";
@@ -32,6 +33,7 @@ export default function Home() {
           <BrokerGallery />
           <ReserveSection />
           <ListingsSection />
+          <CredibilityStrip />
           <TeamSection />
           <BlogPreview />
           <ContactSection />

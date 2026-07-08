@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FOOTER_DISCLAIMER } from "@/lib/broker-content";
 import { CONTACT } from "@/lib/contact";
+import { LOGOS } from "@/lib/assets";
 import { LEGAL_LINKS } from "@/lib/site";
 import { ManageCookiesButton } from "@/components/ManageCookiesButton";
 
@@ -10,7 +12,13 @@ export function BrokerFooter() {
       <div className="wrap">
         <div className="foot-top">
           <div className="foot-brand">
-            <span className="name">Costa Rica Luxury Real Estate</span>
+            <Image
+              src={LOGOS.crlreWordmark}
+              alt="Costa Rica Luxury Real Estate"
+              width={900}
+              height={220}
+              className="foot-logo"
+            />
             <p>
               Developer & exclusive representative of Maravé, Resort & Residences · Manuel Antonio,
               Costa Rica. Pura vida.

@@ -202,7 +202,7 @@ export const RESERVE_STEPS = [
   },
   {
     title: "Receive the documents",
-    body: "The full package: Sales & Purchase Agreement and all project documentation.",
+    body: "The full package includes the Sales & Purchase Agreement and supporting project documentation.",
   },
   {
     title: "Review & due diligence",
@@ -323,6 +323,24 @@ export const TEAM = [
     name: "Gladis B. Galindo",
     role: "Advisor · Attorney",
     bio: "A registered lawyer based in Costa Rica, with deep knowledge of property and administrative law.",
+  },
+] as const;
+
+export const CREDIBILITY_POINTS = [
+  {
+    title: "Developer and broker in one",
+    detail:
+      "Costa Rica Luxury Real Estate develops Maravé and represents it exclusively, so you speak with the team behind the project from day one.",
+  },
+  {
+    title: "Decades on the coast",
+    detail:
+      "Mark Dalton brings more than 35 years of development and sales experience across Costa Rica's most sought-after Pacific addresses.",
+  },
+  {
+    title: "Beyond a single project",
+    detail:
+      "CRLRE also curates exclusive estates, land, and new construction from Manuel Antonio to Uvita when you want context beyond Maravé.",
   },
 ] as const;
 

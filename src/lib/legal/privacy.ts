@@ -1,4 +1,5 @@
 import type { LegalSection } from "@/components/LegalPageShell";
+import { TCPA_PRIVACY_SUMMARY } from "@/lib/legal/consent";
 import { SITE } from "@/lib/site";
 
 export const privacySections: LegalSection[] = [
@@ -17,9 +18,10 @@ export const privacySections: LegalSection[] = [
       "Depending on how you use the Site, we may process the following categories of information:",
     ],
     list: [
+      "Inquiry information you choose to provide, such as your name, email address, phone number, collection preference, and message content when you submit a contact or reservation request.",
       "Usage and device data, such as pages viewed, referring URL, browser type, approximate location derived from IP address, and timestamps. This data is collected through analytics tools only if you consent to analytics cookies.",
       "Cookie and consent records, including your cookie preference selection and the date you made it. This is stored locally in your browser and may also be reflected in essential server logs.",
-      "Information you choose to send us outside the Site, such as the content of an email or phone call if you contact our sales team directly.",
+      "Information you choose to send us outside the Site, such as the content of a direct email or phone call.",
     ],
   },
   {
@@ -31,15 +33,26 @@ export const privacySections: LegalSection[] = [
     list: [
       "Operating, securing, and maintaining the Site.",
       "Understanding aggregate traffic patterns so we can improve content and performance.",
-      "Responding to inquiries you initiate by email or phone.",
+      "Responding to inquiries you initiate by form, email, phone, or text.",
+      "Following up about Maravé, listings, reservations, and related brokerage services you ask about.",
       "Complying with applicable law, regulatory requests, and brokerage record-keeping obligations.",
+    ],
+  },
+  {
+    id: "communications-consent",
+    title: "Communications and TCPA consent",
+    paragraphs: [
+      TCPA_PRIVACY_SUMMARY,
+      "If you submit an inquiry through the Site, you may be asked to provide express written consent to receive calls and text messages from Costa Rica Luxury Real Estate and Mark Dalton at the phone number you provide, including through automated technology or prerecorded messages, about Maravé, listings, reservations, and related real estate services.",
+      "Consent is not required to purchase property. You may revoke consent at any time by emailing mark@crlre.com, calling the phone numbers listed on the Site, or replying STOP to any text message you receive from us.",
+      "Message frequency varies. Message and data rates may apply. Carriers are not liable for delayed or undelivered messages.",
     ],
   },
   {
     id: "legal-bases",
     title: "Legal bases for processing",
     paragraphs: [
-      "Where applicable privacy laws require a legal basis, we rely on one or more of the following: your consent (for analytics cookies), our legitimate interests in operating and improving the Site, and compliance with legal obligations.",
+      "Where applicable privacy laws require a legal basis, we rely on one or more of the following: your consent (for analytics cookies and certain communications), our legitimate interests in operating and improving the Site and responding to inquiries, and compliance with legal obligations.",
     ],
   },
   {
@@ -54,7 +67,7 @@ export const privacySections: LegalSection[] = [
     id: "retention",
     title: "Data retention",
     paragraphs: [
-      "Analytics data retention is governed by our analytics provider's settings. Cookie consent choices remain in your browser until you clear site data or reset your preferences using the footer control. Communications you send us directly are retained according to our brokerage record-keeping policies.",
+      "Analytics data retention is governed by our analytics provider's settings. Cookie consent choices remain in your browser until you clear site data or reset your preferences using the footer control. Inquiry and communication records are retained according to our brokerage record-keeping policies and applicable law.",
     ],
   },
   {
@@ -70,7 +83,7 @@ export const privacySections: LegalSection[] = [
     paragraphs: [
       "Depending on where you live, you may have rights to access, correct, delete, or restrict certain processing of your personal information, and to withdraw consent where processing is consent-based.",
       "California residents may have additional rights under the California Consumer Privacy Act, as amended, including the right to know what categories of information are collected and the right to opt out of sale or sharing. We do not sell or share personal information for cross-context behavioral advertising.",
-      "To exercise privacy rights, contact us using the details below. We may need to verify your request before responding.",
+      "To exercise privacy rights or opt out of marketing communications, contact us using the details below. We may need to verify your request before responding.",
     ],
   },
   {

@@ -4,8 +4,10 @@ export const IMAGES = {
 } as const;
 
 export const LOGOS = {
-  horizontalWhite: "/logos/marave-logo-horizontal-white.png",
-  monogram: "/logos/marave-monogram.svg",
+  crlreWordmark: "/logos/crlre-wordmark.png",
+  crlreMonogram: "/logos/crlre-monogram.svg",
+  maraveHorizontalWhite: "/logos/marave-logo-horizontal-white.png",
+  monogram: "/logos/crlre-monogram.svg",
 } as const;
 
 export const SITE_URL = "https://crlre.com";

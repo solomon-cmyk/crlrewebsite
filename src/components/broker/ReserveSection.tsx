@@ -17,8 +17,8 @@ export function ReserveSection() {
           </h2>
           <p>
             Pre-construction pricing and the best selection exist only in this earliest phase. As
-            Maravé advances toward construction and its worldwide launch, pricing rises and choice
-            narrows. Reserving now protects your unit and today&apos;s price.
+            Maravé moves toward construction and its global launch, pricing rises and choice narrows.
+            A reservation now protects your unit and today&apos;s price.
           </p>
         </div>
         <div className="res-cols">
