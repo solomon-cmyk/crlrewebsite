@@ -67,8 +67,12 @@ export function normalizeSoroPayload(payload: SoroPublishPayload): BlogPost {
   };
 }
 
+function hasBlobStorage(): boolean {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
+}
+
 async function getSoroPosts(): Promise<BlogPost[]> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) return [];
+  if (!hasBlobStorage()) return [];
 
   try {
     const { blobs } = await list({ prefix: BLOG_BLOB_PREFIX });
@@ -109,8 +113,8 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefi
 }
 
 export async function saveSoroBlogPost(post: BlogPost): Promise<void> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error("BLOB_READ_WRITE_TOKEN is not configured");
+  if (!hasBlobStorage()) {
+    throw new Error("Blob storage is not configured. Link a Blob store to this Vercel project.");
   }
 
   await put(`${BLOG_BLOB_PREFIX}${post.slug}.json`, JSON.stringify(post), {

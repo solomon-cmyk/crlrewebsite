@@ -24,7 +24,7 @@ Blob storage cannot be created through the Vercel CLI. Use the dashboard:
 1. Open the Vercel project `crlrewebsite`.
 2. Go to **Storage** → **Create** → **Blob**.
 3. Link the Blob store to the project.
-4. Confirm `BLOB_READ_WRITE_TOKEN` appears in project environment variables.
+4. Confirm `BLOB_STORE_ID` (or `BLOB_READ_WRITE_TOKEN`) appears in project environment variables.
 5. Redeploy.
 
 ### 2. Webhook secret
@@ -116,7 +116,7 @@ Add articles to `src/lib/blog/posts.ts` and redeploy. Soro posts and static post
 | Issue | Fix |
 |-------|-----|
 | 503 SORO_WEBHOOK_SECRET not configured | Add env var in Vercel and redeploy |
-| 503 BLOB_READ_WRITE_TOKEN | Create and link Vercel Blob store |
+| 503 Blob storage not configured | Link a Vercel Blob store to the project and redeploy |
 | 401 Unauthorized | Match secret in Soro and Vercel exactly |
 | Post saved but not visible | Wait up to 5 minutes for ISR, or redeploy |
 
