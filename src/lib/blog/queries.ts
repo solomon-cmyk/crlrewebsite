@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { get, list, put } from "@vercel/blob";
 import { staticBlogPosts, BLOG_BLOB_PREFIX } from "./posts";
 import type { BlogPost, BlogSection, SoroPublishPayload } from "./types";
 
@@ -78,9 +78,10 @@ async function getSoroPosts(): Promise<BlogPost[]> {
     const { blobs } = await list({ prefix: BLOG_BLOB_PREFIX });
     const posts = await Promise.all(
       blobs.map(async (blob) => {
-        const response = await fetch(blob.url, { next: { revalidate: 300 } });
-        if (!response.ok) return null;
-        return (await response.json()) as BlogPost;
+        const result = await get(blob.pathname, { access: "private" });
+        if (!result || result.statusCode !== 200) return null;
+        const raw = await new Response(result.stream).text();
+        return JSON.parse(raw) as BlogPost;
       })
     );
 
@@ -118,7 +119,7 @@ export async function saveSoroBlogPost(post: BlogPost): Promise<void> {
   }
 
   await put(`${BLOG_BLOB_PREFIX}${post.slug}.json`, JSON.stringify(post), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
