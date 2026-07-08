@@ -35,7 +35,7 @@ export default function ListingsIndexPage() {
       />
       <SiteNav />
       <div className="listings-index">
-        <header className="listings-index__hero">
+        <header className="listings-index__hero listings-index__hero--compact">
           <div className="wrap">
             <Link href="/" className="listings-index__home">
               Back to home
@@ -45,13 +45,12 @@ export default function ListingsIndexPage() {
               Exclusive <em>listings</em>
             </h1>
             <p className="listings-index__intro">
-              {activeCount} active properties across Manuel Antonio, Uvita, Dominical, Quepos, and
-              the Southern Pacific coast, curated by Mark Dalton and Costa Rica Luxury Real Estate.
+              {activeCount} active properties · Manuel Antonio, Uvita, Dominical &amp; the Pacific coast
             </p>
           </div>
         </header>
-        <div className="wrap listings-index__grid">
-          <div className="grid">
+        <div className="wrap listings-index__grid listings-index__grid--compact">
+          <div className="grid listings-grid">
             {listings.map((listing) => (
               <ListingCard key={listing.slug} listing={listing} className="card" />
             ))}

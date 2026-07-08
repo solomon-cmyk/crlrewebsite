@@ -1,4 +1,6 @@
 import { BrokerFooter } from "@/components/broker/BrokerFooter";
+import { ListingDescription } from "@/components/broker/ListingDescription";
+import { ListingFeatures } from "@/components/broker/ListingFeatures";
 import { ListingGallery } from "@/components/broker/ListingGallery";
 import { SiteNav } from "@/components/broker/SiteNav";
 import { getAllListings, getListingBySlug } from "@/lib/listings";
@@ -59,62 +61,43 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
       />
       <SiteNav />
       <div className="listing-detail">
-        <div className="wrap listing-detail__top">
-          <Link href="/listings" className="listing-detail__back">
-            ← All listings
-          </Link>
-        </div>
+        <div className="wrap listing-detail__layout">
+          <div className="listing-detail__media">
+            <Link href="/listings" className="listing-detail__back">
+              ← All listings
+            </Link>
+            <ListingGallery images={gallery} title={listing.title} />
+          </div>
 
-        <div className="wrap listing-detail__gallery-wrap">
-          <ListingGallery images={gallery} title={listing.title} />
-        </div>
-
-        <div className="wrap listing-detail__content">
-          <header className="listing-detail__intro">
-            <p className="eyebrow">{listing.location}</p>
-            <h1>{listing.title}</h1>
-            <div className="listing-detail__meta">
-              <span className={`tag${listing.sold ? " tag--sold" : ""}`}>{listing.tag}</span>
-              <span className="listing-detail__price">{listing.price}</span>
-            </div>
-            {listing.specs.length > 0 && (
-              <div className="listing-detail__specs">
-                {listing.specs.map((spec) => (
-                  <span key={`${spec.label}${spec.suffix}`}>
-                    <b>{spec.label}</b>
-                    {spec.suffix}
-                  </span>
-                ))}
+          <div className="listing-detail__panel">
+            <header className="listing-detail__intro">
+              <p className="eyebrow">{listing.location}</p>
+              <h1>{listing.title}</h1>
+              <div className="listing-detail__meta">
+                <span className={`tag${listing.sold ? " tag--sold" : ""}`}>{listing.tag}</span>
+                <span className="listing-detail__price">{listing.price}</span>
               </div>
-            )}
-          </header>
+              {listing.specs.length > 0 && (
+                <div className="listing-detail__specs">
+                  {listing.specs.map((spec) => (
+                    <span key={`${spec.label}${spec.suffix}`}>
+                      <b>{spec.label}</b>
+                      {spec.suffix}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </header>
 
-          {listing.description.length > 0 && (
-            <div className="listing-detail__description">
-              {listing.description.map((paragraph) => (
-                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-              ))}
+            <ListingDescription paragraphs={listing.description} />
+
+            <ListingFeatures features={listing.features} />
+
+            <div className="listing-detail__actions">
+              <Link href="/#contact" className="btn btn-bronze">
+                Contact Mark →
+              </Link>
             </div>
-          )}
-
-          {listing.features.length > 0 && (
-            <div className="listing-detail__features">
-              <h2>Property features</h2>
-              <ul>
-                {listing.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="listing-detail__actions">
-            <Link href="/#contact" className="btn btn-bronze">
-              Contact Mark about this property →
-            </Link>
-            <Link href="/listings" className="btn btn-line">
-              Back to all listings
-            </Link>
           </div>
         </div>
 
