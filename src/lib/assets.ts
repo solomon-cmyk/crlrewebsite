@@ -6,8 +6,6 @@ export const IMAGES = {
 export const LOGOS = {
   horizontalWhite: "/logos/marave-logo-horizontal-white.png",
   monogram: "/logos/marave-monogram.svg",
-  pppWhite: "/logos/ppp-logo-white.svg",
-  pppBlack: "/logos/ppp-logo-black.svg",
 } as const;
 
 export const SITE_URL = "https://crlre.com";

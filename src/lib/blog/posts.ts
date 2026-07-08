@@ -24,7 +24,7 @@ export const staticBlogPosts: BlogPost[] = [
         heading: "What branded ownership means here",
         paragraphs: [
           "You are buying a specific residence, not a hotel room with a deed attached. Branded residence ownership comes with design standards, program rules, and optional hotel management if you choose to enroll later.",
-          "At Maravé, that can mean ocean-view condos, villas with private plunge pools, or one of only four penthouses. Buyers who want clarity early should separate the home decision from any future rental conversation.",
+          "At Maravé, that can mean ocean-view condos, villas with private plunge pools, or one of only four penthouses. Buyers who want clarity early should separate the home decision from any future hotel-use conversation.",
         ],
       },
       {
@@ -55,7 +55,7 @@ export const staticBlogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: "how-marave-rental-program-split-works",
+    slug: "how-marave-pre-construction-reservations-work",
     title: "How Maravé Pre-Construction Reservations Work",
     description:
       "The step-by-step path to reserving a Maravé residence, from the $10,000 deposit to escrow and due diligence.",
@@ -135,7 +135,7 @@ export const staticBlogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: "lxr-residences-personal-use-rules",
+    slug: "what-the-lxr-flag-brings-to-marave-owners",
     title: "What the LXR Flag Brings to Maravé Owners",
     description:
       "Why Hilton's LXR collection matters for Maravé buyers, from design standards to Honors status and managed operations.",
@@ -163,15 +163,15 @@ export const staticBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "Managed operations, optional rental enrollment",
+        heading: "Managed operations and optional hotel services",
         paragraphs: [
-          "Remington Hospitality is identified in project materials as the operator, with Hilton engaged on HOA management. Rental enrollment remains optional and should be evaluated separately from the decision to own the residence itself.",
+          "Remington Hospitality is identified in project materials as the operator, with Hilton engaged on HOA management. Optional hotel services can be evaluated separately from the decision to own the residence itself.",
         ],
       },
     ],
   },
   {
-    slug: "marave-owner-carrying-costs-explained",
+    slug: "manuel-antonio-luxury-homes-how-to-compare",
     title: "Manuel Antonio Luxury Homes: How to Compare Your Options",
     description:
       "How to evaluate Maravé against other premium listings on Costa Rica's Pacific coast without losing sight of total ownership.",
@@ -208,7 +208,7 @@ export const staticBlogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: "voluntary-rental-program-worth-it",
+    slug: "why-early-buyers-are-looking-at-marave",
     title: "Why Early Buyers Are Looking at Maravé Now",
     description:
       "What is driving pre-construction interest in Maravé, from first-release pricing to the rarity of the LXR flag in Manuel Antonio.",

@@ -56,7 +56,7 @@ curl -X POST https://crlre.com/api/soro/publish \
     "slug": "test-article-from-soro",
     "description": "Short meta description for SEO.",
     "body": "First paragraph.\n\nSecond paragraph.",
-    "tags": ["Maravé", "rental program"],
+    "tags": ["Maravé", "Costa Rica luxury real estate"],
     "category": "Insights"
   }'
 ```

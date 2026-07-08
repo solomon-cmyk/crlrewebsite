@@ -216,7 +216,7 @@ export const RESERVE_STEPS = [
 
 export const OWNERSHIP_INCLUDES = [
   "Hilton Honors Diamond Status for ownership",
-  "Optional managed rental program",
+  "Optional Hilton-managed guest services",
   "Operated & managed by Remington Hospitality",
   "Hilton as the HOA management company",
   "Full LXR branding, standards & five-star furnishing",
@@ -327,7 +327,7 @@ export const TEAM = [
 ] as const;
 
 export const FOOTER_DISCLAIMER =
-  'Pricing, square footage, projected values, occupancy figures, and rental terms are estimates provided for informational purposes only, are subject to change, and are not a guarantee of future value or investment return. Renderings are artist\'s impressions. This is not an offer to sell or a solicitation to buy where prohibited. "LXR Hotels & Resorts" is a registered trademark of an affiliate of Hilton Worldwide Holdings Inc. ("Hilton"). The residences described herein are not owned, developed, or sold by Hilton, and Hilton makes no representations or warranties with respect to the residences. The developer uses the LXR brand under a limited, non-exclusive, non-transferable license that may be terminated or expire without renewal.';
+  'Pricing, square footage, projected values, and availability are estimates provided for informational purposes only, are subject to change, and are not a guarantee of future value or investment return. Renderings are artist\'s impressions. This is not an offer to sell or a solicitation to buy where prohibited. "LXR Hotels & Resorts" is a registered trademark of an affiliate of Hilton Worldwide Holdings Inc. ("Hilton"). The residences described herein are not owned, developed, or sold by Hilton, and Hilton makes no representations or warranties with respect to the residences. The developer uses the LXR brand under a limited, non-exclusive, non-transferable license that may be terminated or expire without renewal.';
 
 export const COLLECTION_OPTIONS = [
   "No preference yet",
