@@ -82,16 +82,13 @@ export function organizationJsonLd() {
     "@type": "RealEstateAgent",
     name: SITE.publisher,
     url: SITE_URL,
-    logo: `${SITE_URL}/logos/ppp-logo-white.svg`,
-    telephone: CONTACT.phone,
-    email: CONTACT.email,
+    telephone: [CONTACT.phoneCr, CONTACT.phoneUs],
+    email: [CONTACT.emailMarave, CONTACT.emailCrlre],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "18300 W Dixie Hwy",
-      addressLocality: "Miami",
-      addressRegion: "FL",
-      postalCode: "33160",
-      addressCountry: "US",
+      addressLocality: "Manuel Antonio",
+      addressRegion: "Puntarenas",
+      addressCountry: "CR",
     },
     areaServed: ["Manuel Antonio, Costa Rica", "Quepos, Costa Rica", "United States"],
   };
@@ -104,7 +101,7 @@ export function websiteJsonLd() {
     name: SITE.productName,
     url: SITE_URL,
     description:
-      "Maravé LXR Residences rental program guide, owner FAQ, and net proceeds estimator for crlre.com.",
+      "Costa Rica Luxury Real Estate is the developer and exclusive representative of Maravé LXR-branded residences in Manuel Antonio, plus exclusive Pacific coast listings.",
     publisher: {
       "@type": "Organization",
       name: SITE.publisher,

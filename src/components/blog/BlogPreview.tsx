@@ -10,10 +10,11 @@ export function BlogPreview() {
       <div className="wrap">
         <div className="sec-head">
           <div className="eyebrow">Owner Insights</div>
-          <h2>Guides for buyers researching Maravé</h2>
+          <h2>Guides for buyers exploring Maravé and CRLRE listings</h2>
           <p>
-            Short, practical articles on the rental program, owner economics, and buying in Manuel
-            Antonio. Each post links back to the main guide and calculator.
+            Short, practical articles on branded residences, Manuel Antonio, and luxury buying on
+            Costa Rica&apos;s Pacific coast. Each post links back to reservations and contact on
+            the main site.
           </p>
         </div>
         <div className="blog-preview__grid">

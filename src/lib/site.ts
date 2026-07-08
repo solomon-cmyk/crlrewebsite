@@ -5,14 +5,12 @@ export const SITE = {
   name: "CRLE",
   domain: "crlre.com",
   url: SITE_URL,
-  productName: "Maravé LXR Rental Program Guide",
+  productName: "Costa Rica Luxury Real Estate · Maravé Resort & Residences",
   publisher: CONTACT.company,
   lastUpdated: "July 7, 2026",
-  contactEmail: CONTACT.email,
-  contactPhone: CONTACT.phone,
+  contactEmail: CONTACT.emailCrlre,
+  contactPhone: CONTACT.phoneUs,
   address: CONTACT.address,
-  license: CONTACT.license,
-  brokerage: CONTACT.brokerage,
 } as const;
 
 export const LEGAL_LINKS = [

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Fraunces } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 import { ConsentAnalytics } from "@/components/ConsentAnalytics";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookieConsentProvider } from "@/components/CookieConsentProvider";
@@ -7,17 +7,19 @@ import { IMAGES, SITE_URL } from "@/lib/assets";
 import { organizationJsonLd, jsonLdScript, websiteJsonLd } from "@/lib/seo/jsonld";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-display",
   display: "swap",
-  axes: ["opsz"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const archivo = Archivo({
+const jost = Jost({
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-body",
   display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL;
@@ -25,48 +27,47 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Maravé LXR · Rental Program Guide & Net Proceeds Estimator",
-    template: "%s · Maravé LXR",
+    default: "Costa Rica Luxury Real Estate · Maravé Resort & Residences, Manuel Antonio",
+    template: "%s · Costa Rica Luxury Real Estate",
   },
   description:
-    "A clear walk-through of the Maravé Rental Program: revenue split, reserve, personal use rights, and illustrative net proceeds estimates for owners.",
+    "Costa Rica Luxury Real Estate is the developer and exclusive representative of Maravé LXR-branded residences in Manuel Antonio, plus exclusive Pacific coast listings.",
   keywords: [
+    "Costa Rica luxury real estate",
+    "Manuel Antonio real estate",
     "Maravé LXR Residences",
-    "Maravé rental program",
-    "Manuel Antonio branded residences",
-    "Costa Rica branded residence",
-    "LXR Residences rental income",
-    "net proceeds estimator",
-    "Property Pro Partners",
+    "LXR branded residences Costa Rica",
+    "Costa Rica Luxury Real Estate",
     "crlre.com",
+    "Maravé pre-construction",
   ],
   alternates: {
     canonical: "/",
     types: {
-      "application/rss+xml": [{ url: "/feed.xml", title: "Maravé LXR Blog RSS" }],
+      "application/rss+xml": [{ url: "/feed.xml", title: "CRLRE Blog RSS" }],
     },
   },
   openGraph: {
-    title: "Maravé LXR · Rental Program Guide",
+    title: "Costa Rica Luxury Real Estate · Maravé Resort & Residences",
     description:
-      "See where every rental dollar actually goes. Illustrative estimates only, not projections or guarantees.",
+      "116 LXR-branded residences in Manuel Antonio. Pre-construction reservations and exclusive Costa Rica listings.",
     type: "website",
-    siteName: "Maravé LXR Residences",
+    siteName: "Costa Rica Luxury Real Estate",
     locale: "en_US",
     images: [
       {
         url: IMAGES.og,
         width: 1200,
         height: 630,
-        alt: "Aerial rendering of Maravé at sunset overlooking the Pacific Ocean",
+        alt: "Maravé Resort & Residences overlooking the Pacific",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maravé LXR · Rental Program Guide",
+    title: "Costa Rica Luxury Real Estate · Maravé",
     description:
-      "See where every rental dollar actually goes. Illustrative estimates only, not projections or guarantees.",
+      "116 LXR-branded residences in Manuel Antonio. Pre-construction reservations and exclusive Costa Rica listings.",
     images: [IMAGES.og],
   },
   robots: {
@@ -90,9 +91,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="alternate" type="application/rss+xml" title="Maravé LXR Blog" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="CRLRE Blog" href="/feed.xml" />
       </head>
-      <body className={`${fraunces.variable} ${archivo.variable}`}>
+      <body className={`${cormorant.variable} ${jost.variable}`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={jsonLdScript([organizationJsonLd(), websiteJsonLd()])}

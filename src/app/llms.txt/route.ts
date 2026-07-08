@@ -1,5 +1,6 @@
 import { getAllBlogPosts } from "@/lib/blog/queries";
 import { SITE_URL } from "@/lib/assets";
+import { CONTACT } from "@/lib/contact";
 import { SITE } from "@/lib/site";
 
 export const revalidate = 300;
@@ -13,10 +14,11 @@ export async function GET() {
     `Site: ${SITE.url}`,
     "",
     "## Primary pages",
-    `- Home / rental guide: ${SITE_URL}/`,
-    `- Net proceeds calculator: ${SITE_URL}/#calculator`,
-    `- FAQ: ${SITE_URL}/#faq`,
-    `- Disclosures: ${SITE_URL}/#disclosures`,
+    `- Home: ${SITE_URL}/`,
+    `- Maravé overview: ${SITE_URL}/#marave`,
+    `- Collections: ${SITE_URL}/#collections`,
+    `- Reserve: ${SITE_URL}/#reserve`,
+    `- Contact: ${SITE_URL}/#contact`,
     `- Blog index: ${SITE_URL}/blog`,
     "",
     "## Blog articles",
@@ -26,11 +28,11 @@ export async function GET() {
     ),
     "",
     "## Contact",
-    `- Broker: Property Pro Partners`,
-    `- Email: Brandon@propertypropartners.com`,
-    `- Phone: (786) 859-2628`,
+    `- ${CONTACT.name} · ${CONTACT.company}`,
+    `- Email: ${CONTACT.emailMarave} · ${CONTACT.emailCrlre}`,
+    `- Phone: ${CONTACT.phoneCr} (CR) · ${CONTACT.phoneUs} (US)`,
     "",
-    "All rental income figures on this site are illustrative estimates, not guarantees.",
+    "Pre-construction pricing and availability are subject to change. Listings on crlre.com are updated independently.",
   ];
 
   return new Response(lines.join("\n"), {

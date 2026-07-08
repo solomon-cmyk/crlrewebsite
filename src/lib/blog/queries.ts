@@ -58,7 +58,7 @@ export function normalizeSoroPayload(payload: SoroPublishPayload): BlogPost {
     description: (payload.description || payload.metaDescription || payload.title).trim(),
     publishedAt: payload.publishedAt ?? new Date().toISOString().slice(0, 10),
     updatedAt: payload.updatedAt,
-    author: payload.author ?? "Property Pro Partners",
+    author: payload.author ?? "Costa Rica Luxury Real Estate",
     category: payload.category ?? "Insights",
     tags: payload.tags ?? ["Maravé", "LXR Residences"],
     readingTimeMinutes: estimateReadingTime(sections),

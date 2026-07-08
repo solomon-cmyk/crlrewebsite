@@ -12,7 +12,7 @@ export default function PrivacyPage() {
   return (
     <LegalPageShell
       title="Privacy Policy"
-      intro="This policy explains how Property Pro Partners handles information when you visit the Maravé rental program guide at crlre.com."
+      intro="This policy explains how Costa Rica Luxury Real Estate handles information when you visit crlre.com."
       sections={privacySections}
     />
   );

@@ -1,5 +1,6 @@
 import { BlogPostView } from "@/components/blog/BlogPostView";
-import { Footer } from "@/components/Footer";
+import { BrokerFooter } from "@/components/broker/BrokerFooter";
+import { SiteNav } from "@/components/broker/SiteNav";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog/queries";
 import {
   articleJsonLd,
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: {
-      absolute: `${post.title} · Maravé LXR`,
+      absolute: `${post.title} · Costa Rica Luxury Real Estate`,
     },
     description: post.description,
     alternates: {
@@ -71,11 +72,12 @@ export default async function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLdScript(structuredData)}
       />
+      <SiteNav />
       <div className="blog-post-page">
         <div className="wrap">
           <BlogPostView post={post} />
         </div>
-        <Footer />
+        <BrokerFooter />
       </div>
     </>
   );

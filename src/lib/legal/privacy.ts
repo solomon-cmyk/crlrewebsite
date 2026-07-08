@@ -6,8 +6,8 @@ export const privacySections: LegalSection[] = [
     id: "overview",
     title: "Overview",
     paragraphs: [
-      `${SITE.publisher} ("we," "us," or "our") publishes ${SITE.productName} at ${SITE.url} (the "Site") for informational purposes related to Maravé branded residences and the voluntary rental program. This Privacy Policy explains what information we collect, how we use it, and the choices available to you.`,
-      "We designed this Site as a read-only educational guide. We do not require you to create an account, submit a lead form, or provide personal information to browse the Site.",
+      `${SITE.publisher} ("we," "us," or "our") publishes ${SITE.productName} at ${SITE.url} (the "Site") for informational and marketing purposes related to Maravé branded residences and exclusive Costa Rica listings. This Privacy Policy explains what information we collect, how we use it, and the choices available to you.`,
+      "You may browse most of the Site without creating an account. If you choose to contact us through the inquiry form, your browser may open your email client with the details you provide.",
     ],
   },
   {
@@ -101,8 +101,7 @@ export const privacySections: LegalSection[] = [
       `${SITE.publisher}`,
       `${SITE.address}`,
       `Email: ${SITE.contactEmail}`,
-      `Phone: ${SITE.contactPhone}`,
-      `Real estate license: ${SITE.license} · Brokerage: ${SITE.brokerage}`,
+      `Phone: ${SITE.contactPhone} (US) · +506 8887-0547 (CR)`,
     ],
   },
 ];

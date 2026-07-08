@@ -1,5 +1,6 @@
 import { BlogCard } from "@/components/blog/BlogCard";
-import { Footer } from "@/components/Footer";
+import { BrokerFooter } from "@/components/broker/BrokerFooter";
+import { SiteNav } from "@/components/broker/SiteNav";
 import { getAllBlogPosts } from "@/lib/blog/queries";
 import { organizationJsonLd, jsonLdScript, websiteJsonLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/site";
@@ -10,17 +11,17 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Blog · Maravé LXR Residences & Rental Program Insights",
+    absolute: "Blog · Maravé LXR Residences & Costa Rica Luxury Real Estate",
   },
   description:
-    "Owner guides, rental program explainers, and Costa Rica branded residence insights for Maravé LXR buyers.",
+    "Owner guides, Manuel Antonio market insights, and Maravé LXR branded residence articles from Costa Rica Luxury Real Estate.",
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
-    title: "Maravé LXR Blog",
+    title: "CRLRE Blog",
     description:
-      "Practical articles on the Maravé rental program, owner economics, and buying in Manuel Antonio.",
+      "Practical articles on Maravé LXR Residences, Costa Rica luxury real estate, and buying in Manuel Antonio.",
     type: "website",
   },
 };
@@ -34,17 +35,18 @@ export default async function BlogIndexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLdScript([organizationJsonLd(), websiteJsonLd()])}
       />
+      <SiteNav />
       <div className="blog-index">
         <header className="blog-index__hero">
           <div className="wrap">
             <Link href="/" className="blog-index__home">
-              Back to rental guide
+              Back to home
             </Link>
             <p className="eyebrow">Insights</p>
-            <h1>Maravé owner guides & rental program notes</h1>
+            <h1>Maravé guides and Costa Rica luxury real estate notes</h1>
             <p className="blog-index__intro">
-              Practical articles for buyers researching Maravé LXR Residences in Manuel Antonio. Every
-              article links back to the main program guide and estimator on {SITE.domain}.
+              Practical articles for buyers exploring Maravé LXR Residences and exclusive Pacific
+              coast listings. Every article links back to reservations and contact on {SITE.domain}.
             </p>
           </div>
         </header>
@@ -53,7 +55,7 @@ export default async function BlogIndexPage() {
             <BlogCard key={post.slug} post={post} />
           ))}
         </div>
-        <Footer />
+        <BrokerFooter />
       </div>
     </>
   );

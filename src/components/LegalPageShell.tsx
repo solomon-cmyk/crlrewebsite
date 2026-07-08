@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { CONTACT } from "@/lib/contact";
 import { LEGAL_LINKS, SITE } from "@/lib/site";
 
 export type LegalSection = {
@@ -25,7 +26,7 @@ export function LegalPageShell({
       <header className="legal-page__header">
         <div className="wrap">
           <Link href="/" className="legal-page__back">
-            Back to the rental guide
+            Back to home
           </Link>
           <p className="eyebrow">Legal</p>
           <h1>{title}</h1>
@@ -67,8 +68,8 @@ export function LegalPageShell({
         <div className="wrap">
           <p>
             Questions about these policies? Contact{" "}
-            <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> or call{" "}
-            <a href="tel:+17868592628">{SITE.contactPhone}</a>.
+            <a href={CONTACT.emailCrlreHref}>{CONTACT.emailCrlre}</a> or call{" "}
+            <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs}</a>.
           </p>
           <p className="legal-page__footer-links">
             {LEGAL_LINKS.map((link) => (

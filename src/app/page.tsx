@@ -1,34 +1,43 @@
 import { BlogPreview } from "@/components/blog/BlogPreview";
-import { Calculator } from "@/components/Calculator";
-import { ControlSplit } from "@/components/ControlSplit";
-import { Disclosures } from "@/components/Disclosures";
-import { DollarJourney } from "@/components/DollarJourney";
-import { FAQ } from "@/components/FAQ";
-import { Footer } from "@/components/Footer";
-import { Gallery } from "@/components/Gallery";
-import { Hero, Ribbon } from "@/components/Hero";
-import { Lifecycle } from "@/components/Lifecycle";
-import { PeakDates } from "@/components/PeakDates";
-import { ProgramFacts } from "@/components/ProgramFacts";
-import { StickyNav } from "@/components/StickyNav";
+import { BrokerFooter } from "@/components/broker/BrokerFooter";
+import { BrokerGallery } from "@/components/broker/BrokerGallery";
+import { BrokerHero } from "@/components/broker/BrokerHero";
+import { CollectionsSection } from "@/components/broker/CollectionsSection";
+import { ContactSection } from "@/components/broker/ContactSection";
+import { FilmBand } from "@/components/broker/FilmBand";
+import { FinishesSection } from "@/components/broker/FinishesSection";
+import { LeadModalProvider } from "@/components/broker/LeadModal";
+import { ListingsSection } from "@/components/broker/ListingsSection";
+import { MaraveIntro } from "@/components/broker/MaraveIntro";
+import { MarqueeStrip } from "@/components/broker/MarqueeStrip";
+import { PlaceSection } from "@/components/broker/PlaceSection";
+import { ReserveSection } from "@/components/broker/ReserveSection";
+import { RevealOnScroll } from "@/components/broker/RevealOnScroll";
+import { SiteNav } from "@/components/broker/SiteNav";
+import { TeamSection } from "@/components/broker/TeamSection";
 
 export default function Home() {
   return (
-    <main>
-      <Ribbon />
-      <StickyNav />
-      <Hero />
-      <Gallery />
-      <DollarJourney />
-      <Calculator />
-      <FAQ />
-      <PeakDates />
-      <ProgramFacts />
-      <ControlSplit />
-      <Lifecycle />
-      <Disclosures />
-      <BlogPreview />
-      <Footer />
-    </main>
+    <LeadModalProvider>
+      <main>
+        <SiteNav />
+        <RevealOnScroll>
+          <BrokerHero />
+          <MarqueeStrip />
+          <MaraveIntro />
+          <PlaceSection />
+          <FilmBand />
+          <CollectionsSection />
+          <FinishesSection />
+          <BrokerGallery />
+          <ReserveSection />
+          <ListingsSection />
+          <TeamSection />
+          <BlogPreview />
+          <ContactSection />
+          <BrokerFooter />
+        </RevealOnScroll>
+      </main>
+    </LeadModalProvider>
   );
 }

@@ -41,18 +41,18 @@ export function BlogPostView({ post }: { post: BlogPost }) {
       )}
 
       <aside className="blog-post__cta">
-        <p className="eyebrow">Maravé Rental Program Guide</p>
-        <h2>Model the numbers on your terms</h2>
+        <p className="eyebrow">Maravé · Manuel Antonio</p>
+        <h2>Ready to explore ownership?</h2>
         <p>
-          Use the net proceeds estimator and owner FAQ on the main guide. Every figure is an
-          illustration, not a guarantee.
+          Request the full Maravé package, pricing, and floor plans, or start your $10,000
+          reservation on the main site.
         </p>
         <div className="blog-post__cta-links">
-          <Link href="/#calculator" className="blog-post__btn">
-            Open calculator
+          <Link href="/#reserve" className="blog-post__btn">
+            Start reservation
           </Link>
-          <Link href="/" className="blog-post__btn blog-post__btn--ghost">
-            Full program guide
+          <Link href="/#contact" className="blog-post__btn blog-post__btn--ghost">
+            Contact Mark
           </Link>
         </div>
       </aside>

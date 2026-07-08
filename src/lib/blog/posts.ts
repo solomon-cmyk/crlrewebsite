@@ -1,254 +1,253 @@
 import type { BlogPost } from "./types";
 
+const AUTHOR = "Costa Rica Luxury Real Estate";
+
 export const staticBlogPosts: BlogPost[] = [
   {
     slug: "marave-branded-residences-costa-rica-guide",
-    title: "Maravé Branded Residences in Costa Rica: What Buyers Should Know First",
+    title: "Maravé Branded Residences: What Costa Rica Buyers Should Know First",
     description:
-      "A practical guide to Maravé LXR Residences in Manuel Antonio, including ownership basics, the voluntary rental program, and what makes branded residences different.",
+      "A clear starting point for buyers exploring Maravé LXR Residences in Manuel Antonio, from freehold ownership to pre-construction reservations.",
     publishedAt: "2026-07-01",
-    author: "Property Pro Partners",
-    category: "Buying Guide",
+    author: AUTHOR,
+    category: "Maravé",
     tags: ["Maravé", "LXR Residences", "Costa Rica", "Manuel Antonio", "branded residences"],
-    readingTimeMinutes: 7,
+    readingTimeMinutes: 6,
     sections: [
       {
         paragraphs: [
-          "Maravé is a branded residence project on Costa Rica's Pacific coast, positioned within the LXR Residences collection under Hilton. For many buyers, the appeal is straightforward: a private residence in Manuel Antonio with hotel-level service, design, and access to a global reservation system if they choose to join the rental program.",
-          "That last part matters. Ownership at Maravé and participation in the rental program are separate decisions. You can buy for personal use, buy with the intent to enroll later, or enroll at closing. The guide on crlre.com walks through the rental math, but this article focuses on the ownership side first.",
+          "Maravé is a collection of 116 LXR-branded residences on Costa Rica's Pacific coast, developed and represented by Costa Rica Luxury Real Estate. For many buyers, the appeal is simple: a private home in Manuel Antonio with hotel-level design, service, and the credibility of the LXR flag under Hilton.",
+          "The project is in pre-construction. That means today's pricing, collection choice, and reservation terms reflect an early release phase, not a finished hotel. Renderings and material descriptions show the vision. Your executed purchase documents will define what you own.",
         ],
       },
       {
-        heading: "What a branded residence actually means",
+        heading: "What branded ownership means here",
         paragraphs: [
-          "A branded residence is not a hotel room with a deed. You own a specific unit, subject to program rules, design standards, and hotel operations when you are not in residence. The hotel manages guest stays, housekeeping, and the commercial side of the building when you opt in.",
-          "At Maravé, renderings show ocean-view residences, pool terraces, and LXR-level finishes. Until the hotel is operating, rates and occupancy are not set. Any income discussion should stay in the illustrative range and follow the disclosures on the main guide.",
+          "You are buying a specific residence, not a hotel room with a deed attached. Branded residence ownership comes with design standards, program rules, and optional hotel management if you choose to enroll later.",
+          "At Maravé, that can mean ocean-view condos, villas with private plunge pools, or one of only four penthouses. Buyers who want clarity early should separate the home decision from any future rental conversation.",
         ],
       },
       {
-        heading: "Location: Manuel Antonio and Quepos",
+        heading: "Why Manuel Antonio still draws global buyers",
         paragraphs: [
-          "Manuel Antonio draws international buyers for rainforest-to-ocean geography, national park access, and a mature luxury second-home market. Quepos provides regional infrastructure, airport access, and everyday services.",
-          "Buyers comparing Costa Rica projects should look beyond renderings at access, HOA structure, insurance requirements, and the executed purchase and rental documents. Branded residence value is partly location and partly operator quality over time.",
+          "Manuel Antonio pairs rainforest and ocean in a way few places on the Pacific coast can match. The national park, Quepos infrastructure, and mature luxury market give the location staying power beyond a single project cycle.",
+          "If you are comparing Costa Rica opportunities, look at access, title structure, HOA framework, and who represents the sale. Branded value is part location, part operator quality, and part the team guiding you through due diligence.",
         ],
       },
       {
-        heading: "Where to go next",
+        heading: "A sensible next step",
         paragraphs: [
-          "If you are evaluating the rental program specifically, read how the split works and model your own assumptions in the net proceeds estimator. If you are still in early research, compare carrying costs, personal use rules, and resale terms before you tie purchase price to projected rental income.",
+          "Request the full Maravé package, floor plans, and reservation path from Mark directly, or browse exclusive listings across the coast on crlre.com if you want context beyond the project itself.",
         ],
       },
     ],
     faq: [
       {
-        question: "Is Maravé open and operating today?",
+        question: "Is Maravé finished and operating today?",
         answer:
-          "Maravé is in development. Hotel rates, occupancy, and operating timelines will be set based on market conditions at opening. Marketing materials use renderings where noted.",
+          "No. Maravé is in pre-construction. Marketing materials use renderings where noted, and timelines will follow construction progress.",
       },
       {
-        question: "Do I have to join the rental program to buy?",
+        question: "Who represents sales at Maravé?",
         answer:
-          "No. Participation is voluntary and should be evaluated separately from the purchase decision.",
+          "Costa Rica Luxury Real Estate is the developer and exclusive representative of Maravé Resort & Residences in Manuel Antonio.",
       },
     ],
   },
   {
     slug: "how-marave-rental-program-split-works",
-    title: "How the Maravé Rental Program Split Works (The Real Math Behind 60/40)",
+    title: "How Maravé Pre-Construction Reservations Work",
     description:
-      "Understand the Maravé rental revenue flow from gross room revenue to owner proceeds, including the management fee, FF&E reserve, and why 49% of gross is the honest working number.",
+      "The step-by-step path to reserving a Maravé residence, from the $10,000 deposit to escrow and due diligence.",
     publishedAt: "2026-07-02",
-    author: "Property Pro Partners",
-    category: "Rental Program",
-    tags: ["rental program", "revenue split", "FF&E reserve", "management fee"],
-    readingTimeMinutes: 8,
+    author: AUTHOR,
+    category: "Reservations",
+    tags: ["pre-construction", "reservation", "Maravé", "Manuel Antonio"],
+    readingTimeMinutes: 5,
     sections: [
       {
         paragraphs: [
-          "The headline split at Maravé is often described as 60/40 in the owner's favor. That is accurate at the net rental revenue line, but it is not the same as receiving 60% of every guest dollar. Fees and reserves change the practical result.",
-          "On crlre.com we model an illustrative path where about 49 cents of each dollar of room revenue reaches the owner before personal carrying costs. Here is how that number is built.",
+          "Early buyers at Maravé reserve before construction advances and global marketing intensifies. The process is designed to be straightforward: choose a collection, place a refundable reservation deposit, review the full document package, then move to escrow on execution.",
+          "This is not a casual hold on a floor plan. A reservation locks your unit selection and today's pre-construction price while you and your advisors review the details.",
         ],
       },
       {
-        heading: "Step 1: Start with gross unit revenue",
+        heading: "Step 1: Choose your collection",
         paragraphs: [
-          "Guest room charges flow into gross unit revenue. Costa Rica's 13% VAT sits on top of the room rate and is excluded from the owner split. Ancillary hotel revenue such as spa, dining, or minibar is also outside this room-revenue discussion unless specifically addressed in your executed agreement.",
+          "Maravé offers condominiums, villas, and penthouses at different price points and sizes. Most buyers start with a collection preference, then narrow to view, layout, and timing with Mark's team.",
         ],
       },
       {
-        heading: "Step 2: Management fee off the top",
+        heading: "Step 2: Place the $10,000 reservation",
         paragraphs: [
-          "A 10% management service fee comes out of gross unit revenue before the owner/hotel split. That fee funds program administration, marketing, and hotel-side operations tied to rental inventory.",
+          "The reservation deposit secures your unit and price. It is refundable within the terms of the reservation agreement and gives you room to complete due diligence without losing your place in line.",
         ],
       },
       {
-        heading: "Step 3: The 60/40 split on net rental revenue",
+        heading: "Step 3: Review the full package",
         paragraphs: [
-          "After the management fee, the remaining net rental revenue splits 60% to the participating owner and 40% to the hotel owner under current developer terms. Your executed Rental Management Agreement controls if terms differ.",
+          "You receive the Sales & Purchase Agreement and supporting project documentation. Buyers typically use this period, often around 30 days, to involve Costa Rican counsel, tax advisors, and anyone else they trust on a purchase of this size.",
         ],
       },
       {
-        heading: "Step 4: FF&E reserve from the owner side",
+        heading: "Step 4: Execute and fund escrow",
         paragraphs: [
-          "Five percent of gross unit revenue funds an FF&E reserve for your unit's furniture, fixtures, and equipment. It is deducted from the owner side, not from the hotel's 40% share. The reserve is earmarked for upkeep, not lost, and remaining balances can return on exit subject to the agreement.",
-        ],
-      },
-      {
-        heading: "Model your own scenario",
-        paragraphs: [
-          "Use the interactive estimator on the main guide to test ADR, occupancy, and personal-use nights. Every output is an illustration, not a forecast. Actual performance depends on unit view, seasonality, hotel pricing decisions, and market demand.",
+          "On execution, a 20% deposit goes into escrow and is held securely until groundbreaking under the terms of your agreement. From there, construction milestones and closing timelines follow the executed documents, not marketing copy.",
         ],
       },
     ],
   },
   {
     slug: "buying-branded-residence-manuel-antonio",
-    title: "Buying a Branded Residence in Manuel Antonio: Questions Smart Buyers Ask",
+    title: "Buying in Manuel Antonio: Questions Smart Buyers Ask",
     description:
-      "Due diligence checklist for Maravé and branded residence buyers in Manuel Antonio, from legal review to rental program enrollment.",
+      "A practical due diligence checklist for luxury buyers considering Maravé or other Manuel Antonio properties.",
     publishedAt: "2026-07-03",
-    author: "Property Pro Partners",
+    author: AUTHOR,
     category: "Buying Guide",
-    tags: ["due diligence", "Manuel Antonio", "Costa Rica real estate", "LXR"],
+    tags: ["due diligence", "Manuel Antonio", "Costa Rica real estate", "luxury homes"],
     readingTimeMinutes: 6,
     sections: [
       {
         paragraphs: [
-          "Branded residence purchases in Costa Rica combine real estate, hospitality, and cross-border tax questions. The sales story is often beautiful. The paperwork is where buyers win or lose clarity.",
-          "If you are looking at Maravé, treat the rental program as optional until you have read the Rental Management Agreement and separated the residence purchase from enrollment.",
+          "Luxury purchases in Costa Rica combine real estate, hospitality branding, and cross-border planning. The view from the terrace is easy to fall in love with. The paperwork is where good decisions are made.",
+          "Whether you are focused on Maravé or an exclusive listing elsewhere on the coast, the best buyers ask the same questions early.",
         ],
       },
       {
-        heading: "Separate the home from the income story",
+        heading: "Would you buy it without the story?",
         paragraphs: [
-          "Would you buy the unit if it never rented? That question sounds simple, but it prevents the most common mistake: underwriting a lifestyle asset as a bond.",
-          "Comparable resorts and other owners' results do not predict your unit. Revenue is not pooled across residences, and rotation systems mean identical ADR assumptions can produce different night counts by unit type and view.",
+          "Strip away the renderings and the brochure language. Would you still want the asset on location, title, and long-term use alone? That question keeps buyers from treating a lifestyle home like a guaranteed income product.",
         ],
       },
       {
-        heading: "Legal and tax review",
+        heading: "Who is on your advisory team?",
         paragraphs: [
-          "Costa Rican purchase structures, HOA documents, and the rental agreement may involve Costa Rican counsel, a cross-border CPA, and U.S. reporting considerations. VAT, withholding, and personal carrying costs all sit outside the hotel's quarterly statement.",
+          "Costa Rican purchase structures, HOA documents, and cross-border tax questions usually involve local counsel and a CPA who understands both jurisdictions. Build that team before you feel rushed by inventory timing.",
         ],
       },
       {
-        heading: "Operator and brand continuity",
+        heading: "What happens after closing?",
         paragraphs: [
-          "Remington Hospitality manages the program to LXR Residences standards under Hilton in current materials. Branded programs can outlive a single operator, but there is no guarantee the manager or program terms stay identical forever. Read assignment and termination language carefully.",
+          "Ask about HOA governance, insurance requirements, property management, and resale expectations. Branded projects add program rules on top of standard owner responsibilities. Read both paths carefully.",
         ],
       },
     ],
   },
   {
     slug: "lxr-residences-personal-use-rules",
-    title: "LXR Residences Personal Use Rules: How Owner Stays Work at Maravé",
+    title: "What the LXR Flag Brings to Maravé Owners",
     description:
-      "How personal use, peak dates, and the September 1 reservation window work for Maravé owners in the voluntary rental program.",
+      "Why Hilton's LXR collection matters for Maravé buyers, from design standards to Honors status and managed operations.",
     publishedAt: "2026-07-04",
-    author: "Property Pro Partners",
-    category: "Personal Use",
-    tags: ["personal use", "peak dates", "rental program", "owner calendar"],
-    readingTimeMinutes: 6,
+    author: AUTHOR,
+    category: "Maravé",
+    tags: ["LXR", "Hilton Honors", "branded residences", "Maravé"],
+    readingTimeMinutes: 5,
     sections: [
       {
         paragraphs: [
-          "One of the most misunderstood parts of branded residence rental programs is personal use. Owners hear unlimited use and assume unlimited rental income at the same time. The two do not coexist on the same nights.",
-          "When you occupy your Maravé residence, you earn no rental revenue for those nights, even if the hotel relocates you to another unit during a stay.",
+          "Maravé enters the market as the first hotel flag in Manuel Antonio and the area's first five-star LXR-branded address. For buyers, that is more than a logo. It signals design discipline, operating standards, and affiliation with Hilton's broader reservation ecosystem.",
         ],
       },
       {
-        heading: "The September 1 window",
+        heading: "Design and operating standards",
         paragraphs: [
-          "Reserve by September 1 for the following calendar year and personal use is effectively unlimited, subject to peak-date rules and guest conflicts. After September 1, requests typically need 180 days notice and remain subject to availability.",
+          "LXR-branded residences are expected to meet hospitality-grade finishes, service expectations, and consistency across the guest experience. That influences everything from common-area programming to the way individual homes present when the hotel is operating.",
         ],
       },
       {
-        heading: "Peak dates and guest priority",
+        heading: "Hilton Honors for owners",
         paragraphs: [
-          "Peak periods include the last 10 days and first 7 days of the year, Easter week, Thanksgiving week, and other holiday windows described in program materials. If a hotel guest booked a peak date before April 30, that guest stay can take priority over an owner request.",
+          "Ownership at Maravé includes Hilton Honors Diamond status, a meaningful perk for buyers who already live inside the Hilton ecosystem or travel frequently through it.",
         ],
       },
       {
-        heading: "You stay as a guest",
+        heading: "Managed operations, optional rental enrollment",
         paragraphs: [
-          "During owner stays you check in like a hotel guest, keep a card on file, follow arrival procedures, and pay for housekeeping on the schedule the hotel requires. The hotel holds keys year-round. Private locks are not part of the model.",
+          "Remington Hospitality is identified in project materials as the operator, with Hilton engaged on HOA management. Rental enrollment remains optional and should be evaluated separately from the decision to own the residence itself.",
         ],
       },
     ],
   },
   {
     slug: "marave-owner-carrying-costs-explained",
-    title: "Maravé Owner Carrying Costs: What the Rental Statement Does Not Pay",
+    title: "Manuel Antonio Luxury Homes: How to Compare Your Options",
     description:
-      "HOA dues, insurance, taxes, utilities, and other annual costs Maravé owners pay outside the rental program, with illustrative defaults explained.",
+      "How to evaluate Maravé against other premium listings on Costa Rica's Pacific coast without losing sight of total ownership.",
     publishedAt: "2026-07-05",
-    author: "Property Pro Partners",
-    category: "Owner Economics",
-    tags: ["carrying costs", "HOA", "insurance", "property taxes", "net proceeds"],
-    readingTimeMinutes: 7,
+    author: AUTHOR,
+    category: "Market Guide",
+    tags: ["Manuel Antonio", "luxury listings", "Costa Rica real estate", "CRLRE"],
+    readingTimeMinutes: 6,
     sections: [
       {
         paragraphs: [
-          "The rental program statement shows gross room revenue, fees, split, and reserve movement. It does not show the full economic picture. Owners still carry HOA assessments, insurance, property taxes, utilities, and other line items whether the unit rents or not.",
-          "The net proceeds estimator on crlre.com includes a carrying cost section so you can see owner keeps after those expenses. Defaults are illustrations until final HOA budgets and insurance quotes are published.",
+          "Buyers rarely choose between Maravé and a generic condo down the road. They choose between a branded pre-construction residence, a turnkey estate, a new-build villa, and sometimes raw land with a vision attached.",
+          "Costa Rica Luxury Real Estate represents Maravé and also markets exclusive listings from Uvita to Matapalo. Comparing them well means using the same lens for each option.",
         ],
       },
       {
-        heading: "Common annual owner costs",
+        heading: "Compare like with like",
         paragraphs: [
-          "HOA or association dues fund shared infrastructure and building operations. Insurance at full replacement cost with flood and earthquake coverage is typically required, with the hotel owner and manager as additional insureds.",
-          "Property taxes, utilities, deep cleans, pest control, and non-routine maintenance above the FF&E reserve remain owner responsibilities. Unpaid items can be paid from rental proceeds or trigger program issues.",
+          "Match construction status, titled land, HOA structure, view quality, and completion timeline. A finished home and a pre-construction residence solve different problems for different buyers.",
         ],
       },
       {
-        heading: "Why net yield matters more than gross proceeds",
+        heading: "Look past the headline price",
         paragraphs: [
-          "A strong gross rental year can look modest after carrying costs and before income taxes. Model net yield on purchase price, not headline split percentages alone.",
+          "Insurance, association dues, staffing, maintenance, and furnishing assumptions can shift the real cost of ownership quickly in a tropical climate. Ask for the full picture, not just the asking number.",
+        ],
+      },
+      {
+        heading: "Use local representation",
+        paragraphs: [
+          "A broker who knows the micro-markets around Manuel Antonio, Quepos, Uvita, and Matapalo can save months of false starts. That is the role CRLRE plays for many international buyers before they ever reserve at Maravé.",
         ],
       },
     ],
   },
   {
     slug: "voluntary-rental-program-worth-it",
-    title: "Is the Maravé Voluntary Rental Program Worth It for You?",
+    title: "Why Early Buyers Are Looking at Maravé Now",
     description:
-      "A framework for deciding whether to enroll in the Maravé rental program, without treating illustrative estimates as guaranteed returns.",
+      "What is driving pre-construction interest in Maravé, from first-release pricing to the rarity of the LXR flag in Manuel Antonio.",
     publishedAt: "2026-07-06",
-    author: "Property Pro Partners",
-    category: "Rental Program",
-    tags: ["voluntary program", "rental income", "owner decision", "Maravé"],
-    readingTimeMinutes: 7,
+    author: AUTHOR,
+    category: "Maravé",
+    tags: ["pre-construction", "Manuel Antonio", "LXR", "Costa Rica luxury real estate"],
+    readingTimeMinutes: 5,
     sections: [
       {
         paragraphs: [
-          "There is no universal yes or no. The rental program fits owners who want hotel-managed guest use, prefer not to self-manage, and accept that pricing, occupancy, and personal use tradeoffs sit largely with the operator.",
-          "It fits poorly when you need predictable cash flow, plan heavy personal use in peak weeks, or want to rent outside the program. Exclusive hotel agency terms prohibit parallel rental channels.",
+          "Most landmark coastal projects have a window where pricing, collection choice, and reservation terms are at their most flexible. Maravé is in that window now.",
+          "Buyers paying attention are not chasing a finished hotel. They are securing a place in a project that will introduce the first five-star flagged address Manuel Antonio has seen.",
         ],
       },
       {
-        heading: "What you give up",
+        heading: "First release pricing",
         paragraphs: [
-          "You give up direct control of nightly pricing, discounting, and guest selection. The hotel can comp nights for marketing and apply guest service remedies that affect revenue. You also give up private lock-and-leave autonomy during enrolled periods.",
+          "Pre-construction pricing reflects the stage of the project, not the fully realized resort. As construction advances and the global launch nears, pricing typically rises and the best positions go first.",
         ],
       },
       {
-        heading: "What you gain",
+        heading: "A rare combination",
         paragraphs: [
-          "You gain Hilton/LXR distribution, professional housekeeping, rotation-based commercialization, and a defined statement process. For many second-home owners, that is the point: monetize empty nights without running a mini hotel.",
+          "Rainforest-to-ocean geography, freehold titled ownership, LXR branding, and optional hotel management create a package that does not exist elsewhere in this market today.",
         ],
       },
       {
-        heading: "Use illustrations, not promises",
+        heading: "Talk before the inventory story changes",
         paragraphs: [
-          "Run your own ADR and occupancy assumptions in the calculator. Compare year one and year two occupancy scenarios. Then subtract carrying costs. If the decision still makes sense on conservative inputs, you are asking the right question.",
+          "If Maravé is on your short list, the practical move is a direct conversation and a clear look at current collections. Request information or start a reservation when you are ready to act, not when the project is already front-page news.",
         ],
       },
     ],
     faq: [
       {
-        question: "Can I leave the program later?",
+        question: "Can I see other CRLRE listings while evaluating Maravé?",
         answer:
-          "Owners can non-renew with written notice per program terms, typically five months before year end. Sale generally terminates the agreement unless the hotel approves assignment.",
+          "Yes. Many buyers review exclusive Pacific coast listings on crlre.com for context before reserving at Maravé.",
       },
     ],
   },

@@ -33,7 +33,7 @@ export async function GET() {
   <channel>
     <title>${escapeXml(SITE.productName)} Blog</title>
     <link>${SITE_URL}/blog</link>
-    <description>${escapeXml("Maravé LXR Residences rental program and owner guides.")}</description>
+    <description>${escapeXml("Maravé LXR Residences and Costa Rica luxury real estate insights from CRLRE.")}</description>
     <language>en-us</language>
     ${items}
   </channel>

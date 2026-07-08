@@ -12,7 +12,7 @@ export default function TermsPage() {
   return (
     <LegalPageShell
       title="Terms of Use"
-      intro="Please read these terms carefully before using the Site. They explain what the guide is for, what it is not, and how you may use it."
+      intro="Please read these terms before using the Site. They explain what crlre.com is for, what it is not, and how you may use it."
       sections={termsSections}
     />
   );
