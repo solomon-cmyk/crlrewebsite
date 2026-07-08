@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import { ConsentAnalytics } from "@/components/ConsentAnalytics";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
@@ -23,6 +23,12 @@ const jost = Jost({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL;
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

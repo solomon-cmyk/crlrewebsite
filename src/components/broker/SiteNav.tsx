@@ -34,7 +34,7 @@ export function SiteNav() {
         id="nav"
       >
         <div className="wrap nav-inner">
-          <BrandLogo onClick={closeMenu} compact={scrolled} />
+          <BrandLogo onClick={closeMenu} compact={scrolled || menuOpen} />
           <nav className={`links${menuOpen ? " open" : ""}`} id="links" aria-label="Primary">
             {NAV_LINKS.map((link) => (
               <a key={link.href} href={link.href} onClick={closeMenu}>

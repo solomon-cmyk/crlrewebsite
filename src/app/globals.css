@@ -43,7 +43,16 @@
   line-height:1.65;
   font-weight:300;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden
+  overflow-x:hidden;
+  text-size-adjust:100%
+}
+
+  main {
+  overflow-x:clip
+}
+
+  a,button {
+  -webkit-tap-highlight-color:transparent
 }
 
   h1,h2,h3,h4,.disp {
@@ -1759,6 +1768,10 @@ to {
 
   @media(max-width:660px) {
 
+    header.nav {
+  padding-top:max(12px, env(safe-area-inset-top, 12px))
+}
+
     nav.links {
   position:fixed;
   inset:0 0 0 auto;
@@ -1783,7 +1796,23 @@ to {
 }
 
     .menu-toggle {
-  display:flex
+  display:flex;
+  min-width:44px;
+  min-height:44px;
+  align-items:center;
+  justify-content:center;
+  padding:10px
+}
+
+    nav.links .nav-contact {
+  width:100%;
+  justify-content:center;
+  margin-left:0;
+  margin-top:10px
+}
+
+    main {
+  padding-bottom:calc(78px + env(safe-area-inset-bottom, 0px))
 }
 
     .tiers,.grid,.fin-grid,.foot-top,.agent-grid {
@@ -1811,11 +1840,18 @@ to {
 }
 
     .logo-img {
-  height:34px
+  height:32px;
+  max-width:min(168px, 56vw);
+  width:auto
+}
+
+    .foot-logo {
+  height:44px;
+  max-width:min(220px, 72vw)
 }
 
     .hero {
-  padding:102px 0 54px
+  padding:max(102px, calc(88px + env(safe-area-inset-top, 0px))) 0 54px
 }
 
     .hero-grid {
@@ -1834,6 +1870,85 @@ to {
 
     .hero-figure img {
   height:330px
+}
+
+    .hero-figure::after {
+  inset:12px -12px -12px 12px
+}
+
+    .intent-toggle {
+  flex-direction:column
+}
+
+    .field input,.field select,.field textarea {
+  font-size:16px
+}
+
+    .modal-overlay {
+  align-items:flex-end;
+  padding:0
+}
+
+    .modal {
+  max-height:min(92vh, 920px);
+  border-left:none;
+  border-right:none;
+  border-bottom:none;
+  width:100%;
+  max-width:none
+}
+
+    .modal-close,.film-expand,.film-lightbox__close {
+  min-width:44px;
+  min-height:44px
+}
+
+    .film-lightbox {
+  padding:12px;
+  padding-top:max(12px, env(safe-area-inset-top, 12px));
+  padding-bottom:max(12px, env(safe-area-inset-bottom, 12px))
+}
+
+    .film-lightbox__inner video {
+  max-height:min(72vh, 720px)
+}
+
+    .contact h2 {
+  max-width:none
+}
+
+    .blog-card__meta {
+  flex-wrap:wrap;
+  gap:6px 12px
+}
+
+    .legal-page__header {
+  padding-top:max(108px, calc(92px + env(safe-area-inset-top, 0px)))
+}
+
+    .legal-page__content {
+  padding:20px 18px
+}
+
+    .blog-index__hero,
+    .blog-post__header {
+  padding-top:max(120px, calc(100px + env(safe-area-inset-top, 0px)))
+}
+
+    .nav-inner {
+  gap:12px
+}
+
+    .credibility {
+  padding:44px 0
+}
+
+    .credibility__item {
+  padding:22px 20px
+}
+
+    .credibility__item h3 {
+  font-size:1.35rem
 }
 
     .credibility__grid {
@@ -1994,6 +2109,7 @@ to {
   inset: auto 0 0 0;
   z-index: 200;
   padding: 16px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
   pointer-events: none;
 }
 
