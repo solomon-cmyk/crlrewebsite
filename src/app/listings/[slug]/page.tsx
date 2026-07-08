@@ -23,16 +23,19 @@ export async function generateMetadata({ params }: ListingPageProps): Promise<Me
     return { title: "Listing not found" };
   }
 
+  const description =
+    listing.description[0] ?? listing.excerpt ?? `${listing.title} in ${listing.location}. ${listing.price}.`;
+
   return {
     title: `${listing.title} · Costa Rica Luxury Real Estate`,
-    description: listing.excerpt || `${listing.title} in ${listing.location}. ${listing.price}.`,
+    description,
     alternates: {
       canonical: `/listings/${listing.slug}`,
     },
     openGraph: {
       title: listing.title,
-      description: listing.excerpt || `${listing.price} · ${listing.location}`,
-      images: [{ url: listing.image }],
+      description,
+      images: listing.images.slice(0, 4).map((url) => ({ url })),
       type: "website",
     },
   };
@@ -45,6 +48,8 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
   if (!listing) {
     notFound();
   }
+
+  const gallery = listing.images.length > 0 ? listing.images : [listing.image];
 
   return (
     <>
@@ -69,15 +74,19 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
         </header>
 
         <div className="wrap listing-detail__content">
-          <div className="listing-detail__photo">
-            <Image
-              src={listing.image}
-              alt={listing.alt}
-              width={1400}
-              height={900}
-              unoptimized
-              priority
-            />
+          <div className="listing-detail__gallery">
+            {gallery.map((src, index) => (
+              <div className="listing-detail__photo" key={`${listing.slug}-${index}`}>
+                <Image
+                  src={src}
+                  alt={`${listing.title} photo ${index + 1}`}
+                  width={1400}
+                  height={900}
+                  unoptimized
+                  priority={index === 0}
+                />
+              </div>
+            ))}
           </div>
 
           {listing.specs.length > 0 && (
@@ -91,19 +100,31 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
             </div>
           )}
 
-          {listing.excerpt && <p className="listing-detail__excerpt">{listing.excerpt}</p>}
+          {listing.description.length > 0 && (
+            <div className="listing-detail__description">
+              {listing.description.map((paragraph) => (
+                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              ))}
+            </div>
+          )}
+
+          {listing.features.length > 0 && (
+            <div className="listing-detail__features">
+              <h2>Property features</h2>
+              <ul>
+                {listing.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="listing-detail__actions">
-            <a
-              href={listing.href}
-              className="btn btn-bronze"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View full listing on CRLRE.com →
-            </a>
-            <Link href="/#contact" className="btn btn-line">
-              Contact Mark
+            <Link href="/#contact" className="btn btn-bronze">
+              Contact Mark about this property →
+            </Link>
+            <Link href="/listings" className="btn btn-line">
+              Back to all listings
             </Link>
           </div>
         </div>

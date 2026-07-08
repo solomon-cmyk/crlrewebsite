@@ -32,7 +32,7 @@ export async function GET() {
     `- Email: ${CONTACT.email}`,
     `- Phone: ${CONTACT.phoneCr} (CR) · ${CONTACT.phoneUs} (US)`,
     "",
-    "Pre-construction pricing and availability are subject to change. Listings on crlre.com are updated independently.",
+    "Pre-construction pricing and availability are subject to change. Property listings are updated on this site.",
   ];
 
   return new Response(lines.join("\n"), {

@@ -2644,11 +2644,21 @@ to {
   padding: 0 28px 64px;
 }
 
+.listing-detail__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: -28px;
+}
+
 .listing-detail__photo {
   overflow: hidden;
   border: 1px solid var(--line);
-  margin-top: -28px;
   background: var(--forest2);
+}
+
+.listing-detail__photo:first-child {
+  grid-column: span 2;
 }
 
 .listing-detail__photo img {
@@ -2679,6 +2689,52 @@ to {
   margin-bottom: 28px;
 }
 
+.listing-detail__description {
+  max-width: 72ch;
+  margin: 28px 0;
+}
+
+.listing-detail__description p {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.listing-detail__features {
+  margin: 8px 0 32px;
+  max-width: 72ch;
+}
+
+.listing-detail__features h2 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.listing-detail__features ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.listing-detail__features li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.listing-detail__features li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--bronze);
+}
+
 .listing-detail__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2687,6 +2743,18 @@ to {
 
 @media (max-width: 660px) {
   .listings-index__grid .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .listing-detail__gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .listing-detail__photo:first-child {
+    grid-column: auto;
+  }
+
+  .listing-detail__features ul {
     grid-template-columns: 1fr;
   }
 

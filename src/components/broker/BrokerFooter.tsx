@@ -34,9 +34,6 @@ export function BrokerFooter() {
           <div>
             <h5>Listings</h5>
             <Link href="/listings">All listings</Link>
-            <a href="https://crlre.com/ocean-view-properties/">Ocean View</a>
-            <a href="https://crlre.com/lot-land/">Land</a>
-            <a href="https://crlre.com/agents/">Agents</a>
           </div>
           <div>
             <h5>Contact</h5>

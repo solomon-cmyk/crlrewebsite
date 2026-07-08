@@ -19,10 +19,13 @@ Starter SEO articles live in `src/lib/blog/posts.ts`. Soro-published articles ar
 
 ### 1. Vercel Blob (required for autopublish)
 
+Blob storage cannot be created through the Vercel CLI. Use the dashboard:
+
 1. Open the Vercel project `crlrewebsite`.
-2. Go to **Storage** → **Create Database/Store** → **Blob**.
+2. Go to **Storage** → **Create** → **Blob**.
 3. Link the Blob store to the project.
 4. Confirm `BLOB_READ_WRITE_TOKEN` appears in project environment variables.
+5. Redeploy.
 
 ### 2. Webhook secret
 

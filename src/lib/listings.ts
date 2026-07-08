@@ -7,7 +7,6 @@ export type ListingSpec = {
 
 export type Listing = {
   slug: string;
-  href: string;
   tag: string;
   image: string;
   alt: string;
@@ -18,6 +17,9 @@ export type Listing = {
   excerpt: string;
   sold: boolean;
   featured: boolean;
+  images: string[];
+  description: string[];
+  features: string[];
 };
 
 export function getAllListings(): Listing[] {
