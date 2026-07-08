@@ -37,6 +37,7 @@ export function Footer() {
         </div>
       </div>
       <div className="wrap footer-legal">
+        <Link href="/blog">Blog</Link>
         {LEGAL_LINKS.map((link) => (
           <Link key={link.href} href={link.href}>
             {link.label}

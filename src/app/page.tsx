@@ -1,3 +1,4 @@
+import { BlogPreview } from "@/components/blog/BlogPreview";
 import { Calculator } from "@/components/Calculator";
 import { ControlSplit } from "@/components/ControlSplit";
 import { Disclosures } from "@/components/Disclosures";
@@ -26,6 +27,7 @@ export default function Home() {
       <ControlSplit />
       <Lifecycle />
       <Disclosures />
+      <BlogPreview />
       <Footer />
     </main>
   );

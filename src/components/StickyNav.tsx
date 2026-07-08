@@ -4,6 +4,7 @@ import { CONTACT } from "@/lib/contact";
 import { LOGOS } from "@/lib/assets";
 import { navSections } from "@/lib/content";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function StickyNav() {
@@ -30,6 +31,9 @@ export function StickyNav() {
           />
         </a>
         <div className="site-nav__links">
+          <Link href="/blog" className="site-nav__link">
+            Blog
+          </Link>
           {navSections.map((section) => (
             <a key={section.id} href={`#${section.id}`} className="site-nav__link">
               {section.label}
