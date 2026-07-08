@@ -2,6 +2,7 @@
 
 import { COLLECTION_OPTIONS } from "@/lib/broker-content";
 import { CONTACT } from "@/lib/contact";
+import { submitLeadForm } from "@/lib/forms";
 import { TCPA_CONSENT_LABEL, TCPA_CONSENT_NOTE } from "@/lib/legal/consent";
 import Link from "next/link";
 import {
@@ -34,10 +35,14 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [intent, setIntent] = useState<LeadIntent>("info");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const openModal = useCallback((nextIntent: LeadIntent = "info") => {
     setIntent(nextIntent);
     setSubmitted(false);
+    setSubmitting(false);
+    setError(null);
     setOpen(true);
   }, []);
 
@@ -55,24 +60,30 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(() => ({ openModal, closeModal }), [closeModal, openModal]);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError(null);
+    setSubmitting(true);
+
     const form = event.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "");
-    const email = String(data.get("email") ?? "");
-    const phone = String(data.get("phone") ?? "");
-    const collection = String(data.get("collection") ?? "");
-    const message = String(data.get("message") ?? "");
-    const tcpaConsent = data.get("tcpaConsent") === "on";
-    const subject = encodeURIComponent(
-      `${intent === "reserve" ? "Maravé Reservation Request" : "Maravé Information Request"} | ${name}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nCollection: ${collection}\nIntent: ${intent === "reserve" ? "Reservation Agreement" : "More Information"}\nTCPA Consent: ${tcpaConsent ? "Yes" : "No"}\n\n${message}`
-    );
-    window.location.href = `mailto:${CONTACT.emailMarave}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+
+    try {
+      await submitLeadForm({
+        name: String(data.get("name") ?? ""),
+        email: String(data.get("email") ?? ""),
+        phone: String(data.get("phone") ?? ""),
+        collection: String(data.get("collection") ?? ""),
+        message: String(data.get("message") ?? ""),
+        intent: intent === "reserve" ? "Reservation Agreement" : "More Information",
+        tcpaConsent: data.get("tcpaConsent") === "on",
+      });
+      setSubmitted(true);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Unable to send your request.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -116,10 +127,16 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
               <div className="modal-success">
                 <div className="ck">✓</div>
                 <h3>Thank you.</h3>
-                <p>Your request is ready to send. Mark personally responds within 24 hours.</p>
-                <p style={{ marginTop: 16 }}>
-                  Or reach Mark directly at {CONTACT.emailMarave} · {CONTACT.phoneCr}
+                <p>
+                  Your message has been received. Mark personally responds within 24 hours on
+                  business days.
                 </p>
+                <p style={{ marginTop: 16 }}>
+                  You can also reach Mark directly at {CONTACT.email} · {CONTACT.phoneCr}
+                </p>
+                <button type="button" className="btn btn-ink modal-submit" onClick={closeModal}>
+                  Close
+                </button>
               </div>
             ) : (
               <>
@@ -128,6 +145,7 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
                     type="button"
                     className={intent === "info" ? "active" : undefined}
                     onClick={() => setIntent("info")}
+                    disabled={submitting}
                   >
                     More Information
                   </button>
@@ -135,6 +153,7 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
                     type="button"
                     className={intent === "reserve" ? "active" : undefined}
                     onClick={() => setIntent("reserve")}
+                    disabled={submitting}
                   >
                     Reservation Agreement
                   </button>
@@ -181,11 +200,16 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
                       <Link href="/privacy#communications-consent">Privacy Policy</Link>.
                     </p>
                   </div>
-                  <button type="submit" className="btn btn-bronze modal-submit">
-                    {intent === "reserve" ? "Request reservation →" : "Send to Mark →"}
+                  {error && <p className="form-error">{error}</p>}
+                  <button type="submit" className="btn btn-bronze modal-submit" disabled={submitting}>
+                    {submitting
+                      ? "Sending..."
+                      : intent === "reserve"
+                        ? "Request reservation →"
+                        : "Send to Mark →"}
                   </button>
                   <p className="modal-note">
-                    Or reach Mark directly at {CONTACT.emailMarave} · {CONTACT.phoneCr}
+                    Or reach Mark directly at {CONTACT.email} · {CONTACT.phoneCr}
                   </p>
                 </form>
               </>

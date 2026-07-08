@@ -68,7 +68,7 @@ export function LegalPageShell({
         <div className="wrap">
           <p>
             Questions about these policies? Contact{" "}
-            <a href={CONTACT.emailCrlreHref}>{CONTACT.emailCrlre}</a> or call{" "}
+            <a href={CONTACT.emailHref}>{CONTACT.email}</a> or call{" "}
             <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs}</a>.
           </p>
           <p className="legal-page__footer-links">

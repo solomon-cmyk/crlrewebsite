@@ -40,7 +40,7 @@ export function BrokerFooter() {
           </div>
           <div>
             <h5>Contact</h5>
-            <a href={CONTACT.emailMaraveHref}>{CONTACT.emailMarave}</a>
+            <a href={CONTACT.emailHref}>{CONTACT.email}</a>
             <a href={CONTACT.phoneCrHref}>{CONTACT.phoneCr}</a>
             <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs}</a>
             <Link href="/blog">Blog</Link>

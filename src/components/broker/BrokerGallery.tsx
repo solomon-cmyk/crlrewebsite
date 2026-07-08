@@ -15,7 +15,7 @@ export function BrokerGallery() {
         <div className="gal-grid reveal">
           {GALLERY_ITEMS.map((item) => (
             <a
-              className={`gal${item.wide ? " g-wide" : ""}${item.tall ? " g-tall" : ""}`}
+              className={`gal${item.hero ? " g-hero" : ""}`}
               href={item.href}
               key={item.label}
               target="_blank"

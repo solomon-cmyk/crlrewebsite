@@ -8,7 +8,7 @@ export const SITE = {
   productName: "Costa Rica Luxury Real Estate · Maravé Resort & Residences",
   publisher: CONTACT.company,
   lastUpdated: "July 7, 2026",
-  contactEmail: CONTACT.emailCrlre,
+  contactEmail: CONTACT.email,
   contactPhone: CONTACT.phoneUs,
   address: CONTACT.address,
 } as const;

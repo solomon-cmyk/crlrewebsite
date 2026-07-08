@@ -929,8 +929,8 @@
 /* GALLERY */
   .gal-grid {
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-auto-rows:200px;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:220px;
   gap:14px
 }
 
@@ -969,11 +969,8 @@
   opacity:1
 }
 
-  .g-wide {
-  grid-column:span 2
-}
-
-  .g-tall {
+  .g-hero {
+  grid-column:span 2;
   grid-row:span 2
 }
 
@@ -1584,6 +1581,13 @@ to {
   text-align:center
 }
 
+  .form-error {
+  font-size:.82rem;
+  color:#9b2c2c;
+  margin:0 0 12px;
+  line-height:1.45
+}
+
   .modal-success {
   text-align:center;
   padding:20px 6px
@@ -2011,7 +2015,7 @@ to {
   padding: 22px
 }
 
-    .g-wide,.g-tall {
+    .g-hero {
   grid-column: auto;
   grid-row: auto
 }

@@ -29,7 +29,7 @@ export async function GET() {
     "",
     "## Contact",
     `- ${CONTACT.name} · ${CONTACT.company}`,
-    `- Email: ${CONTACT.emailMarave} · ${CONTACT.emailCrlre}`,
+    `- Email: ${CONTACT.email}`,
     `- Phone: ${CONTACT.phoneCr} (CR) · ${CONTACT.phoneUs} (US)`,
     "",
     "Pre-construction pricing and availability are subject to change. Listings on crlre.com are updated independently.",

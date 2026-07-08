@@ -27,8 +27,7 @@ export function ContactSection() {
           </button>
         </div>
         <div className="contact-meta">
-          <a href={CONTACT.emailMaraveHref}>{CONTACT.emailMarave}</a>
-          <a href={CONTACT.emailCrlreHref}>{CONTACT.emailCrlre}</a>
+          <a href={CONTACT.emailHref}>{CONTACT.email}</a>
           <a href={CONTACT.phoneCrHref}>{CONTACT.phoneCr} (CR)</a>
           <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs} (US)</a>
         </div>

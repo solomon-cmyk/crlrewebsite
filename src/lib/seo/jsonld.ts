@@ -83,7 +83,7 @@ export function organizationJsonLd() {
     name: SITE.publisher,
     url: SITE_URL,
     telephone: [CONTACT.phoneCr, CONTACT.phoneUs],
-    email: [CONTACT.emailMarave, CONTACT.emailCrlre],
+    email: CONTACT.email,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Manuel Antonio",

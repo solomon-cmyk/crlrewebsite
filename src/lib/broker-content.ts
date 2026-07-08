@@ -136,8 +136,7 @@ export type GalleryItem = {
   src: string;
   alt: string;
   label: string;
-  wide?: boolean;
-  tall?: boolean;
+  hero?: boolean;
 };
 
 export const GALLERY_ITEMS: GalleryItem[] = [
@@ -146,8 +145,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_17_Aerial_03.jpg",
     alt: "Aerial estate",
     label: "Aerial Estate",
-    wide: true,
-    tall: true,
+    hero: true,
   },
   {
     href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Condo%20A/H_OC_Interior_CondoA_Living_Day.jpg",
@@ -166,7 +164,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Villa/H_OC_Exterior_18_Villas_Pool.jpg",
     alt: "Villa plunge pool",
     label: "Villa · Plunge Pool",
-    wide: true,
   },
   {
     href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_05_Beach_Club_Pool_V1_06-2.jpg",
@@ -179,19 +176,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/LXR%20Beach%20Image.webp",
     alt: "Pacific beachfront",
     label: "Pacific Beachfront",
-    wide: true,
-  },
-  {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_14_Villas%20Day_b.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Exterior%20Shots%20and%20Beach%20Hero/H_OC_Exterior_14_Villas%20Day_b.jpg",
-    alt: "Villas by day",
-    label: "The Villas",
-  },
-  {
-    href: "https://www.maraveresidences.com/Marave%20Final%20Renders/Extra%20Images/Manuel%20Antonio%20Park.jpg",
-    src: "https://www.maraveresidences.com/Marave%20Final%20Renders/Extra%20Images/Manuel%20Antonio%20Park.jpg",
-    alt: "Manuel Antonio National Park",
-    label: "National Park",
   },
 ];
 
