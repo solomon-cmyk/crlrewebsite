@@ -1,18 +1,20 @@
 import type { MetadataRoute } from "next";
 import { getAllBlogPosts } from "@/lib/blog/queries";
+import { getAllListings } from "@/lib/listings";
 import { SITE_URL } from "@/lib/assets";
 
-const STATIC_PATHS = ["/", "/blog", "/privacy", "/terms", "/cookie-policy"] as const;
+const STATIC_PATHS = ["/", "/listings", "/blog", "/privacy", "/terms", "/cookie-policy"] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllBlogPosts();
-  const lastModified = new Date("2026-07-07");
+  const listings = getAllListings();
+  const lastModified = new Date("2026-07-08");
 
   const staticEntries = STATIC_PATHS.map((path) => ({
     url: `${SITE_URL}${path === "/" ? "" : path}`,
     lastModified,
     changeFrequency: "weekly" as const,
-    priority: path === "/" ? 1 : path === "/blog" ? 0.9 : 0.5,
+    priority: path === "/" ? 1 : path === "/blog" || path === "/listings" ? 0.9 : 0.5,
   }));
 
   const blogEntries = posts.map((post) => ({
@@ -22,5 +24,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticEntries, ...blogEntries];
+  const listingEntries = listings.map((listing) => ({
+    url: `${SITE_URL}/listings/${listing.slug}`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.75,
+  }));
+
+  return [...staticEntries, ...blogEntries, ...listingEntries];
 }

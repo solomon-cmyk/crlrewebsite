@@ -3,7 +3,7 @@ export const NAV_LINKS = [
   { href: "#collections", label: "Residences" },
   { href: "#gallery", label: "Gallery" },
   { href: "#reserve", label: "Reserve" },
-  { href: "#listings", label: "Listings" },
+  { href: "/listings", label: "Listings" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -204,93 +204,6 @@ export const OWNERSHIP_INCLUDES = [
   "Operated & managed by Remington Hospitality",
   "Hilton as the HOA management company",
   "Full LXR branding, standards & five-star furnishing",
-] as const;
-
-export const LISTINGS = [
-  {
-    href: "https://crlre.com/properties/",
-    tag: "Estate",
-    image: "https://crlre.com/wp-content/uploads/jasmine20.jpg",
-    alt: "Casa Jasmine",
-    location: "La Reserva · Manuel Antonio",
-    title: "Casa Jasmine",
-    price: "$3,550,000",
-    specs: [
-      { label: "8", suffix: " beds" },
-      { label: "8.5", suffix: " baths" },
-      { label: "930", suffix: " m²" },
-    ],
-  },
-  {
-    href: "https://crlre.com/properties/casa-manuel-antonio-under-construction-now/",
-    tag: "New Build",
-    image: "https://crlre.com/wp-content/uploads/MA41.png",
-    alt: "Casa Manuel Antonio",
-    location: "Manuel Antonio · Puntarenas",
-    title: "Casa Manuel Antonio",
-    price: "$9,500,000",
-    specs: [
-      { label: "11", suffix: " beds" },
-      { label: "13", suffix: " baths" },
-      { label: "15k+", suffix: " m²" },
-    ],
-  },
-  {
-    href: "https://crlre.com/properties/casa-vista-royal-luxury-villa-uvita-costa-rica/",
-    tag: "Ocean View",
-    image: "https://crlre.com/wp-content/uploads/VISTA-ROYAL-109-e1749845678253.jpg",
-    alt: "Casa Vista Royal",
-    location: "Uvita · Puntarenas",
-    title: "Casa Vista Royal",
-    price: "$3,250,000",
-    specs: [
-      { label: "6", suffix: " beds" },
-      { label: "6", suffix: " baths" },
-      { label: "10k", suffix: " m²" },
-    ],
-  },
-  {
-    href: "https://crlre.com/properties/brisas-del-golfo/",
-    tag: "Private Home",
-    image: "https://crlre.com/wp-content/uploads/Brisas_Del_Golfo_021.jpg",
-    alt: "Casa Mel",
-    location: "Palma Quemada · Matapalo",
-    title: "Casa Mel",
-    price: "$1,490,000",
-    specs: [
-      { label: "6", suffix: " beds" },
-      { label: "6", suffix: " baths" },
-      { label: "5k", suffix: " m²" },
-    ],
-  },
-  {
-    href: "https://crlre.com/properties/new-construction-gorgeous-tropical-home-in-exclusive-gated-community/",
-    tag: "New Build",
-    image: "https://crlre.com/wp-content/uploads/Casa-Blanca-Color.jpg",
-    alt: "Casa Blanca",
-    location: "Matapalo · Puntarenas",
-    title: "Casa Blanca",
-    price: "$1,295,000",
-    specs: [
-      { label: "5", suffix: " beds" },
-      { label: "5", suffix: " baths" },
-      { label: "5k", suffix: " m²" },
-    ],
-  },
-  {
-    href: "https://crlre.com/properties/casa-cielo-contemporary-home-plus-adjacent-lot-with-caretakers-house-for-sale-in-manuel-antonio-mls-7vr101/",
-    tag: "Contemporary",
-    image: "https://crlre.com/wp-content/uploads/transitional-1692243971.59889.jpg",
-    alt: "Casa Cielo",
-    location: "Manuel Antonio · Puntarenas",
-    title: "Casa Cielo",
-    price: "$729,000",
-    specs: [
-      { label: "6", suffix: " beds" },
-      { label: "6", suffix: " baths" },
-      { label: "7k", suffix: " sqft" },
-    ],
-  },
 ] as const;
 
 export const TEAM = [

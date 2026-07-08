@@ -13,5 +13,5 @@ export const CONTACT = {
   emailCrlreHref: "mailto:mark@crlre.com",
   website: "crlre.com",
   websiteHref: "https://crlre.com",
-  propertiesHref: "https://crlre.com/properties/",
+  propertiesHref: "/listings",
 } as const;

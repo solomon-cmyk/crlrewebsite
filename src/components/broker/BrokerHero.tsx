@@ -1,4 +1,5 @@
 import { HeroFigure } from "@/components/broker/HeroFigure";
+import Link from "next/link";
 
 export function BrokerHero() {
   return (
@@ -18,9 +19,9 @@ export function BrokerHero() {
             <a href="#marave" className="btn btn-ink">
               Discover Maravé
             </a>
-            <a href="#listings" className="btn btn-line">
+            <Link href="/listings" className="btn btn-line">
               View exclusive listings
-            </a>
+            </Link>
           </div>
         </div>
         <HeroFigure />

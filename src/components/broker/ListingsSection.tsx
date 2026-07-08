@@ -1,8 +1,11 @@
-import Image from "next/image";
-import { CONTACT } from "@/lib/contact";
-import { LISTINGS } from "@/lib/broker-content";
+import { ListingCard } from "@/components/broker/ListingCard";
+import { getAllListings, getFeaturedListings } from "@/lib/listings";
+import Link from "next/link";
 
 export function ListingsSection() {
+  const listings = getFeaturedListings(6);
+  const totalCount = getAllListings().length;
+
   return (
     <section className="block" id="listings">
       <div className="wrap">
@@ -18,32 +21,14 @@ export function ListingsSection() {
           </p>
         </div>
         <div className="grid">
-          {LISTINGS.map((listing) => (
-            <a className="card reveal" href={listing.href} key={listing.title} target="_blank" rel="noopener noreferrer">
-              <div className="photo">
-                <span className="tag">{listing.tag}</span>
-                <Image src={listing.image} alt={listing.alt} width={600} height={250} unoptimized />
-              </div>
-              <div className="body">
-                <span className="loc">{listing.location}</span>
-                <h3>{listing.title}</h3>
-                <div className="price">{listing.price}</div>
-                <div className="specs">
-                  {listing.specs.map((spec) => (
-                    <span key={spec.label}>
-                      <b>{spec.label}</b>
-                      {spec.suffix}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </a>
+          {listings.map((listing) => (
+            <ListingCard key={listing.slug} listing={listing} />
           ))}
         </div>
         <div className="center-cta reveal">
-          <a href={CONTACT.propertiesHref} className="btn btn-ink">
-            View all properties →
-          </a>
+          <Link href="/listings" className="btn btn-ink">
+            View all {totalCount} properties →
+          </Link>
         </div>
       </div>
     </section>
