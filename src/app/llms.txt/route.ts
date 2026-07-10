@@ -17,7 +17,10 @@ export async function GET() {
     `- Home: ${SITE_URL}/`,
     `- Maravé overview: ${SITE_URL}/#marave`,
     `- Collections: ${SITE_URL}/#collections`,
+    `- Gallery: ${SITE_URL}/#gallery`,
     `- Reserve: ${SITE_URL}/#reserve`,
+    `- Exclusive listings: ${SITE_URL}/listings`,
+    `- Featured listing · Mercadito Gastronómico: ${SITE_URL}/listings/mercadito-gastronomico-manuel-antonio`,
     `- Contact: ${SITE_URL}/#contact`,
     `- Blog index: ${SITE_URL}/blog`,
     "",
@@ -30,7 +33,6 @@ export async function GET() {
     "## Contact",
     `- ${CONTACT.name} · ${CONTACT.company}`,
     `- Email: ${CONTACT.email}`,
-    `- Phone: ${CONTACT.phoneCr} (CR) · ${CONTACT.phoneUs} (US)`,
     "",
     "Pre-construction pricing and availability are subject to change. Property listings are updated on this site.",
   ];

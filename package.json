@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "media:setup": "node scripts/setup-local-media.mjs",
+    "media:optimize": "node scripts/optimize-production.mjs",
+    "listings:sync": "python3 scripts/sync-listings.py"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
