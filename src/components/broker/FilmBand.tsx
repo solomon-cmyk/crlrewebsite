@@ -91,7 +91,7 @@ export function FilmBand() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster={POSTER_SRC}
               aria-label="Maravé Resort & Residences film"
             >

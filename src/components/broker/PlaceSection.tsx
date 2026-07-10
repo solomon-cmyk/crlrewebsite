@@ -12,7 +12,7 @@ export function PlaceSection() {
             width={800}
             height={540}
             className="place-image"
-            unoptimized
+            sizes="(max-width: 660px) 100vw, 48vw"
           />
         </div>
         <div className="place-copy reveal">

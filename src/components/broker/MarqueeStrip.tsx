@@ -103,7 +103,14 @@ export function MarqueeStrip() {
         <div className="marquee-track" ref={trackRef} id="mqTrack">
           {items.map((item, index) => (
             <div className="mq-card" key={`${item.label}-${index}`}>
-              <Image src={item.src} alt={item.alt} width={380} height={262} unoptimized />
+              <Image
+                src={item.src}
+                alt={item.alt}
+                width={380}
+                height={262}
+                sizes="280px"
+                loading={index < 4 ? "eager" : "lazy"}
+              />
               <span>{item.label}</span>
             </div>
           ))}

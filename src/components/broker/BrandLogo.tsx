@@ -19,6 +19,7 @@ export function BrandLogo({
       height={220}
       className={`logo-img${compact ? " logo-img--compact" : ""}`}
       priority
+      sizes="(max-width: 660px) 160px, 220px"
     />
   );
 

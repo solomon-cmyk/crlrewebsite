@@ -18,6 +18,7 @@ export function BrokerFooter() {
               width={900}
               height={220}
               className="foot-logo"
+              sizes="220px"
             />
             <p>
               Developer & exclusive representative of Maravé, Resort & Residences · Manuel Antonio,

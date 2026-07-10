@@ -1,12 +1,12 @@
 export const IMAGES = {
-  hero: "/images/hero/marave-hero-aerial-sunset-pacific.jpg",
+  hero: "/media/marave/images/hero-aerial-sunset.webp",
   og: "/images/og/marave-og-aerial-sunset-1200x630.jpg",
 } as const;
 
 export const LOGOS = {
-  crlreWordmark: "/logos/crlre-wordmark.png",
+  crlreWordmark: "/logos/crlre-wordmark.webp",
   crlreMonogram: "/logos/crlre-monogram.svg",
-  maraveHorizontalWhite: "/logos/marave-logo-horizontal-white.png",
+  maraveHorizontalWhite: "/logos/marave-logo-horizontal-white.webp",
   monogram: "/logos/crlre-monogram.svg",
 } as const;
 

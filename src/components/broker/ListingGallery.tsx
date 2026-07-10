@@ -72,9 +72,8 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
           src={images[active]}
           alt={`${title} — photo ${active + 1} of ${total}`}
           fill
-          unoptimized
           priority={active === 0}
-          sizes="(max-width: 660px) 100vw, 1200px"
+          sizes="(max-width: 660px) 100vw, 55vw"
           className="listing-gallery__hero-img"
         />
         {total > 1 && (
@@ -114,7 +113,7 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
               className={`listing-gallery__thumb${index === active ? " is-active" : ""}`}
               onClick={() => setActive(index)}
             >
-              <Image src={src} alt="" width={140} height={92} unoptimized />
+              <Image src={src} alt="" width={140} height={92} sizes="92px" loading="lazy" />
             </button>
           ))}
         </div>

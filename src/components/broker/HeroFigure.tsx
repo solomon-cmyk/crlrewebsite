@@ -40,7 +40,7 @@ export function HeroFigure() {
         height={540}
         className="hero-image"
         priority
-        unoptimized
+        sizes="(max-width: 660px) 100vw, 48vw"
       />
       <span className="hero-cap">Maravé · Resort & Residences</span>
     </div>

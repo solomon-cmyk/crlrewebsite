@@ -12,15 +12,17 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
+  preload: true,
 });
 
 const jost = Jost({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
+  preload: true,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL;

@@ -17,7 +17,7 @@ export function CollectionsSection() {
             <div className="tier reveal" key={tier.title}>
               <div className="ph">
                 <span className="num">{tier.num}</span>
-                <Image src={tier.image} alt={tier.alt} width={600} height={248} unoptimized />
+                <Image src={tier.image} alt={tier.alt} width={600} height={248} sizes="(max-width: 660px) 100vw, 33vw" />
               </div>
               <div className="body">
                 <span className="kind">{tier.kind}</span>

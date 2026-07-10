@@ -15,7 +15,7 @@ export function ListingCard({ listing, className = "card reveal" }: ListingCardP
     >
       <div className="photo">
         <span className={`tag${listing.sold ? " tag--sold" : ""}`}>{listing.tag}</span>
-        <Image src={listing.image} alt={listing.alt} width={600} height={250} unoptimized />
+        <Image src={listing.image} alt={listing.alt} width={600} height={250} sizes="(max-width: 660px) 100vw, (max-width: 1100px) 50vw, 360px" />
       </div>
       <div className="body">
         <span className="loc">{listing.location}</span>
