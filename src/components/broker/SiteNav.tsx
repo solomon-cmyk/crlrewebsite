@@ -6,6 +6,33 @@ import { BrandLogo } from "@/components/broker/BrandLogo";
 import { NAV_LINKS } from "@/lib/broker-content";
 import { useSmartNav } from "@/hooks/useSmartNav";
 
+function NavItem({
+  href,
+  children,
+  className,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
+  // Native anchors for hash routes so /listings → /#gallery always navigates + scrolls
+  if (href.includes("#")) {
+    return (
+      <a href={href} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
+
 export function SiteNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrolled, hidden } = useSmartNav(menuOpen);
@@ -36,23 +63,17 @@ export function SiteNav() {
         <div className="wrap nav-inner">
           <BrandLogo onClick={closeMenu} compact={scrolled || menuOpen} />
           <nav className={`links${menuOpen ? " open" : ""}`} id="links" aria-label="Primary">
-            {NAV_LINKS.map((link) =>
-              link.href.startsWith("/") ? (
-                <Link key={link.href} href={link.href} onClick={closeMenu}>
-                  {link.label}
-                </Link>
-              ) : (
-                <a key={link.href} href={link.href} onClick={closeMenu}>
-                  {link.label}
-                </a>
-              )
-            )}
-            <Link href="/blog" onClick={closeMenu}>
+            {NAV_LINKS.map((link) => (
+              <NavItem key={link.href} href={link.href} onClick={closeMenu}>
+                {link.label}
+              </NavItem>
+            ))}
+            <NavItem href="/blog" onClick={closeMenu}>
               Blog
-            </Link>
-            <Link href="/#contact" className="btn btn-ghost nav-contact" onClick={closeMenu}>
+            </NavItem>
+            <NavItem href="/#contact" className="btn btn-ghost nav-contact" onClick={closeMenu}>
               Contact
-            </Link>
+            </NavItem>
           </nav>
           <button
             type="button"

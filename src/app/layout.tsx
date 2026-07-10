@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Jost } from "next/font/google";
 import { ConsentAnalytics } from "@/components/ConsentAnalytics";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookieConsentProvider } from "@/components/CookieConsentProvider";
+import { HashScroll } from "@/components/HashScroll";
 import { IMAGES, SITE_URL } from "@/lib/assets";
 import { organizationJsonLd, jsonLdScript, websiteJsonLd } from "@/lib/seo/jsonld";
 import "./globals.css";
@@ -105,6 +106,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={jsonLdScript([organizationJsonLd(), websiteJsonLd()])}
         />
         <CookieConsentProvider>
+          <HashScroll />
           {children}
           <CookieConsentBanner />
           <ConsentAnalytics />

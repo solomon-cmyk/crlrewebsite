@@ -14,7 +14,7 @@ export function TeamSection() {
         </div>
         <div className="agent-grid">
           {TEAM.map((agent) => (
-            <a className="agent reveal" href={agent.href} key={agent.name} target="_blank" rel="noopener noreferrer">
+            <a className="agent reveal" href={agent.href} key={agent.name}>
               <Image src={agent.image} alt={agent.name} width={104} height={104} unoptimized />
               <div>
                 <h3>{agent.name}</h3>
