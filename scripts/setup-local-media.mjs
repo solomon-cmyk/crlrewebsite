@@ -57,6 +57,14 @@ const MARAVE_DOWNLOADS = [
     url: `${MARAVE_BASE}/videos/residences-hero.mp4`,
     dest: "videos/residences-hero.mp4",
   },
+  {
+    url: `${MARAVE_BASE}/videos/hero.mp4`,
+    dest: "videos/hero.mp4",
+  },
+  {
+    url: `${MARAVE_BASE}/videos/hero-mobile.mp4`,
+    dest: "videos/hero-mobile.mp4",
+  },
 ];
 
 const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;

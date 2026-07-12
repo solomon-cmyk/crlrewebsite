@@ -376,7 +376,8 @@
   will-change:transform
 }
 
-  .hero-figure--motion img {
+  .hero-figure--motion img,
+  .hero-figure--motion video {
   transform:translateY(calc(var(--hero-shift) * -1));
   transition:transform .2s linear
 }
@@ -410,10 +411,13 @@
   position:relative
 }
 
-  .hero-figure img {
+  .hero-figure img,
+  .hero-figure video {
   width:100%;
   height:540px;
-  object-fit:cover
+  object-fit:cover;
+  display:block;
+  background:var(--ink)
 }
 
   .hero-figure::after {
@@ -1934,7 +1938,8 @@ to {
   gap:40px
 }
 
-    .hero-figure img {
+    .hero-figure img,
+    .hero-figure video {
   height:430px
 }
 
@@ -2108,7 +2113,8 @@ to {
   margin:16px 0 22px
 }
 
-    .hero-figure img {
+    .hero-figure img,
+    .hero-figure video {
   height:330px
 }
 
@@ -2201,7 +2207,8 @@ to {
   transform:none!important
 }
 
-    .hero-figure--motion img {
+    .hero-figure--motion img,
+    .hero-figure--motion video {
   transform:none!important
 }
 
