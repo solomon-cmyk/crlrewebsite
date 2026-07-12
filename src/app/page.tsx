@@ -17,6 +17,8 @@ import { RevealOnScroll } from "@/components/broker/RevealOnScroll";
 import { SiteNav } from "@/components/broker/SiteNav";
 import { TeamSection } from "@/components/broker/TeamSection";
 
+export const revalidate = 300;
+
 export default async function Home() {
   return (
     <LeadModalProvider>

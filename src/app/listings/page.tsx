@@ -1,10 +1,12 @@
 import { ListingCard } from "@/components/broker/ListingCard";
 import { BrokerFooter } from "@/components/broker/BrokerFooter";
 import { SiteNav } from "@/components/broker/SiteNav";
-import { getActiveListings, getAllListings } from "@/lib/listings";
+import { getAllListings } from "@/lib/listings";
 import { organizationJsonLd, jsonLdScript, websiteJsonLd } from "@/lib/seo/jsonld";
 import type { Metadata } from "next";
 import Link from "next/link";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
 
 export default async function ListingsIndexPage() {
   const listings = await getAllListings();
-  const activeCount = (await getActiveListings()).length;
+  const activeCount = listings.filter((listing) => !listing.sold).length;
 
   return (
     <>

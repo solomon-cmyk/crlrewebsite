@@ -1,8 +1,5 @@
 import { LISTINGS_DATA } from "@/lib/listings-data";
-import {
-  getMergedListingBySlug,
-  getMergedListings,
-} from "@/lib/listings/store";
+import { getMergedListingBySlug, getMergedListings } from "@/lib/listings/store";
 
 export type ListingSpec = {
   label: string;
@@ -26,17 +23,13 @@ export type Listing = {
   features: string[];
 };
 
-/** Sync fallback used only for build-time static params when needed. */
+/** Sync fallback used only when storage is unavailable. */
 export function getStaticListings(): Listing[] {
   return [...LISTINGS_DATA];
 }
 
 export async function getAllListings(): Promise<Listing[]> {
-  try {
-    return await getMergedListings();
-  } catch {
-    return getStaticListings();
-  }
+  return getMergedListings();
 }
 
 export async function getActiveListings(): Promise<Listing[]> {
@@ -45,16 +38,13 @@ export async function getActiveListings(): Promise<Listing[]> {
 }
 
 export async function getFeaturedListings(limit = 6): Promise<Listing[]> {
-  const active = await getActiveListings();
+  const listings = await getAllListings();
+  const active = listings.filter((listing) => !listing.sold);
   const featured = active.filter((listing) => listing.featured);
   const rest = active.filter((listing) => !listing.featured);
   return [...featured, ...rest].slice(0, limit);
 }
 
 export async function getListingBySlug(slug: string): Promise<Listing | undefined> {
-  try {
-    return await getMergedListingBySlug(slug);
-  } catch {
-    return LISTINGS_DATA.find((listing) => listing.slug === slug);
-  }
+  return getMergedListingBySlug(slug);
 }

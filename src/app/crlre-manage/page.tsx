@@ -1,8 +1,8 @@
 "use client";
 
-import { ADMIN_PATH } from "@/lib/admin/constants";
+import { ADMIN_PATH, safeAdminNextPath } from "@/lib/admin/constants";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useState } from "react";
+import { type FormEvent, Suspense, useState } from "react";
 
 function LoginForm() {
   const router = useRouter();
@@ -28,7 +28,7 @@ function LoginForm() {
         setError(data.error || "Unable to sign in");
         return;
       }
-      const next = searchParams.get("next") || `${ADMIN_PATH}/listings`;
+      const next = safeAdminNextPath(searchParams.get("next"), `${ADMIN_PATH}/listings`);
       router.replace(next);
       router.refresh();
     } catch {

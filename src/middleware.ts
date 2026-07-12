@@ -18,12 +18,15 @@ export async function middleware(request: NextRequest) {
   const session = await readAdminSession(
     token,
     process.env.ADMIN_SESSION_SECRET,
-    process.env.ADMIN_USERNAME
+    process.env.ADMIN_USERNAME,
+    process.env.ADMIN_PASSWORD
   );
   if (session) return NextResponse.next();
 
   const loginUrl = new URL(ADMIN_PATH, request.url);
-  loginUrl.searchParams.set("next", pathname);
+  if (pathname.startsWith(ADMIN_PATH)) {
+    loginUrl.searchParams.set("next", pathname);
+  }
   return NextResponse.redirect(loginUrl);
 }
 

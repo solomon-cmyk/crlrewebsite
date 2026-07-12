@@ -4,11 +4,7 @@ import { getMergedListings, saveListing, slugifyTitle, storageMode } from "@/lib
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-async function requireAdmin() {
-  const session = await getAdminSessionFromCookies();
-  if (!session) return null;
-  return session;
-}
+export const runtime = "nodejs";
 
 function revalidateListingPaths(slug?: string) {
   revalidatePath("/");
@@ -18,7 +14,7 @@ function revalidateListingPaths(slug?: string) {
 }
 
 export async function GET() {
-  if (!(await requireAdmin())) {
+  if (!(await getAdminSessionFromCookies())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
@@ -27,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!(await requireAdmin())) {
+  if (!(await getAdminSessionFromCookies())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
@@ -46,11 +42,6 @@ export async function POST(request: Request) {
   const slug = (body.slug?.trim() || slugifyTitle(title)).toLowerCase();
   if (!slug) {
     return NextResponse.json({ ok: false, error: "Slug is required" }, { status: 400 });
-  }
-
-  const existing = await getMergedListings();
-  if (existing.some((listing) => listing.slug === slug)) {
-    return NextResponse.json({ ok: false, error: "A listing with that slug already exists" }, { status: 409 });
   }
 
   const listing: Listing = {
@@ -76,6 +67,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, listing: saved });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to save listing";
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+    const status = message.includes("already exists") ? 409 : 500;
+    return NextResponse.json({ ok: false, error: message }, { status });
   }
 }

@@ -1,12 +1,10 @@
 import { getAdminSessionFromCookies } from "@/lib/admin/auth";
 import type { Listing } from "@/lib/listings";
-import {
-  deleteListing,
-  getMergedListingBySlug,
-  saveListing,
-} from "@/lib/listings/store";
+import { deleteListing, getMergedListingBySlug, saveListing } from "@/lib/listings/store";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+
+export const runtime = "nodejs";
 
 type RouteContext = {
   params: Promise<{ slug: string }>;
@@ -47,26 +45,26 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 
   const existing = await getMergedListingBySlug(slug);
-  if (!existing && !body.title) {
+  if (!existing) {
     return NextResponse.json({ ok: false, error: "Listing not found" }, { status: 404 });
   }
 
   const nextSlug = (body.slug?.trim() || slug).toLowerCase();
   const listing: Listing = {
     slug: nextSlug,
-    tag: body.tag?.trim() || existing?.tag || "Sale",
-    image: body.image || body.images?.[0] || existing?.image || "",
-    alt: body.alt?.trim() || body.title?.trim() || existing?.alt || "",
-    location: body.location?.trim() ?? existing?.location ?? "",
-    title: body.title?.trim() || existing?.title || "",
-    price: body.price?.trim() || existing?.price || "Contact for price",
-    specs: body.specs ?? existing?.specs ?? [],
-    excerpt: body.excerpt?.trim() ?? existing?.excerpt ?? "",
-    sold: body.sold ?? existing?.sold ?? false,
-    featured: body.featured ?? existing?.featured ?? false,
-    images: body.images ?? existing?.images ?? [],
-    description: body.description ?? existing?.description ?? [],
-    features: body.features ?? existing?.features ?? [],
+    tag: body.tag?.trim() || existing.tag || "Sale",
+    image: body.image || body.images?.[0] || existing.image || "",
+    alt: body.alt?.trim() || body.title?.trim() || existing.alt || "",
+    location: body.location?.trim() ?? existing.location,
+    title: body.title?.trim() || existing.title,
+    price: body.price?.trim() || existing.price || "Contact for price",
+    specs: body.specs ?? existing.specs,
+    excerpt: body.excerpt?.trim() ?? existing.excerpt,
+    sold: body.sold ?? existing.sold,
+    featured: body.featured ?? existing.featured,
+    images: body.images ?? existing.images,
+    description: body.description ?? existing.description,
+    features: body.features ?? existing.features,
   };
 
   if (!listing.title) {
@@ -74,16 +72,15 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 
   try {
-    if (nextSlug !== slug) {
-      await deleteListing(slug);
-    }
-    const saved = await saveListing(listing);
+    // Atomic within one state write: write new + tombstone old together.
+    const saved = await saveListing(listing, { previousSlug: slug });
     revalidateListingPaths(slug);
     revalidateListingPaths(saved.slug);
     return NextResponse.json({ ok: true, listing: saved });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to save listing";
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+    const status = message.includes("already exists") ? 409 : 500;
+    return NextResponse.json({ ok: false, error: message }, { status });
   }
 }
 

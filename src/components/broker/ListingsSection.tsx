@@ -3,8 +3,11 @@ import { getAllListings, getFeaturedListings } from "@/lib/listings";
 import Link from "next/link";
 
 export async function ListingsSection() {
-  const listings = await getFeaturedListings(6);
-  const totalCount = (await getAllListings()).length;
+  const [listings, allListings] = await Promise.all([
+    getFeaturedListings(6),
+    getAllListings(),
+  ]);
+  const totalCount = allListings.length;
 
   return (
     <section className="block" id="listings">

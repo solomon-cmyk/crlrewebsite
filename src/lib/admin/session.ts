@@ -6,6 +6,8 @@ export const SESSION_TTL_MS = 1000 * 60 * 60 * 12; // 12 hours
 export type SessionPayload = {
   email: string;
   exp: number;
+  /** Invalidates sessions when ADMIN_PASSWORD changes. */
+  fp: string;
 };
 
 function toBase64Url(bytes: ArrayBuffer | Uint8Array): string {
@@ -24,7 +26,7 @@ function fromBase64Url(value: string): Uint8Array {
   return bytes;
 }
 
-async function sign(value: string, secret: string): Promise<string> {
+async function hmacSign(value: string, secret: string): Promise<string> {
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),
@@ -36,43 +38,70 @@ async function sign(value: string, secret: string): Promise<string> {
   return toBase64Url(signature);
 }
 
-async function verifySignature(value: string, signature: string, secret: string): Promise<boolean> {
-  const expected = await sign(value, secret);
-  if (expected.length !== signature.length) return false;
+function timingSafeEqualBytes(a: Uint8Array, b: Uint8Array): boolean {
+  if (a.length !== b.length) return false;
   let mismatch = 0;
-  for (let i = 0; i < expected.length; i += 1) {
-    mismatch |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
-  }
+  for (let i = 0; i < a.length; i += 1) mismatch |= a[i] ^ b[i];
   return mismatch === 0;
 }
 
-export async function createAdminSessionToken(email: string, secret: string): Promise<string> {
+export function timingSafeStringEqual(a: string, b: string): boolean {
+  const left = new TextEncoder().encode(a);
+  const right = new TextEncoder().encode(b);
+  if (left.length !== right.length) {
+    let burn = 0;
+    for (let i = 0; i < left.length; i += 1) burn |= left[i];
+    void burn;
+    return false;
+  }
+  return timingSafeEqualBytes(left, right);
+}
+
+export async function passwordFingerprint(password: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(`crlre-admin:${password}`)
+  );
+  return toBase64Url(digest).slice(0, 32);
+}
+
+export async function createAdminSessionToken(
+  email: string,
+  secret: string,
+  password: string
+): Promise<string> {
   const payload: SessionPayload = {
     email: email.trim().toLowerCase(),
     exp: Date.now() + SESSION_TTL_MS,
+    fp: await passwordFingerprint(password),
   };
   const body = toBase64Url(new TextEncoder().encode(JSON.stringify(payload)));
-  const signature = await sign(body, secret);
+  const signature = await hmacSign(body, secret);
   return `${body}.${signature}`;
 }
 
 export async function readAdminSession(
   token: string | null | undefined,
   secret: string | undefined,
-  expectedEmail: string | undefined
+  expectedEmail: string | undefined,
+  expectedPassword: string | undefined
 ): Promise<SessionPayload | null> {
-  if (!secret || !expectedEmail || !token) return null;
+  if (!secret || !expectedEmail || !expectedPassword || !token) return null;
 
   const [body, signature] = token.split(".");
   if (!body || !signature) return null;
-  if (!(await verifySignature(body, signature, secret))) return null;
+
+  const expectedSig = await hmacSign(body, secret);
+  if (!timingSafeStringEqual(expectedSig, signature)) return null;
 
   try {
     const json = new TextDecoder().decode(fromBase64Url(body));
     const payload = JSON.parse(json) as SessionPayload;
-    if (!payload?.email || !payload.exp) return null;
+    if (!payload?.email || !payload.exp || !payload.fp) return null;
     if (payload.exp < Date.now()) return null;
-    if (payload.email !== expectedEmail.trim().toLowerCase()) return null;
+    if (!timingSafeStringEqual(payload.email, expectedEmail.trim().toLowerCase())) return null;
+    const expectedFp = await passwordFingerprint(expectedPassword);
+    if (!timingSafeStringEqual(payload.fp, expectedFp)) return null;
     return payload;
   } catch {
     return null;

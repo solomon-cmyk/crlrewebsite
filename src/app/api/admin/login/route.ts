@@ -5,13 +5,24 @@ import {
   sessionCookieOptions,
   verifyAdminCredentials,
 } from "@/lib/admin/auth";
+import { clientIp, rateLimit } from "@/lib/admin/rate-limit";
 import { NextResponse } from "next/server";
+
+export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   if (!isAdminConfigured()) {
     return NextResponse.json(
       { ok: false, error: "Admin credentials are not configured on this deployment." },
       { status: 503 }
+    );
+  }
+
+  const limited = rateLimit(`admin-login:${clientIp(request)}`, 8, 15 * 60 * 1000);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { ok: false, error: "Too many login attempts. Try again later." },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfterSec) } }
     );
   }
 

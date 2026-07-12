@@ -13,6 +13,7 @@ type ListingPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const revalidate = 300;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

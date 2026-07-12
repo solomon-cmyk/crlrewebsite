@@ -1,33 +1,55 @@
 import { LISTINGS_DATA } from "@/lib/listings-data";
 import type { Listing } from "@/lib/listings";
-import { get, list, put, del } from "@vercel/blob";
+import { del, get, list, put } from "@vercel/blob";
+import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { cache } from "react";
 
-export const LISTINGS_BLOB_PREFIX = "listings/data/";
-export const LISTINGS_META_PATH = "listings/meta.json";
+export const LISTINGS_STATE_PATH = "listings/state.json";
 export const LISTINGS_MEDIA_PREFIX = "listings/media/";
+/** Legacy per-listing files from the first admin revision. */
+const LEGACY_BLOB_PREFIX = "listings/data/";
+const LEGACY_META_PATH = "listings/meta.json";
 
-type ListingsMeta = {
+type ListingsState = {
+  version: number;
   deleted: string[];
+  overrides: Record<string, Listing>;
 };
 
-const EMPTY_META: ListingsMeta = { deleted: [] };
+const EMPTY_STATE: ListingsState = {
+  version: 0,
+  deleted: [],
+  overrides: {},
+};
+
+class StoreReadError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "StoreReadError";
+  }
+}
 
 function hasBlobStorage(): boolean {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
+}
+
+export function requirePersistentStorage(): void {
+  // Local/dev can use `.data/`; Vercel serverless filesystem is ephemeral.
+  if (process.env.VERCEL && !hasBlobStorage()) {
+    throw new Error(
+      "Blob storage is required for listing admin on Vercel. Link a Blob store to this project."
+    );
+  }
 }
 
 function localRoot() {
   return path.join(process.cwd(), ".data", "listings");
 }
 
-function localListingPath(slug: string) {
-  return path.join(localRoot(), "data", `${slug}.json`);
-}
-
-function localMetaPath() {
-  return path.join(localRoot(), "meta.json");
+function localStatePath() {
+  return path.join(localRoot(), "state.json");
 }
 
 function localMediaDir(slug: string) {
@@ -78,93 +100,19 @@ export function slugifyTitle(title: string): string {
     .slice(0, 80);
 }
 
-async function readMetaLocal(): Promise<ListingsMeta> {
-  try {
-    const raw = await fs.readFile(localMetaPath(), "utf8");
-    const parsed = JSON.parse(raw) as ListingsMeta;
-    return { deleted: Array.isArray(parsed.deleted) ? parsed.deleted : [] };
-  } catch {
-    return { ...EMPTY_META };
-  }
+function isValidState(value: unknown): value is ListingsState {
+  if (!value || typeof value !== "object") return false;
+  const state = value as ListingsState;
+  return (
+    typeof state.version === "number" &&
+    Array.isArray(state.deleted) &&
+    !!state.overrides &&
+    typeof state.overrides === "object"
+  );
 }
 
-async function writeMetaLocal(meta: ListingsMeta): Promise<void> {
-  await ensureDir(localRoot());
-  await fs.writeFile(localMetaPath(), JSON.stringify(meta, null, 2));
-}
-
-async function readMetaBlob(): Promise<ListingsMeta> {
-  try {
-    const result = await get(LISTINGS_META_PATH, { access: "private" });
-    if (!result || result.statusCode !== 200) return { ...EMPTY_META };
-    const raw = await new Response(result.stream).text();
-    const parsed = JSON.parse(raw) as ListingsMeta;
-    return { deleted: Array.isArray(parsed.deleted) ? parsed.deleted : [] };
-  } catch {
-    return { ...EMPTY_META };
-  }
-}
-
-async function writeMetaBlob(meta: ListingsMeta): Promise<void> {
-  await put(LISTINGS_META_PATH, JSON.stringify(meta), {
-    access: "private",
-    contentType: "application/json",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
-}
-
-async function readMeta(): Promise<ListingsMeta> {
-  return hasBlobStorage() ? readMetaBlob() : readMetaLocal();
-}
-
-async function writeMeta(meta: ListingsMeta): Promise<void> {
-  if (hasBlobStorage()) await writeMetaBlob(meta);
-  else await writeMetaLocal(meta);
-}
-
-async function listOverridesLocal(): Promise<Listing[]> {
-  const dir = path.join(localRoot(), "data");
-  try {
-    const files = await fs.readdir(dir);
-    const listings = await Promise.all(
-      files
-        .filter((file) => file.endsWith(".json"))
-        .map(async (file) => {
-          const raw = await fs.readFile(path.join(dir, file), "utf8");
-          return normalizeListing(JSON.parse(raw) as Listing);
-        })
-    );
-    return listings.filter((listing) => Boolean(listing.slug));
-  } catch {
-    return [];
-  }
-}
-
-async function listOverridesBlob(): Promise<Listing[]> {
-  try {
-    const { blobs } = await list({ prefix: LISTINGS_BLOB_PREFIX });
-    const listings = await Promise.all(
-      blobs.map(async (blob) => {
-        const result = await get(blob.pathname, { access: "private" });
-        if (!result || result.statusCode !== 200) return null;
-        const raw = await new Response(result.stream).text();
-        return normalizeListing(JSON.parse(raw) as Listing);
-      })
-    );
-    return listings.filter((listing): listing is Listing => Boolean(listing?.slug));
-  } catch {
-    return [];
-  }
-}
-
-async function listOverrides(): Promise<Listing[]> {
-  return hasBlobStorage() ? listOverridesBlob() : listOverridesLocal();
-}
-
-export async function getMergedListings(): Promise<Listing[]> {
-  const [meta, overrides] = await Promise.all([readMeta(), listOverrides()]);
-  const deleted = new Set(meta.deleted);
+function mergeCatalog(state: ListingsState): Listing[] {
+  const deleted = new Set(state.deleted);
   const bySlug = new Map<string, Listing>();
 
   for (const listing of LISTINGS_DATA) {
@@ -172,80 +120,250 @@ export async function getMergedListings(): Promise<Listing[]> {
     bySlug.set(listing.slug, listing);
   }
 
-  for (const listing of overrides) {
-    if (deleted.has(listing.slug)) continue;
-    bySlug.set(listing.slug, listing);
+  for (const listing of Object.values(state.overrides)) {
+    if (!listing?.slug || deleted.has(listing.slug)) continue;
+    bySlug.set(listing.slug, normalizeListing(listing));
   }
 
   return sortListings(Array.from(bySlug.values()));
 }
+
+async function readAllBlobs(prefix: string): Promise<Array<{ pathname: string; url?: string }>> {
+  const items: Array<{ pathname: string; url?: string }> = [];
+  let cursor: string | undefined;
+
+  do {
+    const page = await list({ prefix, cursor });
+    items.push(...page.blobs.map((blob) => ({ pathname: blob.pathname, url: blob.url })));
+    cursor = page.hasMore ? page.cursor : undefined;
+  } while (cursor);
+
+  return items;
+}
+
+async function migrateLegacyBlobState(): Promise<ListingsState | null> {
+  try {
+    const blobs = await readAllBlobs(LEGACY_BLOB_PREFIX);
+    if (!blobs.length) {
+      // Still check legacy meta-only tombstones.
+      try {
+        const metaResult = await get(LEGACY_META_PATH, { access: "private" });
+        if (metaResult?.statusCode === 200) {
+          const raw = await new Response(metaResult.stream).text();
+          const meta = JSON.parse(raw) as { deleted?: string[] };
+          if (Array.isArray(meta.deleted) && meta.deleted.length) {
+            return { version: 1, deleted: meta.deleted, overrides: {} };
+          }
+        }
+      } catch {
+        // no legacy meta
+      }
+      return null;
+    }
+
+    const overrides: Record<string, Listing> = {};
+    await Promise.all(
+      blobs.map(async (blob) => {
+        const result = await get(blob.pathname, { access: "private" });
+        if (!result || result.statusCode !== 200) return;
+        const raw = await new Response(result.stream).text();
+        const listing = normalizeListing(JSON.parse(raw) as Listing);
+        if (listing.slug) overrides[listing.slug] = listing;
+      })
+    );
+
+    let deleted: string[] = [];
+    try {
+      const metaResult = await get(LEGACY_META_PATH, { access: "private" });
+      if (metaResult?.statusCode === 200) {
+        const raw = await new Response(metaResult.stream).text();
+        const meta = JSON.parse(raw) as { deleted?: string[] };
+        deleted = Array.isArray(meta.deleted) ? meta.deleted : [];
+      }
+    } catch {
+      // ignore
+    }
+
+    return { version: 1, deleted, overrides };
+  } catch {
+    return null;
+  }
+}
+
+async function readStateBlob(): Promise<ListingsState> {
+  try {
+    const result = await get(LISTINGS_STATE_PATH, { access: "private" });
+    if (result?.statusCode === 200) {
+      const raw = await new Response(result.stream).text();
+      const parsed = JSON.parse(raw) as unknown;
+      if (!isValidState(parsed)) {
+        throw new StoreReadError("Listings state blob is corrupt");
+      }
+      return {
+        version: parsed.version,
+        deleted: [...parsed.deleted],
+        overrides: { ...parsed.overrides },
+      };
+    }
+  } catch (error) {
+    if (error instanceof StoreReadError) throw error;
+    // Missing blob falls through to legacy migration / empty.
+  }
+
+  const migrated = await migrateLegacyBlobState();
+  if (migrated) {
+    await writeStateBlob(migrated);
+    return migrated;
+  }
+
+  return { ...EMPTY_STATE, overrides: {} };
+}
+
+async function writeStateBlob(state: ListingsState): Promise<void> {
+  await put(LISTINGS_STATE_PATH, JSON.stringify(state), {
+    access: "private",
+    contentType: "application/json",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  });
+}
+
+async function readStateLocal(): Promise<ListingsState> {
+  try {
+    const raw = await fs.readFile(localStatePath(), "utf8");
+    const parsed = JSON.parse(raw) as unknown;
+    if (!isValidState(parsed)) {
+      throw new StoreReadError("Local listings state is corrupt");
+    }
+    return {
+      version: parsed.version,
+      deleted: [...parsed.deleted],
+      overrides: { ...parsed.overrides },
+    };
+  } catch (error) {
+    if (error instanceof StoreReadError) throw error;
+    if ((error as NodeJS.ErrnoException)?.code === "ENOENT") {
+      return { ...EMPTY_STATE, overrides: {} };
+    }
+    throw new StoreReadError(
+      error instanceof Error ? error.message : "Unable to read local listings state"
+    );
+  }
+}
+
+async function writeStateLocal(state: ListingsState): Promise<void> {
+  await ensureDir(localRoot());
+  const tmp = `${localStatePath()}.tmp`;
+  await fs.writeFile(tmp, JSON.stringify(state, null, 2));
+  await fs.rename(tmp, localStatePath());
+}
+
+async function readState(): Promise<ListingsState> {
+  return hasBlobStorage() ? readStateBlob() : readStateLocal();
+}
+
+async function writeState(state: ListingsState): Promise<void> {
+  if (hasBlobStorage()) await writeStateBlob(state);
+  else await writeStateLocal(state);
+}
+
+async function updateState(
+  mutator: (state: ListingsState) => ListingsState | Promise<ListingsState>
+): Promise<ListingsState> {
+  requirePersistentStorage();
+  const current = await readState();
+  const next = await mutator({
+    version: current.version,
+    deleted: [...current.deleted],
+    overrides: { ...current.overrides },
+  });
+  next.version = current.version + 1;
+  await writeState(next);
+  return next;
+}
+
+export const getMergedListings = cache(async (): Promise<Listing[]> => {
+  try {
+    const state = await readState();
+    return mergeCatalog(state);
+  } catch (error) {
+    // Public pages should stay up if storage is briefly unavailable.
+    console.error("[listings] failed to load overrides; serving static catalog", error);
+    return sortListings([...LISTINGS_DATA]);
+  }
+});
 
 export async function getMergedListingBySlug(slug: string): Promise<Listing | undefined> {
   const listings = await getMergedListings();
   return listings.find((listing) => listing.slug === slug);
 }
 
-export async function saveListing(input: Listing): Promise<Listing> {
+export async function saveListing(
+  input: Listing,
+  options?: { previousSlug?: string }
+): Promise<Listing> {
   const listing = normalizeListing(input);
   if (!listing.slug) throw new Error("Slug is required");
   if (!listing.title) throw new Error("Title is required");
+  const previousSlug = options?.previousSlug;
 
-  const meta = await readMeta();
-  meta.deleted = meta.deleted.filter((slug) => slug !== listing.slug);
-  await writeMeta(meta);
+  await updateState((state) => {
+    const live = mergeCatalog(state);
+    const takenByOther = live.some(
+      (item) => item.slug === listing.slug && item.slug !== previousSlug
+    );
+    if (takenByOther) {
+      throw new Error("A listing with that slug already exists");
+    }
 
-  if (hasBlobStorage()) {
-    await put(`${LISTINGS_BLOB_PREFIX}${listing.slug}.json`, JSON.stringify(listing), {
-      access: "private",
-      contentType: "application/json",
-      addRandomSuffix: false,
-      allowOverwrite: true,
-    });
-  } else {
-    await ensureDir(path.join(localRoot(), "data"));
-    await fs.writeFile(localListingPath(listing.slug), JSON.stringify(listing, null, 2));
-  }
+    if (previousSlug && previousSlug !== listing.slug) {
+      delete state.overrides[previousSlug];
+      if (!state.deleted.includes(previousSlug)) state.deleted.push(previousSlug);
+    }
+
+    state.deleted = state.deleted.filter((slug) => slug !== listing.slug);
+    state.overrides[listing.slug] = listing;
+    return state;
+  });
 
   return listing;
 }
 
 export async function deleteListing(slug: string): Promise<void> {
-  const meta = await readMeta();
-  if (!meta.deleted.includes(slug)) {
-    meta.deleted.push(slug);
-    await writeMeta(meta);
-  }
-
-  if (hasBlobStorage()) {
-    try {
-      await del(`${LISTINGS_BLOB_PREFIX}${slug}.json`);
-    } catch {
-      // Override may not exist for static-only listings.
-    }
-  } else {
-    try {
-      await fs.unlink(localListingPath(slug));
-    } catch {
-      // Same as above.
-    }
-  }
+  await updateState((state) => {
+    delete state.overrides[slug];
+    if (!state.deleted.includes(slug)) state.deleted.push(slug);
+    return state;
+  });
 }
 
 export async function uploadListingImage(
   slug: string,
   file: File
 ): Promise<{ url: string }> {
+  requirePersistentStorage();
   if (!slug) throw new Error("Slug is required");
+
+  const allowed = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"]);
+  if (file.type && !allowed.has(file.type)) {
+    throw new Error("Only JPEG, PNG, WebP, GIF, or AVIF images are allowed");
+  }
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const sharp = (await import("sharp")).default;
-  const webp = await sharp(bytes, { failOn: "none" })
+  const image = sharp(bytes, { failOn: "error", limitInputPixels: 40_000_000 });
+  const meta = await image.metadata();
+  if (!meta.format || !["jpeg", "png", "webp", "gif", "avif", "tiff"].includes(meta.format)) {
+    throw new Error("File is not a valid image");
+  }
+
+  const webp = await image
     .rotate()
     .resize({ width: 1600, height: 1600, fit: "inside", withoutEnlargement: true })
     .webp({ quality: 78, effort: 4 })
     .toBuffer();
 
-  const stamp = Date.now();
+  const stamp = `${Date.now()}-${createHash("sha1").update(webp).digest("hex").slice(0, 8)}`;
   const filename = `${stamp}.webp`;
 
   if (hasBlobStorage()) {
@@ -262,6 +380,34 @@ export async function uploadListingImage(
   await ensureDir(dir);
   await fs.writeFile(path.join(dir, filename), webp);
   return { url: `/listings/uploads/managed/${slug}/${filename}` };
+}
+
+export async function deleteListingImage(url: string): Promise<void> {
+  requirePersistentStorage();
+  if (!url) return;
+
+  if (url.startsWith("/listings/uploads/managed/")) {
+    const relative = url.replace(/^\//, "");
+    const full = path.join(process.cwd(), "public", relative);
+    const managedRoot = path.join(process.cwd(), "public", "listings", "uploads", "managed");
+    if (!full.startsWith(managedRoot)) {
+      throw new Error("Invalid local media path");
+    }
+    try {
+      await fs.unlink(full);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException)?.code !== "ENOENT") throw error;
+    }
+    return;
+  }
+
+  if (hasBlobStorage() && url.includes("blob.vercel-storage.com")) {
+    try {
+      await del(url);
+    } catch {
+      // Blob may already be gone.
+    }
+  }
 }
 
 export function storageMode(): "blob" | "local" {

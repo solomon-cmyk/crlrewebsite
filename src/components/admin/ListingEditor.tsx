@@ -4,7 +4,7 @@ import { ADMIN_PATH } from "@/lib/admin/constants";
 import type { Listing, ListingSpec } from "@/lib/listings";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 
 type ListingEditorProps = {
   mode: "create" | "edit";
@@ -75,9 +75,11 @@ export function ListingEditor({ mode, initial }: ListingEditorProps) {
     setError("");
     setStatus("");
 
-    try {
-      const uploaded: string[] = [];
-      for (const file of Array.from(files)) {
+    let uploaded = 0;
+    const failures: string[] = [];
+
+    for (const file of Array.from(files)) {
+      try {
         const form = new FormData();
         form.set("slug", slug);
         form.set("file", file);
@@ -86,23 +88,44 @@ export function ListingEditor({ mode, initial }: ListingEditorProps) {
         if (!response.ok || !data.ok || !data.url) {
           throw new Error(data.error || `Upload failed for ${file.name}`);
         }
-        uploaded.push(data.url);
+        uploaded += 1;
+        setListing((current) => {
+          const images = [...current.images, data.url!];
+          return {
+            ...current,
+            slug: current.slug || slug,
+            images,
+            image: current.image || images[0] || "",
+          };
+        });
+      } catch (err) {
+        failures.push(err instanceof Error ? err.message : file.name);
       }
+    }
 
-      setListing((current) => {
-        const images = [...current.images, ...uploaded];
-        return {
-          ...current,
-          slug: current.slug || slug,
-          images,
-          image: current.image || images[0] || "",
-        };
+    if (uploaded) {
+      setStatus(`Uploaded ${uploaded} photo${uploaded === 1 ? "" : "s"}. Remember to save.`);
+    }
+    if (failures.length) {
+      setError(failures.join(" · "));
+    }
+    setUploading(false);
+  }
+
+  async function removeImage(url: string, index: number) {
+    setListing((current) => {
+      const images = current.images.filter((_, i) => i !== index);
+      return { ...current, images, image: images[0] || "" };
+    });
+
+    try {
+      await fetch("/api/admin/media/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
       });
-      setStatus(`Uploaded ${uploaded.length} photo${uploaded.length === 1 ? "" : "s"}.`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
-    } finally {
-      setUploading(false);
+    } catch {
+      // UI already removed the image; storage cleanup is best-effort.
     }
   }
 
@@ -396,9 +419,7 @@ export function ListingEditor({ mode, initial }: ListingEditorProps) {
                   <button
                     type="button"
                     onClick={() => {
-                      const images = listing.images.filter((_, i) => i !== index);
-                      update("images", images);
-                      update("image", images[0] || "");
+                      void removeImage(url, index);
                     }}
                   >
                     Del

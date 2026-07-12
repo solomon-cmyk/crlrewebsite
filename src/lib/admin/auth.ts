@@ -3,12 +3,12 @@ import { ADMIN_COOKIE } from "@/lib/admin/constants";
 import {
   createAdminSessionToken as createToken,
   readAdminSession as readToken,
-  sessionCookieOptions,
+  timingSafeStringEqual,
   type SessionPayload,
 } from "@/lib/admin/session";
 
-export { ADMIN_COOKIE, ADMIN_PATH } from "@/lib/admin/constants";
-export { sessionCookieOptions };
+export { ADMIN_COOKIE, ADMIN_PATH, safeAdminNextPath } from "@/lib/admin/constants";
+export { sessionCookieOptions } from "@/lib/admin/session";
 
 function getCredentials() {
   const email = process.env.ADMIN_USERNAME?.trim().toLowerCase();
@@ -26,17 +26,27 @@ export function isAdminConfigured(): boolean {
 export async function verifyAdminCredentials(email: string, password: string): Promise<boolean> {
   const creds = getCredentials();
   if (!creds.email || !creds.password) return false;
-  return email.trim().toLowerCase() === creds.email && password === creds.password;
+  const emailOk = timingSafeStringEqual(email.trim().toLowerCase(), creds.email);
+  const passwordOk = timingSafeStringEqual(password, creds.password);
+  return emailOk && passwordOk;
 }
 
 export async function createAdminSessionToken(email: string): Promise<string> {
-  const { secret } = getCredentials();
-  if (!secret) throw new Error("ADMIN_SESSION_SECRET is not configured");
-  return createToken(email, secret);
+  const { secret, password } = getCredentials();
+  if (!secret || !password) throw new Error("ADMIN_SESSION_SECRET is not configured");
+  return createToken(email, secret, password);
 }
 
 export async function getAdminSessionFromCookies(): Promise<SessionPayload | null> {
-  const { secret, email } = getCredentials();
+  const { secret, email, password } = getCredentials();
   const jar = await cookies();
-  return readToken(jar.get(ADMIN_COOKIE)?.value, secret, email);
+  return readToken(jar.get(ADMIN_COOKIE)?.value, secret, email, password);
+}
+
+export async function requireAdminSession(): Promise<SessionPayload> {
+  const session = await getAdminSessionFromCookies();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  return session;
 }
