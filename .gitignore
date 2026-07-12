@@ -22,6 +22,9 @@
 .DS_Store
 *.pem
 
+# local admin listing overrides (dev fallback when Blob is unset)
+.data/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -38,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# managed uploads from local admin (blob used in prod)
+/public/listings/uploads/managed/

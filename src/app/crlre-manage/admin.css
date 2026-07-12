@@ -1,0 +1,259 @@
+.admin-shell {
+  --admin-bg: #f3eee4;
+  --admin-ink: #13201a;
+  --admin-muted: #5d6b63;
+  --admin-line: #d7cfc0;
+  --admin-card: #fffdf8;
+  --admin-accent: #9a7b45;
+  --admin-danger: #8b2e2e;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(154, 123, 69, 0.12), transparent 34%),
+    linear-gradient(180deg, #f7f2e8 0%, var(--admin-bg) 100%);
+  color: var(--admin-ink);
+  font-family: "Jost", system-ui, sans-serif;
+}
+
+.admin-wrap {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 64px;
+}
+
+.admin-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-line);
+  padding: 28px;
+}
+
+.admin-login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.admin-login__card {
+  width: min(420px, 100%);
+}
+
+.admin-login h1,
+.admin-top h1,
+.admin-editor h1 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 0 0 8px;
+}
+
+.admin-muted {
+  color: var(--admin-muted);
+  margin: 0 0 24px;
+}
+
+.admin-field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-field label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--admin-muted);
+}
+
+.admin-field input,
+.admin-field textarea,
+.admin-field select {
+  width: 100%;
+  border: 1px solid var(--admin-line);
+  background: #fff;
+  color: var(--admin-ink);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.admin-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.admin-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-btn {
+  appearance: none;
+  border: 1px solid var(--admin-ink);
+  background: var(--admin-ink);
+  color: #f7f2e8;
+  padding: 11px 16px;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-btn--line {
+  background: transparent;
+  color: var(--admin-ink);
+}
+
+.admin-btn--danger {
+  background: transparent;
+  border-color: var(--admin-danger);
+  color: var(--admin-danger);
+}
+
+.admin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.admin-error {
+  color: var(--admin-danger);
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+}
+
+.admin-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--admin-line);
+  vertical-align: top;
+}
+
+.admin-table th {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--admin-muted);
+  font-weight: 500;
+}
+
+.admin-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid var(--admin-line);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-pill--sold {
+  color: var(--admin-danger);
+  border-color: color-mix(in srgb, var(--admin-danger) 40%, var(--admin-line));
+}
+
+.admin-pill--featured {
+  color: var(--admin-accent);
+  border-color: color-mix(in srgb, var(--admin-accent) 45%, var(--admin-line));
+}
+
+.admin-thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+
+.admin-thumb {
+  position: relative;
+  border: 1px solid var(--admin-line);
+  background: #fff;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.admin-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-thumb__actions {
+  position: absolute;
+  inset: auto 6px 6px 6px;
+  display: flex;
+  gap: 4px;
+}
+
+.admin-thumb__actions button {
+  flex: 1;
+  border: none;
+  background: rgba(19, 32, 26, 0.82);
+  color: #fff;
+  font-size: 0.68rem;
+  padding: 6px 4px;
+  cursor: pointer;
+}
+
+.admin-specs {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.admin-spec-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+}
+
+.admin-status {
+  font-size: 0.85rem;
+  color: var(--admin-muted);
+  margin-bottom: 18px;
+}
+
+@media (max-width: 720px) {
+  .admin-row,
+  .admin-spec-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-top {
+    flex-direction: column;
+  }
+
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

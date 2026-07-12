@@ -13,13 +13,15 @@ type ListingPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  return getAllListings().map((listing) => ({ slug: listing.slug }));
+  return (await getAllListings()).map((listing) => ({ slug: listing.slug }));
 }
 
 export async function generateMetadata({ params }: ListingPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const listing = getListingBySlug(slug);
+  const listing = await getListingBySlug(slug);
 
   if (!listing) {
     return { title: "Listing not found" };
@@ -45,7 +47,7 @@ export async function generateMetadata({ params }: ListingPageProps): Promise<Me
 
 export default async function ListingDetailPage({ params }: ListingPageProps) {
   const { slug } = await params;
-  const listing = getListingBySlug(slug);
+  const listing = await getListingBySlug(slug);
 
   if (!listing) {
     notFound();

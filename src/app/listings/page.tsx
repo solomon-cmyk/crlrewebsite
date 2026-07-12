@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ListingsIndexPage() {
-  const listings = getAllListings();
-  const activeCount = getActiveListings().length;
+export default async function ListingsIndexPage() {
+  const listings = await getAllListings();
+  const activeCount = (await getActiveListings()).length;
 
   return (
     <>

@@ -2,9 +2,9 @@ import { ListingCard } from "@/components/broker/ListingCard";
 import { getAllListings, getFeaturedListings } from "@/lib/listings";
 import Link from "next/link";
 
-export function ListingsSection() {
-  const listings = getFeaturedListings(6);
-  const totalCount = getAllListings().length;
+export async function ListingsSection() {
+  const listings = await getFeaturedListings(6);
+  const totalCount = (await getAllListings()).length;
 
   return (
     <section className="block" id="listings">

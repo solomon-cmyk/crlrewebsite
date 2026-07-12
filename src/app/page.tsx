@@ -17,7 +17,7 @@ import { RevealOnScroll } from "@/components/broker/RevealOnScroll";
 import { SiteNav } from "@/components/broker/SiteNav";
 import { TeamSection } from "@/components/broker/TeamSection";
 
-export default function Home() {
+export default async function Home() {
   return (
     <LeadModalProvider>
       <main>

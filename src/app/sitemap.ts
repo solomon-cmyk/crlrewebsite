@@ -7,7 +7,7 @@ const STATIC_PATHS = ["/", "/listings", "/blog", "/privacy", "/terms", "/cookie-
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllBlogPosts();
-  const listings = getAllListings();
+  const listings = await getAllListings();
   const lastModified = new Date("2026-07-08");
 
   const staticEntries = STATIC_PATHS.map((path) => ({
