@@ -101,6 +101,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="alternate" type="application/rss+xml" title="CRLRE Blog" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="CRLRE Blog RSS" href="/rss.xml" />
       </head>
       <body className={`${cormorant.variable} ${jost.variable}`}>
         <script

@@ -87,6 +87,10 @@ export async function GET() {
       "tags",
       "category",
       "author",
+      "image",
+      "coverImage",
+      "featuredImage",
     ],
+    preferredIntegration: "RSS via /api/soro/rss-sync + SORO_RSS_FEED_URL",
   });
 }

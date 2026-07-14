@@ -106,9 +106,14 @@ Homepage gallery is a compact mosaic with category filters (Exteriors, Residence
 
 ---
 
-## Soro blog autopublish
+## Soro blog autopublish (RSS recommended)
 
 See [SORO-INTEGRATION.md](./SORO-INTEGRATION.md).
+
+1. Connect Soro with **RSS** and copy the feed URL
+2. Set `SORO_RSS_FEED_URL` + Blob storage on Vercel
+3. Hourly cron syncs `/api/soro/rss-sync` → `/blog`
+4. Site feeds: `/feed.xml` and `/rss.xml`
 
 Summary:
 

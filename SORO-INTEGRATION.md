@@ -1,6 +1,8 @@
 # Soro integration for crlre.com
 
-[Soro](https://trysoro.com/) is an SEO autopilot that can research keywords, write articles, and publish to connected sites. This project supports Soro through a **custom webhook** and **Vercel Blob** storage.
+[Soro](https://trysoro.com/) is an SEO autopilot that researches keywords, writes articles, and publishes them to connected sites. For this Next.js site, **RSS is the recommended publish path** (Soro → RSS feed → crlre.com sync).
+
+Webhook publishing remains available as a backup.
 
 ## What is already built
 
@@ -8,120 +10,117 @@
 |------|----------|
 | Blog index | `/blog` |
 | Blog articles | `/blog/[slug]` |
-| RSS feed | `/feed.xml` |
-| AI discovery file | `/llms.txt` |
-| Soro webhook | `POST /api/soro/publish` |
-| Webhook docs | `GET /api/soro/publish` |
+| Site RSS feed (outbound) | `/feed.xml` and `/rss.xml` |
+| Soro RSS sync (inbound) | `GET/POST /api/soro/rss-sync` |
+| Soro webhook (backup) | `POST /api/soro/publish` |
+| Live endpoint docs | `GET /api/soro/rss-sync` and `GET /api/soro/publish` |
 
-Starter SEO articles live in `src/lib/blog/posts.ts`. Soro-published articles are stored in Vercel Blob and merged at runtime.
+Starter SEO articles live in `src/lib/blog/posts.ts`. Soro articles are stored in Vercel Blob and merged at runtime.
 
-## Setup checklist
+## Recommended setup: RSS
 
-### 1. Vercel Blob (required for autopublish)
+Soro’s privacy/integrations list includes **RSS**. In practice Soro gives you a feed URL for your project; this site polls that feed and publishes matching posts to `/blog`.
+
+### 1. Vercel Blob (required)
 
 1. Open the Vercel project `crlrewebsite`.
-2. Go to **Storage** → **Create** → **Blob** (private store is fine).
-3. Link the Blob store to the project.
-4. Confirm `BLOB_STORE_ID` appears in project environment variables (or `BLOB_READ_WRITE_TOKEN` if using token auth).
+2. **Storage** → **Create** → **Blob**.
+3. Link the store to the project.
+4. Confirm `BLOB_STORE_ID` (or `BLOB_READ_WRITE_TOKEN`) is present.
 5. Redeploy.
 
-### 2. Webhook secret
+### 2. Connect Soro with RSS
 
-1. Generate a long random string.
-2. Add to Vercel env: `SORO_WEBHOOK_SECRET=your-secret` (Production / Preview / Development).
-3. Redeploy.
-
-### 3. Connect Soro
-
-Soro’s onboarding dropdown often **does not show Next.js**. That is expected.
-
-1. Sign up at [trysoro.com](https://trysoro.com/).
+1. Sign up / log in at [trysoro.com](https://trysoro.com/).
 2. Add website: `https://crlre.com`
-3. Choose **Other** (custom / webhook). Do **not** use the embed widget, Ghost, RSS, or FTP options.
-4. If webhook fields are missing, email Soro support and ask them to enable a custom webhook with:
-
-   - **Publish URL:** `https://crlre.com/api/soro/publish`
-   - **Method:** `POST`
-   - **Auth:** `Authorization: Bearer <SORO_WEBHOOK_SECRET>`
-   - Or header: `x-soro-secret: <SORO_WEBHOOK_SECRET>`
-
-5. Map Soro fields to the payload below.
-
-### 4. Test the endpoint
+3. Choose **RSS** (preferred over Ghost/FTP/embed for this stack).
+4. Copy the **Soro RSS feed URL** they provide for this project.
+5. In Vercel → Project → Settings → Environment Variables, add:
 
 ```bash
-curl -X POST https://crlre.com/api/soro/publish \
-  -H "Authorization: Bearer YOUR_SECRET" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Test Article From Soro",
-    "slug": "test-article-from-soro",
-    "description": "Short meta description for SEO.",
-    "body": "First paragraph.\n\nSecond paragraph.",
-    "tags": ["Maravé", "Costa Rica luxury real estate"],
-    "category": "Insights"
-  }'
+SORO_RSS_FEED_URL=https://...your-soro-feed-url...
+SORO_WEBHOOK_SECRET=long-random-secret   # also used to authorize manual sync
 ```
 
-Expected response:
+6. Redeploy.
+
+### 3. Sync schedule
+
+Vercel Cron runs daily at 14:00 UTC (Hobby-compatible):
+
+`GET /api/soro/rss-sync`
+
+On Pro you can tighten the schedule in `vercel.json` (e.g. hourly).
+
+Manual sync (after a Soro publish):
+
+```bash
+curl -X POST "https://crlre.com/api/soro/rss-sync" \
+  -H "Authorization: Bearer YOUR_SECRET"
+```
+
+Or:
+
+```bash
+curl "https://crlre.com/api/soro/rss-sync?sync=1&secret=YOUR_SECRET"
+```
+
+Expected:
 
 ```json
-{ "ok": true, "slug": "test-article-from-soro", "url": "/blog/test-article-from-soro" }
+{ "ok": true, "imported": 1, "updated": 0, "total": 1, "slugs": ["article-slug"] }
 ```
 
-Then open `https://crlre.com/blog/test-article-from-soro`.
+### 4. What the sync imports
 
-`GET https://crlre.com/api/soro/publish` returns live field docs.
+From each RSS/Atom item:
 
-## Webhook payload
+- title, link/slug, description
+- full HTML from `content:encoded` / `content` when present
+- categories → tags
+- featured image from `media:content`, `enclosure`, or first `<img>`
+- pubDate
 
-Required:
+Posts are saved to Blob as `blog/posts/{slug}.json` and appear on `/blog` after revalidation.
 
-- `title` (string)
-- `slug` (string)
+## Site outbound RSS (for SEO / readers)
 
-Recommended:
+Live feeds:
 
-- `description` or `metaDescription`
-- `body`, `content`, or `html`
-- `publishedAt` (YYYY-MM-DD)
-- `tags` (string array)
-- `category`
-- `author`
+- https://crlre.com/feed.xml
+- https://crlre.com/rss.xml
 
-Optional:
+Includes:
 
-- `sections` array of `{ heading?, paragraphs: string[] }` for structured content
+- `atom:link` self reference
+- `content:encoded` full article HTML
+- `dc:creator`, categories
+- `media:content` + `enclosure` when a cover image exists
 
-## How publishing works
+These are discovery feeds for the published blog. They are **not** the Soro inbound feed URL.
 
-1. Soro sends `POST /api/soro/publish`.
-2. The route validates the secret.
-3. The post is normalized and saved to Vercel Blob at `blog/posts/{slug}.json`.
-4. Next.js revalidates `/blog`, the article page, sitemap, and RSS feed.
-5. The article appears on the site within seconds (ISR revalidate: 300s max).
+## Backup: webhook publish
 
-## SEO surfaces updated automatically
+If Soro enables a custom webhook for Next.js:
 
-- `/sitemap.xml` includes all blog URLs
-- `/feed.xml` RSS includes all posts
-- `/llms.txt` lists primary pages, listings, and articles for AI crawlers
-- Article pages include Article, FAQ (when present), and Breadcrumb JSON-LD
+- **URL:** `https://crlre.com/api/soro/publish`
+- **Auth:** `Authorization: Bearer <SORO_WEBHOOK_SECRET>` or `x-soro-secret`
+- **Required JSON:** `title`, `slug`
+- **Optional:** `description`, `html` / `body` / `content`, `publishedAt`, `tags`, `category`, `author`, `image` / `coverImage`
 
-## Manual posts (without Soro)
-
-Add articles to `src/lib/blog/posts.ts` and redeploy. Soro posts and static posts merge by slug (Soro wins on duplicate slugs).
+Docs: `GET https://crlre.com/api/soro/publish`
 
 ## Troubleshooting
 
 | Issue | Fix |
-|-------|-----|
-| 503 SORO_WEBHOOK_SECRET not configured | Add env var in Vercel and redeploy |
-| 503 Blob storage not configured | Link a Vercel Blob store to the project and redeploy |
-| 401 Unauthorized | Match secret in Soro and Vercel exactly |
-| Post saved but not visible | Wait up to 5 minutes for ISR, or redeploy |
-| No Next.js option in Soro UI | Use **Other** or email Soro for custom webhook setup |
+|------|-----|
+| 503 SORO_RSS_FEED_URL not configured | Paste Soro feed URL into Vercel env and redeploy |
+| 503 Blob not configured | Link a Vercel Blob store |
+| 401 Unauthorized | Match `SORO_WEBHOOK_SECRET` / cron secret |
+| Sync ok but empty blog | Confirm Soro feed has `<item>` entries in a browser/curl |
+| Images missing | Prefer Soro items with `media:content` or inline `<img>` (Soro fixed Ghost RSS images; same fields work here) |
+| No RSS option in Soro UI | Email **info@trysoro.com** and ask them to enable RSS for `https://crlre.com` |
 
 ## Notes
 
-Listing photos and Maravé media are **not** stored in Blob. They live in `public/` as optimized WebP. Blob is only for Soro blog JSON.
+Listing photos and Maravé media are **not** in Blob. Blob is only for Soro/blog JSON.

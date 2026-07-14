@@ -20,6 +20,8 @@ export type BlogPost = {
   readingTimeMinutes: number;
   sections: BlogSection[];
   faq?: BlogFaq[];
+  coverImage?: string;
+  html?: string;
   source?: "static" | "soro";
 };
 
@@ -37,5 +39,8 @@ export type SoroPublishPayload = {
   category?: string;
   tags?: string[];
   metaDescription?: string;
+  image?: string;
+  coverImage?: string;
+  featuredImage?: string;
   secret?: string;
 };

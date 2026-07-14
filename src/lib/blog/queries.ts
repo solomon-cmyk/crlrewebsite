@@ -51,6 +51,7 @@ function bodyToSections(payload: SoroPublishPayload): BlogSection[] {
 export function normalizeSoroPayload(payload: SoroPublishPayload): BlogPost {
   const sections = bodyToSections(payload);
   const slug = payload.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+  const coverImage = payload.coverImage || payload.featuredImage || payload.image;
 
   return {
     slug,
@@ -63,8 +64,50 @@ export function normalizeSoroPayload(payload: SoroPublishPayload): BlogPost {
     tags: payload.tags ?? ["Maravé", "LXR Residences"],
     readingTimeMinutes: estimateReadingTime(sections),
     sections,
+    coverImage,
+    html: payload.html,
     source: "soro",
   };
+}
+
+export async function syncSoroRssFeed(feedUrl: string): Promise<{
+  imported: number;
+  updated: number;
+  slugs: string[];
+}> {
+  const response = await fetch(feedUrl, {
+    headers: { "User-Agent": "CRLRE-Soro-RSS/1.0 (+https://crlre.com)" },
+    next: { revalidate: 0 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Soro RSS fetch failed (${response.status})`);
+  }
+
+  const xml = await response.text();
+  const { parseRssFeed, rssItemToBlogPost } = await import("./rss");
+  const items = parseRssFeed(xml);
+
+  if (!items.length) {
+    throw new Error("Soro RSS feed had no <item> or <entry> elements.");
+  }
+
+  const existing = await getSoroPosts();
+  const existingSlugs = new Set(existing.map((post) => post.slug));
+  const slugs: string[] = [];
+  let imported = 0;
+  let updated = 0;
+
+  for (const item of items) {
+    const post = rssItemToBlogPost(item);
+    if (!post.slug || !post.title) continue;
+    await saveSoroBlogPost(post);
+    slugs.push(post.slug);
+    if (existingSlugs.has(post.slug)) updated += 1;
+    else imported += 1;
+  }
+
+  return { imported, updated, slugs };
 }
 
 function hasBlobStorage(): boolean {
