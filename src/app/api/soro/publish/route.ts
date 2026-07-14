@@ -60,6 +60,7 @@ export async function POST(request: Request) {
   revalidatePath(`/blog/${post.slug}`);
   revalidatePath("/sitemap.xml");
   revalidatePath("/feed.xml");
+  revalidatePath("/rss.xml");
 
   return NextResponse.json({
     ok: true,

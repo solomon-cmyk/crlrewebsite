@@ -75,7 +75,7 @@ export async function GET(request: Request) {
       notes: [
         "Soro RSS is the recommended publish path for this Next.js site.",
         "In Soro, connect the site with RSS and copy the feed URL they give you into SORO_RSS_FEED_URL.",
-        "Vercel Cron hits this endpoint hourly; you can also trigger manually after publishing.",
+        "Vercel Cron hits this endpoint daily (14:00 UTC); you can also trigger manually after publishing.",
       ],
     });
   }

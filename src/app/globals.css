@@ -3143,6 +3143,15 @@ to {
   color: var(--on-dark);
 }
 
+.blog-post__cover {
+  display: block;
+  width: min(100%, 920px);
+  max-height: 420px;
+  object-fit: cover;
+  margin-top: 28px;
+  border-radius: 10px;
+}
+
 .blog-index__grid {
   padding: 40px 28px 64px;
 }

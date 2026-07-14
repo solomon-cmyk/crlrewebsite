@@ -106,69 +106,72 @@ export function parseRssFeed(xml: string): ParsedRssItem[] {
   const entries = xml.match(/<entry[\s\S]*?<\/entry>/gi) ?? [];
 
   if (items.length) {
-    return items
-      .map((item) => {
-        const title = tagContent(item, "title");
-        const link =
-          item.match(/<link>([^<]+)<\/link>/i)?.[1]?.trim() ||
-          attr(item, "link", "href") ||
-          "";
-        const guid = tagContent(item, "guid") || link || title;
-        const description = tagContent(item, "description");
-        const contentHtml =
-          tagContent(item, "content:encoded") ||
-          tagContent(item, "content") ||
-          description;
-        const publishedAt = toIsoDate(
-          tagContent(item, "pubDate") || tagContent(item, "dc:date") || tagContent(item, "published")
-        );
-        const author =
-          tagContent(item, "dc:creator") ||
-          tagContent(item, "author") ||
-          tagContent(item, "creator") ||
-          undefined;
-        const categories = Array.from(item.matchAll(/<category[^>]*>([\s\S]*?)<\/category>/gi)).map(
-          (m) => decodeEntities(m[1]).replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").trim()
-        ).filter(Boolean);
+    const parsed: ParsedRssItem[] = [];
+    for (const item of items) {
+      const title = tagContent(item, "title");
+      if (!title) continue;
 
-        if (!title) return null;
+      const link =
+        item.match(/<link>([^<]+)<\/link>/i)?.[1]?.trim() ||
+        attr(item, "link", "href") ||
+        "";
+      const guid = tagContent(item, "guid") || link || title;
+      const description = tagContent(item, "description");
+      const contentHtml =
+        tagContent(item, "content:encoded") ||
+        tagContent(item, "content") ||
+        description;
+      const publishedAt = toIsoDate(
+        tagContent(item, "pubDate") || tagContent(item, "dc:date") || tagContent(item, "published")
+      );
+      const author =
+        tagContent(item, "dc:creator") ||
+        tagContent(item, "author") ||
+        tagContent(item, "creator") ||
+        undefined;
+      const categories = Array.from(item.matchAll(/<category[^>]*>([\s\S]*?)<\/category>/gi))
+        .map((m) => decodeEntities(m[1]).replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").trim())
+        .filter(Boolean);
 
-        return {
-          title,
-          link,
-          guid,
-          description: description.replace(/<[^>]+>/g, "").slice(0, 320) || title,
-          contentHtml,
-          publishedAt,
-          author,
-          categories,
-          imageUrl: extractImage(item, contentHtml),
-        } satisfies ParsedRssItem;
-      })
-      .filter((item): item is ParsedRssItem => Boolean(item));
-  }
-
-  return entries
-    .map((entry) => {
-      const title = tagContent(entry, "title");
-      const link = attr(entry, "link", "href") || tagContent(entry, "link");
-      const guid = tagContent(entry, "id") || link || title;
-      const contentHtml = tagContent(entry, "content") || tagContent(entry, "summary");
-      const description = tagContent(entry, "summary") || contentHtml.replace(/<[^>]+>/g, "").slice(0, 320);
-      const publishedAt = toIsoDate(tagContent(entry, "published") || tagContent(entry, "updated"));
-      if (!title) return null;
-      return {
+      parsed.push({
         title,
         link,
         guid,
         description: description.replace(/<[^>]+>/g, "").slice(0, 320) || title,
         contentHtml,
         publishedAt,
-        categories: [],
-        imageUrl: extractImage(entry, contentHtml),
-      } satisfies ParsedRssItem;
-    })
-    .filter((item): item is ParsedRssItem => Boolean(item));
+        author,
+        categories,
+        imageUrl: extractImage(item, contentHtml),
+      });
+    }
+    return parsed;
+  }
+
+  const parsed: ParsedRssItem[] = [];
+  for (const entry of entries) {
+    const title = tagContent(entry, "title");
+    if (!title) continue;
+
+    const link = attr(entry, "link", "href") || tagContent(entry, "link");
+    const guid = tagContent(entry, "id") || link || title;
+    const contentHtml = tagContent(entry, "content") || tagContent(entry, "summary");
+    const description =
+      tagContent(entry, "summary") || contentHtml.replace(/<[^>]+>/g, "").slice(0, 320);
+    const publishedAt = toIsoDate(tagContent(entry, "published") || tagContent(entry, "updated"));
+
+    parsed.push({
+      title,
+      link,
+      guid,
+      description: description.replace(/<[^>]+>/g, "").slice(0, 320) || title,
+      contentHtml,
+      publishedAt,
+      categories: [],
+      imageUrl: extractImage(entry, contentHtml),
+    });
+  }
+  return parsed;
 }
 
 export function rssItemToBlogPost(item: ParsedRssItem): BlogPost {

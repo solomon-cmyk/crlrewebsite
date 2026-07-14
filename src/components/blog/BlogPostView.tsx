@@ -15,6 +15,14 @@ export function BlogPostView({ post }: { post: BlogPost }) {
           {formatBlogDate(post.publishedAt)} · {post.readingTimeMinutes} min read · {post.author}
         </p>
         <p className="blog-post__dek">{post.description}</p>
+        {post.coverImage ? (
+          <img
+            className="blog-post__cover"
+            src={post.coverImage}
+            alt=""
+            loading="eager"
+          />
+        ) : null}
       </header>
 
       <div className="blog-post__body">

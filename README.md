@@ -62,7 +62,9 @@ See `.env.example`.
 |----------|----------|-------|
 | `NEXT_PUBLIC_SITE_URL` | Yes | `https://crlre.com` |
 | `NEXT_PUBLIC_FORMSPREE_FORM_URL` | Yes (leads) | Formspree endpoint |
-| `SORO_WEBHOOK_SECRET` | For Soro | Same secret configured in Soro |
+| `SORO_RSS_FEED_URL` | For Soro RSS | Feed URL from Soro Integrations → RSS |
+| `SORO_WEBHOOK_SECRET` | For Soro sync/webhook | Authorizes manual sync + backup webhook |
+| `CRON_SECRET` | Optional | Used by Vercel Cron auth when set |
 | `BLOB_STORE_ID` | For Soro | Private Blob store linked in Vercel |
 | `BLOB_READ_WRITE_TOKEN` | Optional | Alternate Blob auth if used |
 

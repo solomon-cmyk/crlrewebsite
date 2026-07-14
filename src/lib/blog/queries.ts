@@ -77,7 +77,7 @@ export async function syncSoroRssFeed(feedUrl: string): Promise<{
 }> {
   const response = await fetch(feedUrl, {
     headers: { "User-Agent": "CRLRE-Soro-RSS/1.0 (+https://crlre.com)" },
-    next: { revalidate: 0 },
+    cache: "no-store",
   });
 
   if (!response.ok) {
