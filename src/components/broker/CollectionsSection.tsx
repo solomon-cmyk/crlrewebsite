@@ -1,4 +1,4 @@
-import { CollectionMedia } from "@/components/broker/CollectionMedia";
+import Image from "next/image";
 import { COLLECTIONS } from "@/lib/broker-content";
 
 export function CollectionsSection() {
@@ -15,12 +15,16 @@ export function CollectionsSection() {
         <div className="tiers">
           {COLLECTIONS.map((tier) => (
             <div className="tier reveal" key={tier.title}>
-              <CollectionMedia
-                video={tier.video}
-                poster={tier.image}
-                alt={tier.alt}
-                num={tier.num}
-              />
+              <div className="ph">
+                <span className="num">{tier.num}</span>
+                <Image
+                  src={tier.image}
+                  alt={tier.alt}
+                  width={600}
+                  height={248}
+                  sizes="(max-width: 660px) 100vw, 33vw"
+                />
+              </div>
               <div className="body">
                 <span className="kind">{tier.kind}</span>
                 <h3>{tier.title}</h3>

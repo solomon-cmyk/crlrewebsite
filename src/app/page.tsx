@@ -16,6 +16,7 @@ import { ReserveSection } from "@/components/broker/ReserveSection";
 import { RevealOnScroll } from "@/components/broker/RevealOnScroll";
 import { SiteNav } from "@/components/broker/SiteNav";
 import { TeamSection } from "@/components/broker/TeamSection";
+import { VideosSection } from "@/components/broker/VideosSection";
 
 export const revalidate = 300;
 
@@ -30,6 +31,7 @@ export default async function Home() {
           <MaraveIntro />
           <PlaceSection />
           <FilmBand />
+          <VideosSection />
           <CollectionsSection />
           <FinishesSection />
           <BrokerGallery />

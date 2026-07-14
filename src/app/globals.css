@@ -783,6 +783,101 @@
   color:var(--bronze-lt)
 }
 
+/* VIDEOS / REELS */
+  .videos-section {
+  background:var(--paper);
+  border-top:1px solid var(--line)
+}
+
+  .reel-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  align-items:start
+}
+
+  .reel-card {
+  display:flex;
+  flex-direction:column;
+  gap:14px
+}
+
+  .reel-card__stage {
+  position:relative;
+  aspect-ratio:9/16;
+  max-height:min(72vh, 640px);
+  margin:0 auto;
+  width:100%;
+  overflow:hidden;
+  background:#0a100e;
+  border:1px solid var(--line)
+}
+
+  .reel-card__video {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  background:#0a100e
+}
+
+  .reel-card__play {
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border:0;
+  background:rgba(10,16,14,.28);
+  color:#fff;
+  cursor:pointer;
+  transition:background .25s
+}
+
+  .reel-card__play:hover {
+  background:rgba(10,16,14,.42)
+}
+
+  .reel-card__play span[aria-hidden] {
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.55);
+  background:rgba(19,32,26,.72);
+  display:grid;
+  place-items:center;
+  font-size:1.1rem;
+  padding-left:3px
+}
+
+  .reel-card__play-label {
+  font-family:var(--font-body);
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase
+}
+
+  .reel-card__meta {
+  text-align:center
+}
+
+  .reel-card__kind {
+  display:block;
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--bronze);
+  margin-bottom:4px
+}
+
+  .reel-card__meta h3 {
+  font-size:1.55rem;
+  font-weight:400;
+  margin:0
+}
+
 /* TIERS */
   .tiers {
   display:grid;
@@ -820,12 +915,7 @@
   transition:transform .7s ease
 }
 
-  .tier .ph video {
-  cursor:pointer
-}
-
-  .tier:hover .ph img,
-  .tier:hover .ph video {
+  .tier:hover .ph img {
   transform:scale(1.04)
 }
 
@@ -1992,7 +2082,7 @@ to {
 
   @media(max-width:980px) {
 
-    .tiers,.grid,.fin-grid {
+    .tiers,.grid,.fin-grid,.reel-grid {
   grid-template-columns:1fr 1fr
 }
 
@@ -2102,8 +2192,13 @@ to {
   padding-bottom:calc(78px + env(safe-area-inset-bottom, 0px))
 }
 
-    .tiers,.grid,.fin-grid,.foot-top,.agent-grid {
+    .tiers,.grid,.fin-grid,.foot-top,.agent-grid,.reel-grid {
   grid-template-columns:1fr
+}
+
+    .reel-card__stage {
+  max-height:min(70vh, 560px);
+  max-width:360px
 }
 
     .gal-grid {
