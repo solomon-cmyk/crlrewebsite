@@ -39,7 +39,6 @@ export function BrokerGallery() {
   };
 
   const goPrev = useCallback(() => {
-    setZoomed(false);
     setActive((index) => {
       if (index === null) return index;
       return index === 0 ? filtered.length - 1 : index - 1;
@@ -47,7 +46,6 @@ export function BrokerGallery() {
   }, [filtered.length]);
 
   const goNext = useCallback(() => {
-    setZoomed(false);
     setActive((index) => {
       if (index === null) return index;
       return index === filtered.length - 1 ? 0 : index + 1;
@@ -60,13 +58,10 @@ export function BrokerGallery() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         if (zoomed) setZoomed(false);
-        else {
-          setZoomed(false);
-          setActive(null);
-        }
+        else close();
       }
-      if (event.key === "ArrowLeft" && !zoomed) goPrev();
-      if (event.key === "ArrowRight" && !zoomed) goNext();
+      if (event.key === "ArrowLeft") goPrev();
+      if (event.key === "ArrowRight") goNext();
       if (event.key === "+" || event.key === "=") setZoomed(true);
       if (event.key === "-" || event.key === "_") setZoomed(false);
     };
@@ -159,11 +154,9 @@ export function BrokerGallery() {
             if (event.target === event.currentTarget) close();
           }}
           onTouchStart={(event) => {
-            if (zoomed) return;
             touchStartX.current = event.changedTouches[0]?.clientX ?? 0;
           }}
           onTouchEnd={(event) => {
-            if (zoomed) return;
             const delta = (event.changedTouches[0]?.clientX ?? 0) - touchStartX.current;
             if (Math.abs(delta) < 40) return;
             if (delta > 0) goPrev();
@@ -177,48 +170,44 @@ export function BrokerGallery() {
           <button
             type="button"
             className="gal-lightbox__zoom"
-            aria-label={zoomed ? "Zoom out" : "Zoom in"}
+            aria-label={zoomed ? "Exit full view" : "Fill the page"}
             aria-pressed={zoomed}
             onClick={() => setZoomed((value) => !value)}
           >
-            {zoomed ? "−" : "+"}
+            {zoomed ? "↘" : "↖"}
           </button>
 
-          {!zoomed && (
-            <>
-              <button type="button" className="gal-lightbox__nav gal-lightbox__nav--prev" aria-label="Previous photo" onClick={goPrev}>
-                ‹
-              </button>
-              <button type="button" className="gal-lightbox__nav gal-lightbox__nav--next" aria-label="Next photo" onClick={goNext}>
-                ›
-              </button>
-            </>
-          )}
+          <button type="button" className="gal-lightbox__nav gal-lightbox__nav--prev" aria-label="Previous photo" onClick={goPrev}>
+            ‹
+          </button>
+          <button type="button" className="gal-lightbox__nav gal-lightbox__nav--next" aria-label="Next photo" onClick={goNext}>
+            ›
+          </button>
 
           <div className="gal-lightbox__stage">
-            <div className="gal-lightbox__viewport">
-              <button
-                type="button"
-                className={`gal-lightbox__frame${zoomed ? " is-zoomed" : ""}`}
-                onClick={() => setZoomed((value) => !value)}
-                aria-label={zoomed ? "Zoom out photo" : "Zoom in photo"}
-              >
-                <Image
-                  src={current.src}
-                  alt={current.alt}
-                  fill
-                  sizes={zoomed ? "3840px" : "100vw"}
-                  quality={95}
-                  className="gal-lightbox__image"
-                  priority
-                />
-              </button>
-            </div>
+            <button
+              type="button"
+              className="gal-lightbox__frame"
+              onClick={() => setZoomed((value) => !value)}
+              aria-label={zoomed ? "Exit full view" : "Fill the page"}
+            >
+              <Image
+                src={current.src}
+                alt={current.alt}
+                fill
+                sizes="100vw"
+                quality={95}
+                className="gal-lightbox__image"
+                priority
+              />
+            </button>
             <div className="gal-lightbox__meta">
               <span>{current.label}</span>
               <span>
                 {active + 1} / {filtered.length}
-                <span className="gal-lightbox__hint">{zoomed ? " · click to zoom out" : " · click to zoom"}</span>
+                <span className="gal-lightbox__hint">
+                  {zoomed ? " · arrows keep full view" : " · click for full page"}
+                </span>
               </span>
             </div>
           </div>
@@ -233,10 +222,7 @@ export function BrokerGallery() {
                   aria-selected={index === active}
                   aria-label={`View ${item.label}`}
                   className={`gal-lightbox__thumb${index === active ? " is-active" : ""}`}
-                  onClick={() => {
-                    setZoomed(false);
-                    setActive(index);
-                  }}
+                  onClick={() => setActive(index)}
                 >
                   <Image src={item.src} alt="" width={96} height={64} sizes="72px" loading="lazy" />
                 </button>

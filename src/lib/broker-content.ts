@@ -13,31 +13,49 @@ export const MARQUEE_ITEMS = [
     src: "/media/marave/images/aerial-estate.webp",
     alt: "Aerial view of Maravé estate",
     label: "Aerial Estate",
+    href: "/#gallery",
   },
   {
     src: "/media/marave/images/villas-general.webp",
     alt: "Villas among the canopy",
     label: "Villas · Canopy",
+    href: "/#collections",
   },
   {
     src: "/media/marave/images/beach-club-solarium.webp",
     alt: "Beach club solarium",
     label: "Beach Club · Solarium",
+    href: "/#gallery",
+  },
+  {
+    src: "/media/marave/images/beach-club-pool.webp",
+    alt: "Beach club pool",
+    label: "Beach Club · Pool",
+    href: "/#gallery",
   },
   {
     src: "/media/marave/images/spa.webp",
     alt: "Spa amenity",
     label: "Spa",
+    href: "/#gallery",
   },
   {
-    src: "/media/marave/images/kayak.webp",
-    alt: "Kayaking on the Pacific",
-    label: "Kayak",
+    src: "/media/marave/images/speakeasy.webp",
+    alt: "Speakeasy lounge",
+    label: "Speakeasy",
+    href: "/#gallery",
   },
   {
-    src: "/media/marave/images/condo-detail.webp",
-    alt: "Condominium exterior detail",
-    label: "Condo · Exterior",
+    src: "/media/marave/images/kids-club.webp",
+    alt: "Kids club",
+    label: "Kids Club",
+    href: "/#gallery",
+  },
+  {
+    src: "/media/marave/images/wildlife.webp",
+    alt: "Local wildlife",
+    label: "Wildlife",
+    href: "/#gallery",
   },
 ] as const;
 
@@ -61,7 +79,7 @@ export const COLLECTIONS = [
     kind: "46 Residences",
     title: "Condominiums",
     image: "/media/marave/images/condo-a-living.webp",
-    video: "/media/marave/videos/collection-condominiums.mp4",
+    video: "/media/marave/videos/collection-condominiums.mp4?v=3",
     alt: "Maravé condominium",
     specs: [
       { label: "1 to 3", suffix: " bed" },
@@ -75,7 +93,7 @@ export const COLLECTIONS = [
     kind: "66 Estates",
     title: "The Villas",
     image: "/media/marave/images/villa-pool.webp",
-    video: "/media/marave/videos/collection-villas.mp4",
+    video: "/media/marave/videos/collection-villas.mp4?v=3",
     alt: "Maravé villa",
     specs: [
       { label: "4,000+", suffix: " sq ft" },
@@ -89,7 +107,7 @@ export const COLLECTIONS = [
     kind: "Only 4 Available",
     title: "Penthouses",
     image: "/media/marave/images/penthouse-balcony.webp",
-    video: "/media/marave/videos/collection-penthouses.mp4",
+    video: "/media/marave/videos/collection-penthouses.mp4?v=3",
     alt: "Maravé penthouse",
     specs: [
       { label: "4,000+", suffix: " sq ft" },

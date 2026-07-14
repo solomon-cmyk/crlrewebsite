@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { MARQUEE_ITEMS } from "@/lib/broker-content";
 
 export function MarqueeStrip() {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const dragMoved = useRef(false);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -56,6 +58,7 @@ export function MarqueeStrip() {
     const onPointerDown = (event: PointerEvent) => {
       if (event.pointerType !== "mouse") return;
       dragging = true;
+      dragMoved.current = false;
       paused = true;
       startX = event.clientX;
       startScroll = marquee.scrollLeft;
@@ -63,7 +66,9 @@ export function MarqueeStrip() {
     };
     const onPointerMove = (event: PointerEvent) => {
       if (!dragging) return;
-      marquee.scrollLeft = startScroll - (event.clientX - startX);
+      const delta = event.clientX - startX;
+      if (Math.abs(delta) > 6) dragMoved.current = true;
+      marquee.scrollLeft = startScroll - delta;
     };
     const onPointerUp = () => {
       if (!dragging) return;
@@ -102,7 +107,18 @@ export function MarqueeStrip() {
       <div className="marquee" ref={marqueeRef} id="marquee">
         <div className="marquee-track" ref={trackRef} id="mqTrack">
           {items.map((item, index) => (
-            <div className="mq-card" key={`${item.label}-${index}`}>
+            <Link
+              className="mq-card"
+              key={`${item.label}-${index}`}
+              href={item.href}
+              aria-label={`View ${item.label}`}
+              onClick={(event) => {
+                if (dragMoved.current) {
+                  event.preventDefault();
+                  dragMoved.current = false;
+                }
+              }}
+            >
               <Image
                 src={item.src}
                 alt={item.alt}
@@ -112,7 +128,7 @@ export function MarqueeStrip() {
                 loading={index < 4 ? "eager" : "lazy"}
               />
               <span>{item.label}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
