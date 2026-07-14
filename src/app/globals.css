@@ -2421,10 +2421,60 @@ to {
   box-shadow:0 30px 60px -34px rgba(27,42,33,.45)
 }
 
+/* Avoid sticky :hover lift states on touch devices */
+  @media (hover:none) {
+  .btn:hover {
+  transform:none
+}
+
+  .tier:hover,
+  .card:hover,
+  .credibility__item:hover {
+  transform:none;
+  box-shadow:none
+}
+
+  .tier:hover {
+  border-color:var(--line)
+}
+
+  .mq-card:hover img,
+  .gal:hover img,
+  .tier:hover .ph img,
+  .film:hover video {
+  transform:none
+}
+
+}
+
   @media(max-width:980px) {
 
-    .tiers,.grid,.fin-grid,.reel-grid {
+    .tiers,.grid,.fin-grid {
   grid-template-columns:1fr 1fr
+}
+
+    .reel-grid {
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:8px;
+  grid-template-columns:none
+}
+
+    .reel-grid::-webkit-scrollbar {
+  display:none
+}
+
+    .reel-card {
+  flex:0 0 min(42vw, 280px);
+  scroll-snap-align:start
+}
+
+    .reel-card__stage {
+  max-height:min(64vh, 520px)
 }
 
     .hero-grid {
@@ -2493,16 +2543,19 @@ to {
     nav.links {
   position:fixed;
   inset:0 0 0 auto;
-  width:80%;
+  width:min(84vw, 320px);
   max-width:320px;
   background:var(--forest);
   flex-direction:column;
-  justify-content:center;
-  gap:26px;
+  justify-content:flex-start;
+  gap:8px;
   transform:translateX(100%);
-  transition:transform .4s;
-  padding:40px;
-  box-shadow:-20px 0 60px rgba(0,0,0,.3)
+  transition:transform .4s cubic-bezier(.2,.7,.2,1);
+  padding:max(72px, calc(56px + env(safe-area-inset-top, 0px))) 28px max(28px, env(safe-area-inset-bottom, 0px));
+  box-shadow:-20px 0 60px rgba(0,0,0,.3);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch
 }
 
     nav.links.open {
@@ -2513,8 +2566,16 @@ to {
   color:var(--on-dark)
 }
 
+    nav.links a:not(.btn) {
+  font-size:.95rem;
+  letter-spacing:.12em;
+  padding:12px 0
+}
+
     nav.links a:not(.btn)::after {
-  bottom:-4px
+  bottom:8px;
+  right:auto;
+  width:28px
 }
 
     .menu-toggle {
@@ -2523,41 +2584,95 @@ to {
   min-height:44px;
   align-items:center;
   justify-content:center;
-  padding:10px
+  padding:10px;
+  z-index:2
 }
 
     nav.links .nav-contact {
   width:100%;
   justify-content:center;
   margin-left:0;
-  margin-top:10px
+  margin-top:18px
 }
 
     main {
-  padding-bottom:calc(78px + env(safe-area-inset-bottom, 0px))
+  padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px))
 }
 
-    .tiers,.grid,.fin-grid,.foot-top,.agent-grid,.reel-grid {
+    .tiers,.grid,.fin-grid,.foot-top,.agent-grid {
   grid-template-columns:1fr
 }
 
+    /* Reels: horizontal snap scroller instead of three tall stacks */
+    .reel-grid {
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  margin:0 -20px;
+  padding:2px 20px 10px;
+  grid-template-columns:none
+}
+
+    .reel-grid::-webkit-scrollbar {
+  display:none
+}
+
+    .reel-card {
+  flex:0 0 min(72vw, 300px);
+  scroll-snap-align:start
+}
+
     .reel-card__stage {
-  max-height:min(70vh, 560px);
-  max-width:360px
+  max-height:none;
+  max-width:none;
+  width:100%
+}
+
+    .reel-card__play span[aria-hidden] {
+  width:72px;
+  height:72px
+}
+
+    .reel-card__expand {
+  min-height:40px;
+  padding:10px 12px
 }
 
     .gal-grid {
   grid-template-columns:1fr 1fr;
-  grid-auto-rows:120px
+  grid-auto-rows:128px;
+  gap:8px
+}
+
+    .gal span {
+  font-size:.58rem;
+  letter-spacing:.12em;
+  padding:20px 8px 8px
 }
 
     .gal-filters {
-  gap:6px
+  justify-content:flex-start;
+  flex-wrap:nowrap;
+  gap:6px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  margin:0 0 18px;
+  padding-bottom:2px
+}
+
+    .gal-filters::-webkit-scrollbar {
+  display:none
 }
 
     .gal-filter {
-  padding:8px 11px;
-  font-size:.64rem
+  flex:none;
+  padding:10px 12px;
+  font-size:.64rem;
+  min-height:40px
 }
 
     .gal-lightbox__stage {
@@ -2606,9 +2721,36 @@ to {
   aspect-ratio:16/11
 }
 
+    .marquee-wrap {
+  padding:28px 0 16px
+}
+
     .mq-card {
-  width:300px;
-  height:208px
+  width:min(78vw, 300px);
+  height:200px
+}
+
+    .mq-card span {
+  font-size:.62rem;
+  letter-spacing:.16em;
+  padding:12px 14px
+}
+
+    .film {
+  max-width:none;
+  width:calc(100% + 40px);
+  margin-left:-20px;
+  margin-right:-20px;
+  border-left:none;
+  border-right:none;
+  box-shadow:none
+}
+
+    .film-expand {
+  right:12px;
+  bottom:12px;
+  min-height:44px;
+  padding:12px 14px
 }
 
     .agent {
@@ -2633,30 +2775,91 @@ to {
 }
 
     .hero {
-  padding:max(102px, calc(88px + env(safe-area-inset-top, 0px))) 0 54px
+  padding:max(102px, calc(88px + env(safe-area-inset-top, 0px))) 0 40px
 }
 
     .hero-grid {
   grid-template-columns:1fr;
-  gap:30px
+  gap:28px
 }
 
     .hero h1 {
-  font-size:2.5rem
+  font-size:clamp(2.25rem, 9vw, 2.65rem)
 }
 
     .hero .lead {
   font-size:1rem;
+  line-height:1.65;
+  max-width:none;
   margin:16px 0 22px
+}
+
+    .hero-figure {
+  margin-right:12px;
+  margin-bottom:12px
 }
 
     .hero-figure img,
     .hero-figure video {
-  height:330px
+  height:min(68vw, 340px)
 }
 
     .hero-figure::after {
-  inset:12px -12px -12px 12px
+  inset:10px -10px -10px 10px
+}
+
+    .hero-cap {
+  font-size:.6rem;
+  letter-spacing:.16em;
+  padding:28px 14px 12px
+}
+
+    .place-figure {
+  margin-right:12px;
+  margin-bottom:12px
+}
+
+    .place-figure::after {
+  inset:10px -10px -10px 10px
+}
+
+    .place-figure img {
+  height:min(70vw, 320px)
+}
+
+    .tier:active {
+  border-color:var(--bronze)
+}
+
+    .sec-head {
+  margin-bottom:36px
+}
+
+    .sec-head p {
+  font-size:1rem
+}
+
+    .mv-stats {
+  gap:22px 28px
+}
+
+    .mv-stats .st b {
+  font-size:2.4rem
+}
+
+    .mv-flag {
+  margin-top:32px;
+  padding:22px 18px
+}
+
+    .contact-meta__email {
+  font-size:1.08rem;
+  word-break:break-word
+}
+
+    .contact-meta__phones {
+  flex-direction:column;
+  gap:10px
 }
 
     .intent-toggle {
@@ -2754,9 +2957,11 @@ to {
   right: 14px;
   width: auto;
   justify-content: center;
-  padding: 11px 18px;
+  padding: 12px 18px;
   font-size: .7rem;
-  bottom: max(14px, env(safe-area-inset-bottom, 14px))
+  min-height: 46px;
+  bottom: max(14px, env(safe-area-inset-bottom, 14px));
+  box-shadow: 0 14px 34px -10px rgba(27,42,33,.55)
 }
 
     .wrap {
@@ -2800,13 +3005,16 @@ to {
   grid-row: span 2
 }
 
-    .hero-figure img,
-    .hero-figure video {
-  height: 430px
-}
-
     .filmband .sec-head p {
   color: var(--on-dark-mut)
+}
+
+    .foot-top {
+  gap: 28px 20px
+}
+
+    footer {
+  padding: 56px 0 max(24px, env(safe-area-inset-bottom, 0px))
 }
 
     .blog-preview__grid,.blog-index__grid {
