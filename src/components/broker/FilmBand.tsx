@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 const VIDEO_SRC = "/media/marave/videos/residences-hero.mp4";
-const POSTER_SRC = "/media/marave/images/villa-pool.webp";
+/** Gallery + film poster only — do not reuse collection/hero/marquee images. */
+const POSTER_SRC = "/media/marave/images/beach-club-aerial.webp";
 
 export function FilmBand() {
   const wrapRef = useRef<HTMLDivElement>(null);

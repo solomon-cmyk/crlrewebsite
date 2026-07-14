@@ -1045,30 +1045,69 @@
   position:fixed;
   inset:0;
   z-index:1200;
-  background:rgba(10,16,14,.94);
+  background:rgba(10,16,14,.96);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:16px;
-  padding:max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom))
+  gap:12px;
+  padding:max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom))
 }
 
   .gal-lightbox__stage {
   position:relative;
-  width:min(1100px, 94vw);
-  max-height:min(72vh, 760px);
+  width:min(1680px, calc(100vw - 24px));
+  height:min(86vh, calc(100dvh - 110px));
   display:flex;
   flex-direction:column;
-  align-items:center
+  align-items:stretch;
+  min-height:0
+}
+
+  .gal-lightbox--zoomed .gal-lightbox__stage {
+  width:100%;
+  height:100%;
+  max-height:none
+}
+
+  .gal-lightbox__viewport {
+  position:relative;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  overflow:hidden;
+  background:#0a100e
+}
+
+  .gal-lightbox--zoomed .gal-lightbox__viewport {
+  overflow:auto;
+  overscroll-behavior:contain
+}
+
+  .gal-lightbox__frame {
+  position:relative;
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:zoom-in
+}
+
+  .gal-lightbox__frame.is-zoomed {
+  width:185%;
+  height:185%;
+  min-width:185%;
+  min-height:185%;
+  cursor:zoom-out
 }
 
   .gal-lightbox__image {
-  width:100%;
-  height:auto;
-  max-height:min(66vh, 700px);
   object-fit:contain;
-  background:#0a100e
+  object-position:center
 }
 
   .gal-lightbox__meta {
@@ -1076,15 +1115,23 @@
   display:flex;
   justify-content:space-between;
   gap:16px;
-  margin-top:10px;
+  margin-top:8px;
   color:rgba(255,255,255,.82);
   font-size:.78rem;
   letter-spacing:.12em;
-  text-transform:uppercase
+  text-transform:uppercase;
+  flex:0 0 auto
+}
+
+  .gal-lightbox__hint {
+  opacity:.55;
+  letter-spacing:.08em;
+  text-transform:none
 }
 
   .gal-lightbox__close,
-  .gal-lightbox__nav {
+  .gal-lightbox__nav,
+  .gal-lightbox__zoom {
   appearance:none;
   border:1px solid rgba(255,255,255,.22);
   background:rgba(255,255,255,.08);
@@ -1093,15 +1140,24 @@
   transition:background .2s,border-color .2s
 }
 
-  .gal-lightbox__close {
+  .gal-lightbox__close,
+  .gal-lightbox__zoom {
   position:absolute;
   top:max(14px, env(safe-area-inset-top));
-  right:16px;
   width:44px;
   height:44px;
   font-size:1.6rem;
   line-height:1;
   z-index:2
+}
+
+  .gal-lightbox__close {
+  right:16px
+}
+
+  .gal-lightbox__zoom {
+  right:68px;
+  font-size:1.35rem
 }
 
   .gal-lightbox__nav {
@@ -1124,7 +1180,8 @@
 }
 
   .gal-lightbox__close:hover,
-  .gal-lightbox__nav:hover {
+  .gal-lightbox__nav:hover,
+  .gal-lightbox__zoom:hover {
   background:rgba(255,255,255,.16);
   border-color:rgba(255,255,255,.4)
 }
@@ -1132,10 +1189,11 @@
   .gal-lightbox__thumbs {
   display:flex;
   gap:8px;
-  max-width:min(1100px, 94vw);
+  max-width:min(1680px, calc(100vw - 24px));
   overflow-x:auto;
   padding:4px 2px 8px;
-  scrollbar-width:thin
+  scrollbar-width:thin;
+  flex:0 0 auto
 }
 
   .gal-lightbox__thumb {
@@ -2062,15 +2120,25 @@ to {
 }
 
     .gal-lightbox__stage {
-  max-height:58vh
+  width:100%;
+  height:min(78vh, calc(100dvh - 96px))
 }
 
-    .gal-lightbox__image {
-  max-height:52vh
-}
-
-    .gal-lightbox__nav {
+    .gal-lightbox__nav,
+    .gal-lightbox__hint {
   display:none
+}
+
+    .gal-lightbox__zoom {
+  right:62px;
+  width:40px;
+  height:40px
+}
+
+    .gal-lightbox__close {
+  width:40px;
+  height:40px;
+  right:12px
 }
 
     .mq-card {
