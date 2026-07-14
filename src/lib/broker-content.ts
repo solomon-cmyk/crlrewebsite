@@ -59,8 +59,8 @@ export const COLLECTIONS = [
     num: "I",
     kind: "46 Residences",
     title: "Condominiums",
-    image:
-      "/media/marave/images/condo-a-living.webp",
+    image: "/media/marave/images/condo-a-living.webp",
+    video: "/media/marave/videos/collection-condominiums.mp4",
     alt: "Maravé condominium",
     specs: [
       { label: "1 to 3", suffix: " bed" },
@@ -73,8 +73,8 @@ export const COLLECTIONS = [
     num: "II",
     kind: "66 Estates",
     title: "The Villas",
-    image:
-      "/media/marave/images/villa-pool.webp",
+    image: "/media/marave/images/villa-pool.webp",
+    video: "/media/marave/videos/collection-villas.mp4",
     alt: "Maravé villa",
     specs: [
       { label: "4,000+", suffix: " sq ft" },
@@ -87,8 +87,8 @@ export const COLLECTIONS = [
     num: "III",
     kind: "Only 4 Available",
     title: "Penthouses",
-    image:
-      "/media/marave/images/penthouse-balcony.webp",
+    image: "/media/marave/images/penthouse-balcony.webp",
+    video: "/media/marave/videos/collection-penthouses.mp4",
     alt: "Maravé penthouse",
     specs: [
       { label: "4,000+", suffix: " sq ft" },

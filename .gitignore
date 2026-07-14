@@ -44,3 +44,6 @@ next-env.d.ts
 
 # managed uploads from local admin (blob used in prod)
 /public/listings/uploads/managed/
+
+# raw oversized Maravé source renders (web-optimized copies live beside them)
+/public/media/marave/videos/_source/
