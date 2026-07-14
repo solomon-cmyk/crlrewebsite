@@ -207,8 +207,8 @@ export function BrokerGallery() {
                   src={current.src}
                   alt={current.alt}
                   fill
-                  sizes="100vw"
-                  quality={92}
+                  sizes={zoomed ? "3840px" : "100vw"}
+                  quality={95}
                   className="gal-lightbox__image"
                   priority
                 />

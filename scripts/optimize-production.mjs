@@ -78,10 +78,11 @@ async function main() {
   });
 
   console.log("Recompressing Maravé images...");
+  // Keep gallery assets sharp for lightbox zoom — do not crush below ~2400.
   await walkWebp(path.join(ROOT, "public/media/marave/images"), {
-    maxEdge: 1400,
-    quality: 72,
-    minBytes: 120 * 1024,
+    maxEdge: 2400,
+    quality: 88,
+    minBytes: 450 * 1024,
   });
 
   console.log("Converting logos...");

@@ -47,3 +47,4 @@ next-env.d.ts
 
 # raw oversized Maravé source renders (web-optimized copies live beside them)
 /public/media/marave/videos/_source/
+.tmp/

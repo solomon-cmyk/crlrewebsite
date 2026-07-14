@@ -84,7 +84,7 @@ async function downloadMarave() {
   }
 }
 
-async function optimizeImage(filePath, maxEdge = 1600) {
+async function optimizeImage(filePath, maxEdge = 2400) {
   const ext = path.extname(filePath).toLowerCase();
   const base = filePath.slice(0, -ext.length);
   const outPath = `${base}.webp`;
@@ -101,7 +101,7 @@ async function optimizeImage(filePath, maxEdge = 1600) {
   let pipeline = sharp(filePath, { failOn: "none" });
   if (resize) pipeline = pipeline.resize(resize);
 
-  await pipeline.webp({ quality: 78, effort: 4 }).toFile(outPath);
+  await pipeline.webp({ quality: 88, effort: 5 }).toFile(outPath);
 
   const before = fs.statSync(filePath).size;
   const after = fs.statSync(outPath).size;
