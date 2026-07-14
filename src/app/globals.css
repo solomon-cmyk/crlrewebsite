@@ -709,7 +709,8 @@
   width:100%;
   display:block;
   aspect-ratio:16/9;
-  object-fit:cover
+  object-fit:cover;
+  cursor:pointer
 }
 
   .film-expand {
@@ -739,17 +740,13 @@
   .film-lightbox {
   position:fixed;
   inset:0;
-  z-index:120;
-  display:none;
+  z-index:1200;
+  display:flex;
   align-items:center;
   justify-content:center;
   padding:24px;
   background:rgba(15,26,20,.88);
   backdrop-filter:blur(10px)
-}
-
-  .film-lightbox--open {
-  display:flex
 }
 
   .film-lightbox__inner {
@@ -821,6 +818,10 @@
   object-position:center 28%;
   display:block;
   transition:transform .7s ease
+}
+
+  .tier .ph video {
+  cursor:pointer
 }
 
   .tier:hover .ph img,

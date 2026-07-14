@@ -6,6 +6,32 @@ const VIDEO_SRC = "/media/marave/videos/residences-hero.mp4";
 /** Gallery + film poster only — do not reuse collection/hero/marquee images. */
 const POSTER_SRC = "/media/marave/images/beach-club-aerial.webp";
 
+async function playWhenReady(video: HTMLVideoElement) {
+  video.muted = true;
+  try {
+    await video.play();
+    return;
+  } catch {
+    // wait until the element can play, then retry
+  }
+
+  await new Promise<void>((resolve) => {
+    const start = () => {
+      video.play().catch(() => {});
+      cleanup();
+      resolve();
+    };
+    const cleanup = () => {
+      video.removeEventListener("canplay", start);
+      video.removeEventListener("loadeddata", start);
+    };
+    video.addEventListener("canplay", start, { once: true });
+    video.addEventListener("loadeddata", start, { once: true });
+    if (video.readyState >= 2) start();
+    else video.load();
+  });
+}
+
 export function FilmBand() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -20,13 +46,9 @@ export function FilmBand() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    const play = () => {
-      video.play().catch(() => {});
-    };
-
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) play();
+        if (entry.isIntersecting) playWhenReady(video);
         else video.pause();
       },
       { threshold: 0.35 }
@@ -41,10 +63,17 @@ export function FilmBand() {
 
     const inline = videoRef.current;
     const expandedVideo = lightboxVideoRef.current;
-    if (inline && expandedVideo) {
-      expandedVideo.currentTime = inline.currentTime;
-      expandedVideo.play().catch(() => {});
+    if (!expandedVideo) return;
+
+    if (inline && Number.isFinite(inline.currentTime)) {
+      try {
+        expandedVideo.currentTime = inline.currentTime;
+      } catch {
+        // ignore seek before metadata
+      }
     }
+
+    playWhenReady(expandedVideo);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setExpanded(false);
@@ -62,8 +91,12 @@ export function FilmBand() {
     const inline = videoRef.current;
     const expandedVideo = lightboxVideoRef.current;
     if (inline && expandedVideo) {
-      inline.currentTime = expandedVideo.currentTime;
-      inline.play().catch(() => {});
+      try {
+        inline.currentTime = expandedVideo.currentTime;
+      } catch {
+        // ignore
+      }
+      playWhenReady(inline);
     }
     setExpanded(false);
   };
@@ -92,9 +125,10 @@ export function FilmBand() {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               poster={POSTER_SRC}
               aria-label="Maravé Resort & Residences film"
+              onClick={openExpanded}
             >
               <source src={VIDEO_SRC} type="video/mp4" />
             </video>
@@ -110,25 +144,35 @@ export function FilmBand() {
         </div>
       </section>
 
-      <div
-        className={`film-lightbox${expanded ? " film-lightbox--open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Expanded Maravé film"
-        hidden={!expanded}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) closeExpanded();
-        }}
-      >
-        <button type="button" className="film-lightbox__close" aria-label="Close" onClick={closeExpanded}>
-          ×
-        </button>
-        <div className="film-lightbox__inner">
-          <video ref={lightboxVideoRef} playsInline controls poster={POSTER_SRC}>
-            <source src={VIDEO_SRC} type="video/mp4" />
-          </video>
+      {expanded && (
+        <div
+          className="film-lightbox film-lightbox--open"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded Maravé film"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeExpanded();
+          }}
+        >
+          <button type="button" className="film-lightbox__close" aria-label="Close" onClick={closeExpanded}>
+            ×
+          </button>
+          <div className="film-lightbox__inner">
+            <video
+              ref={lightboxVideoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="auto"
+              poster={POSTER_SRC}
+            >
+              <source src={VIDEO_SRC} type="video/mp4" />
+            </video>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
