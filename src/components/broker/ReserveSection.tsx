@@ -46,7 +46,7 @@ export function ReserveSection() {
             </ul>
             <div className="res-cta">
               <button type="button" className="btn btn-bronze" onClick={() => openModal("reserve")}>
-                Start a reservation →
+                Start a reservation
               </button>
               <button type="button" className="btn btn-ghost" onClick={() => openModal("info")}>
                 Request information

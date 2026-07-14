@@ -16,7 +16,7 @@ export function BrokerHero() {
             Costa Rica Luxury Real Estate.
           </p>
           <div className="hero-cta">
-            <a href="#marave" className="btn btn-ink">
+            <a href="#marave" className="btn btn-bronze">
               Discover Maravé
             </a>
             <Link href="/listings" className="btn btn-line">

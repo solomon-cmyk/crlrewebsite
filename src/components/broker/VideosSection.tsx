@@ -143,12 +143,12 @@ export function VideosSection() {
     <section className="block videos-section" id="videos">
       <div className="wrap">
         <div className="sec-head reveal">
-          <span className="eyebrow">Videos</span>
+          <span className="eyebrow">Residence Reels</span>
           <span className="rule" />
           <h2>
-            Watch the <em>residences</em>
+            Life inside the <em>collection</em>
           </h2>
-          <p>Click to play with sound — or expand for the full-screen reel.</p>
+          <p>Short films of the condominiums, villas, and penthouses — play with sound.</p>
         </div>
         <div className="reel-grid">
           {COLLECTIONS.map((tier, index) => (

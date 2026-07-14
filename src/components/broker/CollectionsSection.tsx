@@ -40,6 +40,7 @@ export function CollectionsSection() {
           <h2>
             Three ways to <em>belong</em>
           </h2>
+          <p>Condominiums, villas, and penthouses — open any residence for pricing and next steps.</p>
         </div>
         <div className="tiers">
           {COLLECTIONS.map((tier, index) => (

@@ -20,16 +20,20 @@ export function ContactSection() {
         </p>
         <div className="contact-rows">
           <button type="button" className="btn btn-bronze" onClick={() => openModal("reserve")}>
-            Reserve a residence →
+            Reserve a residence
           </button>
           <button type="button" className="btn btn-line" onClick={() => openModal("info")}>
             Request information
           </button>
         </div>
         <div className="contact-meta">
-          <a href={CONTACT.emailHref}>{CONTACT.email}</a>
-          <a href={CONTACT.phoneCrHref}>{CONTACT.phoneCr} (CR)</a>
-          <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs} (US)</a>
+          <a className="contact-meta__email" href={CONTACT.emailHref}>
+            {CONTACT.email}
+          </a>
+          <span className="contact-meta__phones">
+            <a href={CONTACT.phoneCrHref}>{CONTACT.phoneCr} · CR</a>
+            <a href={CONTACT.phoneUsHref}>{CONTACT.phoneUs} · US</a>
+          </span>
         </div>
       </div>
     </section>

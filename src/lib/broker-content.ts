@@ -4,7 +4,6 @@ export const NAV_LINKS = [
   { href: "/#gallery", label: "Gallery" },
   { href: "/#reserve", label: "Reserve" },
   { href: "/listings", label: "Listings" },
-  { href: "/#contact", label: "Contact" },
 ] as const;
 
 /** Featured strip only — each image may also appear in the gallery, nowhere else. */
